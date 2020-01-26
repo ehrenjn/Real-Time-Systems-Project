@@ -1,0 +1,7 @@
+# Ignore Eclipse settings files
+.classpath
+.project
+.settings/*
+
+# ignore compiled files
+bin/*
