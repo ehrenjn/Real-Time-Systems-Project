@@ -1,7 +1,10 @@
+package main;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,14 +48,53 @@ public class Event {
 	}
 	
 	/**
+	 * @return the time of this event
+	 */
+	public Date getTime() {
+		return time;
+	}
+	
+	/**
+	 * @return floor this event originates on
+	 */
+	public int getCurrentFloor() {
+		return currentFloor;
+	}
+	
+	/**
+	 * @return which direction button was pressed in this event
+	 */
+	public Direction getDirection() {
+		return direction;
+	}
+	
+	/**
+	 * @return where the person causing this event would like to go
+	 */
+	public int getDesiredFloor() {
+		return desiredFloor;
+	}
+	
+	
+	public static ArrayList<Event> fromCSV(String fileLocation) {
+		try (FileInputStream stream = new FileInputStream(new File(fileLocation))) {
+			return fromCSV(stream);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+		return null;
+	}
+	
+	/**
 	 * Creates an array of Events from a CSV file
-	 * @param file the CSV file to read a list of events from
+	 * @param csv the CSV input stream to read a list of events from
 	 * @return An array of Events
 	 */
-	public static ArrayList<Event> fromCSV(File file) {
+	public static ArrayList<Event> fromCSV(InputStream csv) {
 		ArrayList<Event> events = new ArrayList<Event>();
 		
-		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(csv))) {
 			for (String line = reader.readLine(); line != null; line = reader.readLine()) {
 				int lineNumber = events.size() + 1;
 				String[] columns = line.split(",");
