@@ -1,0 +1,29 @@
+package common;
+
+/**
+ * A enum representing the direction of an elevator
+ */
+
+public enum Direction{
+    UP("up"), DOWN("down");
+
+    String key;
+
+    Direction(String key) { 
+    	this.key = key; 
+    }
+
+    public static Direction getValue(String key) {
+    	//Normalize the direction
+    	key = key.toLowerCase();
+        if ("up".equals(key)) { 
+        	return UP; 
+        }
+        else if ("down".equals(key)) {
+        	return DOWN;
+        }
+        else {
+        	throw new IllegalArgumentException("Illegal Key Argument");
+        }
+    }
+}

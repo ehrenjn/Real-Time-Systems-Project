@@ -1,4 +1,4 @@
-package main;
+package scheduler;
 
 public class Scheduler {
 
