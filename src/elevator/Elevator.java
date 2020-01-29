@@ -1,7 +1,8 @@
 package elevator;
 
-public class Elevator implements Runnable{
-	public void run() {
-		
-	}
+public class Elevator{
+	private ElevatorButton[] elevatorButtons;
+	private ElevatorLamp[] evelatorLamps;
+	private Motor motor;
+	private Door door;
 }

@@ -1,7 +1,7 @@
 package floor;
 
-public class Floor implements Runnable{
-	public void run() {
-		
-	}
+public class Floor{
+	private DirectionLamp[] directionLamps;
+	private FloorLamp[] floorLamps;
+	private FloorButton[] floorButtons;
 }
