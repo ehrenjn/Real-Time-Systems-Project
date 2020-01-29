@@ -61,7 +61,7 @@ public class EventReader {
 	}
 	
 	
-	private static Date EventParseTime(String timeStr, int lineNumber) {
+	public static Date EventParseTime(String timeStr, int lineNumber) {
 		SimpleDateFormat timeParser = new SimpleDateFormat("HH:mm:ss.SSS");
 		try {
 			return timeParser.parse(timeStr);
@@ -70,7 +70,7 @@ public class EventReader {
 		}  
 	}
 	
-	private static int EventParseInt(String intStr, int lineNumber) {
+	public static int EventParseInt(String intStr, int lineNumber) {
 		try {
 			return Integer.parseInt(intStr);
 		} catch (NumberFormatException e) {
@@ -78,7 +78,7 @@ public class EventReader {
 		}
 	}
 	
-	private static Direction EventParseDirection(String directionStr, int lineNumber) {
+	public static Direction EventParseDirection(String directionStr, int lineNumber) {
 		try{
 			return Direction.getValue(directionStr);
 		}
