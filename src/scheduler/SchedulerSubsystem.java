@@ -5,23 +5,21 @@ import common.Event;
 import common.CommunicationSocket;
 
 public class SchedulerSubsystem implements Runnable{
-	private CommunicationSocket elevatorSocket;
-	private CommunicationSocket floorSocket;
+	private Scheduler scheduler;
 	
 	public SchedulerSubsystem(CommunicationSocket elevatorSocket, CommunicationSocket floorSocket) {
-		this.elevatorSocket = elevatorSocket;
-		this.floorSocket = floorSocket;
+		this.scheduler = new Scheduler(elevatorSocket, floorSocket);
 	}
 	
 	public void run() {
 		while(true) {
-			Event event = this.floorSocket.recieveEventOut();
+			Event event = this.scheduler.recieveFloorEventOut();
 			System.out.println("Scheduler recieved floor event in: " + event);
-			this.elevatorSocket.sendEventIn(event);
+			this.scheduler.sendElevatorEventIn(event);
 			System.out.println("Scheduler sent elevator event out: " + event);
-			event = this.elevatorSocket.recieveEventOut();
+			event = this.scheduler.recieveElevatorEventOut();
 			System.out.println("Scheduler recieved elevator event in:" + event);
-			this.floorSocket.sendEventIn(event);
+			this.scheduler.sendFloorEventIn(event);
 			System.out.println("Scheduler sent elevator event out: " + event);
 		}
 	}
