@@ -13,11 +13,13 @@ import scheduler.SchedulerSubsystem;
 
 public class Main {
 	public static void main(String[] args) {
+		int numberOfFloors = 22;
+		
 		CommunicationSocket elevatorSocket = new CommunicationSocket();
 		CommunicationSocket floorSocket = new CommunicationSocket();
 		
 		ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem(elevatorSocket);
-		FloorSubsystem floorSubsystem = new FloorSubsystem(floorSocket);
+		FloorSubsystem floorSubsystem = new FloorSubsystem(floorSocket, numberOfFloors);
 		SchedulerSubsystem schedulerSubsystem = new SchedulerSubsystem(elevatorSocket, floorSocket);
 		
 		Thread elevatorThread = new Thread(elevatorSubsystem);
