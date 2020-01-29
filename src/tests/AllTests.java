@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	tests.TestEvent.class
+	tests.TestEvent.class,
+	tests.TestCommunicationSocket.class
 })
 
 public class AllTests {}
