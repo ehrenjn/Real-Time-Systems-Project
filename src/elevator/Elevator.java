@@ -21,14 +21,22 @@ public class Elevator {
 		this.elevatorSocket = elevatorSocket;
 	}
 	
+	
 	/**
-	 * Receives an event, does work, then sends an event back to the server
+	 * Receives an event
+	 * @return the received event
 	 */
-	public void doWork() {
-		Event event = this.elevatorSocket.recieveEventIn();
-		System.out.println("Elevator recieved elevator event in: " + event);
-		//Do work on message
+	public Event recieveEventIn()
+	{
+		return this.elevatorSocket.recieveEventIn();
+	}
+	
+	/**
+	 * Sends an event
+	 * @param event event to send
+	 */
+	public void sendEventOut(Event event)
+	{
 		this.elevatorSocket.sendEventOut(event);
-		System.out.println("Elevator sent elevator event out: " + event);
 	}
 }
