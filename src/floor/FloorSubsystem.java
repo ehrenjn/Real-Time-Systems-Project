@@ -6,10 +6,9 @@ import common.CommunicationSocket;
 import common.Event;
 import floor.Floor;
 
-
 public class FloorSubsystem implements Runnable{
 	private Floor[] floors;
-
+	
 	public FloorSubsystem(CommunicationSocket floorSocket, int numFloors) { 
 		this.floors = new Floor[numFloors];
 		
@@ -18,7 +17,6 @@ public class FloorSubsystem implements Runnable{
 				this.floors[i] = new Floor(floorSocket, i );
 			}
 	}
-
 	
 
 	public void run() {
