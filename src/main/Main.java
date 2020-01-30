@@ -15,9 +15,10 @@ public class Main {
 	public static void main(String[] args) {
 		CommunicationSocket elevatorSocket = new CommunicationSocket();
 		CommunicationSocket floorSocket = new CommunicationSocket();
+		int numberOfFloors = 22;
 		
 		ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem(elevatorSocket);
-		FloorSubsystem floorSubsystem = new FloorSubsystem(floorSocket);
+		FloorSubsystem floorSubsystem = new FloorSubsystem(floorSocket, numberOfFloors);
 		SchedulerSubsystem schedulerSubsystem = new SchedulerSubsystem(elevatorSocket, floorSocket);
 		
 		Thread elevatorThread = new Thread(elevatorSubsystem);

@@ -4,13 +4,18 @@ import java.util.ArrayList;
 
 import common.CommunicationSocket;
 import common.Event;
+import floor.Floor;
 
 public class FloorSubsystem implements Runnable{
 	private Floor[] floors;
-	private CommunicationSocket floorSocket;
 	
-	public FloorSubsystem(CommunicationSocket floorSocket) {
-		this.floorSocket = floorSocket;
+	public FloorSubsystem(CommunicationSocket floorSocket, int numFloors) { 
+		this.floors = new Floor[numFloors];
+		
+		for (int i = 0; i < numFloors; i++)
+			{
+				this.floors[i] = new Floor(floorSocket, i );
+			}
 	}
 	
 
@@ -19,9 +24,9 @@ public class FloorSubsystem implements Runnable{
 		ArrayList<Event> events = EventReader.fromEventFile("floorEvents.tsv");
 		
 		for (Event event: events) {
-			this.floorSocket.sendEventOut(event);
+			this.floors[event.getCurrentFloor()].sendEventOut(event);
 			System.out.println("Floor sent floor event out: " + event);
-			event = this.floorSocket.recieveEventIn();
+			event = this.floors[event.getCurrentFloor()].recieveEventIn();
 			System.out.println("Floor recieved floor event In: " + event);
 		}
 	}
