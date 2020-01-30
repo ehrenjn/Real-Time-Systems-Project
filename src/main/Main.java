@@ -16,8 +16,10 @@ public class Main {
 		CommunicationSocket elevatorSocket = new CommunicationSocket();
 		CommunicationSocket floorSocket = new CommunicationSocket();
 		
+		int numOfFloors = 22;
+		
 		ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem(elevatorSocket);
-		FloorSubsystem floorSubsystem = new FloorSubsystem(floorSocket);
+		FloorSubsystem floorSubsystem = new FloorSubsystem(floorSocket, numOfFloors);
 		SchedulerSubsystem schedulerSubsystem = new SchedulerSubsystem(elevatorSocket, floorSocket);
 		
 		Thread elevatorThread = new Thread(elevatorSubsystem);
