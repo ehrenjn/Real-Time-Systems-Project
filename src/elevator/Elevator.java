@@ -5,10 +5,6 @@ import common.Direction;
 import common.Event;
 
 public class Elevator {
-	private ElevatorButton[] elevatorButtons;
-	private ElevatorLamp[] evelatorLamps;
-	private Motor motor;
-	private Door door;
 	private Direction direction;
 	private int floor;
 	private CommunicationSocket elevatorSocket;

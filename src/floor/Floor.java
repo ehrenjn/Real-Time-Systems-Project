@@ -6,11 +6,6 @@ import common.Event;
 
 public class Floor{
 	private int floorNumber;
-	private DirectionLamp[] directionLamps;
-	private FloorLamp[] floorLamps;
-	private FloorButton[] floorButtons;
-	private ArrayList<Event> upEventList;
-	private ArrayList<Event> downEventList;
 	private CommunicationSocket floorSocket;
 	
 	public Floor(CommunicationSocket floorSocket, int floorNumber) {
