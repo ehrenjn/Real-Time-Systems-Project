@@ -43,6 +43,7 @@ public class Event {
 	}
 	
 	/**
+	 * Returns the time of the event as a Date Object
 	 * @return the time of this event
 	 */
 	public Date getTime() {
@@ -50,13 +51,15 @@ public class Event {
 	}
 	
 	/**
-	 * @return floor this event originates on
+	 * Returns the integer position of the floor the event originates from
+	 * @return integer position of the floor this event originates on
 	 */
 	public int getCurrentFloor() {
 		return currentFloor;
 	}
 	
 	/**
+	 * Returns the intended direction of the event request
 	 * @return which direction button was pressed in this event
 	 */
 	public Direction getDirection() {
@@ -64,7 +67,8 @@ public class Event {
 	}
 	
 	/**
-	 * @return where the person causing this event would like to go
+	 * Returns the integer position o the floor the event desires to go
+	 * @return the integer position of the floor the person causing this event would like to go
 	 */
 	public int getDesiredFloor() {
 		return desiredFloor;

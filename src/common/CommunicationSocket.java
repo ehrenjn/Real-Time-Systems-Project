@@ -1,5 +1,9 @@
 package common;
 
+/**
+ * A placeholder synchronized "box" class for event passing between threads. In the future it will be replaced with a
+ * DatagramSocket class.
+ */
 public class CommunicationSocket {
 	private Event eventIn;
 	private Event eventOut;
@@ -66,6 +70,7 @@ public class CommunicationSocket {
 	 * Receives an event from a client
 	 * @return the event received
 	 */
+	
 	public synchronized Event recieveEventOut() {
         while (this.eventOut == null) {
             try {

@@ -8,13 +8,20 @@ import floor.EventReader;
 
 public class ElevatorSubsystem implements Runnable {
 	private Elevator[] elevators;
-	private static int NUM_ELEVATORS = 1;
+	
+
+	/**
+	 * Constructor of the ElevatorSubsystem
+	 * @param elevatorSocket the socket for the elevator to receive and send events on
+	 */	
 	
 	public ElevatorSubsystem(CommunicationSocket elevatorSocket) {
 		elevators = new Elevator[] {new Elevator(elevatorSocket)};
 	}
 	
-	
+	/**
+	 * The method to run as in a Thread. Runs forever as it waits for incoming event
+	 */
 	public void run() {
 		while(true) {
 			for (Elevator elevator: elevators) {

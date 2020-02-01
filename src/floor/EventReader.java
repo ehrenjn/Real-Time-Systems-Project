@@ -15,7 +15,13 @@ import common.Direction;
 import common.Event;
 
 public class EventReader {
-
+	
+	
+	/**
+	 * Reads in a file given the relative path of the file
+	 * @param fileLocation The file name of the file in relative terms to the project
+	 * @return an ArrayList containing all the events read from a file
+	 */
 	public static ArrayList<Event> fromEventFile(String fileLocation) {
 		try (FileInputStream stream = new FileInputStream(new File(fileLocation))) {
 			return fromEventFile(stream);
@@ -60,7 +66,12 @@ public class EventReader {
 		return events;
 	}
 	
-	
+	/**
+	 * Parses a string in the format "HH:mm:ss.SSS" and converts it to a Date object
+	 * @param timeStr the string to be parse
+	 * @param lineNumber the lineNumber of the string to be parse
+	 * @return A Date parsed from the string
+	 */
 	public static Date EventParseTime(String timeStr, int lineNumber) {
 		SimpleDateFormat timeParser = new SimpleDateFormat("HH:mm:ss.SSS");
 		try {
@@ -70,6 +81,12 @@ public class EventReader {
 		}  
 	}
 	
+	/**
+	 * Parses a string Integer and converts it to an int
+	 * @param intStr the string to be parse
+	 * @param lineNumber the lineNumber of the string to be parse
+	 * @return An int parsed from the string
+	 */
 	public static int EventParseInt(String intStr, int lineNumber) {
 		try {
 			return Integer.parseInt(intStr);
@@ -78,6 +95,12 @@ public class EventReader {
 		}
 	}
 	
+	/**
+	 * Parses a string Direction and converts it to a Direction eum
+	 * @param directionStr the string to be parse
+	 * @param lineNumber the lineNumber of the string to be parse
+	 * @return A Direction parsed from the string
+	 */
 	public static Direction EventParseDirection(String directionStr, int lineNumber) {
 		try{
 			return Direction.getValue(directionStr);
