@@ -13,6 +13,10 @@ public enum Direction{
     	this.key = key; 
     }
 
+    /**
+     * Returns an Enum of a given key specified by the string
+     * @param key A string that is a key to return an Enum value
+     */
     public static Direction getValue(String key) {
     	//Normalize the direction
     	key = key.toLowerCase();
