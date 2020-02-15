@@ -6,7 +6,7 @@ import common.*;
  * Represents a request to turn a floor lamp on or off
  *
  */
-public class FloorLampEvent {
+public class FloorLampEvent extends Event {
 	private LampState lampState;
 	private Direction direction;
 	public static final String NAME = "FloorLampEvent";
@@ -17,6 +17,7 @@ public class FloorLampEvent {
 	 * @param direction the direction lamp you would like to change
 	 */
 	public FloorLampEvent(LampState lampState, Direction direction) {
+		super(NAME);
 		this.lampState = lampState;
 	}
 	
