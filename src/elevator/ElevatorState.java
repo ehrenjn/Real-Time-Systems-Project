@@ -45,14 +45,6 @@ public abstract class ElevatorState {
 		this.downLamp = state.downLamp;
 		this.buttonLamps = state.buttonLamps;
 	}
-
-	/**
-	 * Default implementation for the handling of elevatorButtonEvent
-	 * @param elevatorButtonEvent the event modeling the press of a button
-	 */
-	public ElevatorState handleElevatorButtonEvent(ElevatorButtonEvent elevatorButtonEvent) {
-		return this;
-	}
 	
 	/**
 	 * Default implementation for the handling of elevatorDirectionLampEvent
@@ -80,11 +72,19 @@ public abstract class ElevatorState {
 	}
 		
 	/**
+	 * Default implementation for the handling of elevatorButtonEvent
+	 * @param elevatorButtonEvent the event modeling the press of a button
+	 */
+	public ElevatorState handleElevatorButtonEvent(ElevatorButtonEvent elevatorButtonEvent) {
+		return new ElevatorFailureState();
+	}
+	
+	/**
 	 * Default implementation for the handling of elevatorDoorEvent
 	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
 	 */
 	public ElevatorState handleElevatorDoorEvent(ElevatorDoorEvent elevatorDoorEvent) {
-		return this;
+		return new ElevatorFailureState();
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public abstract class ElevatorState {
 	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
 	 */
 	public ElevatorState handleElevatorTransitEvent(ElevatorTransitEvent elevatorTransitEvent) {
-		return this;
+		return new ElevatorFailureState();
 	}
 	
 	/**
@@ -100,6 +100,6 @@ public abstract class ElevatorState {
 	 * @param elevatorArrivalEvent the event modeling the arrival sensor of an elevator
 	 */
 	public ElevatorState handleElevatorArrivalEvent(ElevatorArrivalEvent elevatorArrivalEvent) {
-		return this;
+		return new ElevatorFailureState();
 	}
 }

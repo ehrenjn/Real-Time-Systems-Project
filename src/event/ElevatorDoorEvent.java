@@ -19,7 +19,7 @@ public class ElevatorDoorEvent extends Event {
 		this.direction = direction;
 	}
 	
-	public DoorState getDirection() {
+	public DoorState getDoorState() {
 		return direction;
 	}
 }

@@ -36,7 +36,7 @@ public class TestEventReader {
 		ArrayList<Event> events = EventReader.fromEventFile(stream);
 		
 		assertEquals("initial floor should be parsed correctly", 0, events.get(0).getCurrentFloor());
-		assertEquals("direction should be parsed correctly", Direction.DOWN, events.get(1).getDirection());
+		assertEquals("direction should be parsed correctly", Direction.DOWN, events.get(1).getDoorState());
 		assertEquals("destination floor should be parsed correctly", 4, events.get(1).getDesiredFloor());
 		
 		try {
