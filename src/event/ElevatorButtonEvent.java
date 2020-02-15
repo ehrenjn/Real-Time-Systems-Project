@@ -6,12 +6,14 @@ package event;
  */
 public class ElevatorButtonEvent extends Event {
 	private int desiredFloor;
+	public static String NAME = "ElevatorButtonEvent";
 	
 	/**
 	 * Creates a new ElevatorButtonEvent
 	 * @param desiredFloor the floor a person would like to go to
 	 */
 	public ElevatorButtonEvent(int desiredFloor) {
+		super(NAME);
 		this.desiredFloor = desiredFloor;
 	}
 	
