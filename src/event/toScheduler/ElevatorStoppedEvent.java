@@ -8,7 +8,12 @@ import event.*;
 public class ElevatorStoppedEvent extends Event {
 	public static final String NAME = "ElevatorStoppedEvent";
 	
-	public ElevatorStoppedEvent(String name, int recipientId, int senderId) {
-		super(name, recipientId, senderId);
+	/**
+	 * 
+	 * @param recipientId the id of the recipient of this event
+	 * @param senderId the id of the sender of this event
+	 */
+	public ElevatorStoppedEvent(int recipientId, int senderId) {
+		super(NAME, recipientId, senderId);
 	}
 }
