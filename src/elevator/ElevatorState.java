@@ -9,20 +9,28 @@ import event.*;
 public abstract class ElevatorState {
 	protected int currentFloor;
 	protected Direction direction;
+	protected DoorState doorState;
 	protected LampState upLamp;
 	protected LampState downLamp;
-	protected LampState[] lamps;
+	protected LampState[] buttonLamps;
+	
 	
 	/**
 	 * Default constructor for the Elevator Open door state. This is considered the default state for an
 	 * Elevator state
+	 * 
+	 * @param numFloors number of floors the elevator must service
 	 */
-	public ElevatorState() {
+	public ElevatorState(int numFloors) {
 		this.currentFloor = 0;
+		this.doorState = DoorState.OPEN;
 		this.direction = Direction.IDLE;
 		this.upLamp = LampState.OFF;
 		this.downLamp = LampState.OFF;
-		this.lamps = lamps;
+		this.buttonLamps = new LampState[numFloors];
+		for (LampState buttonLamp: buttonLamps) {
+			buttonLamp = LampState.OFF;
+		}
 	}
 	
 	/**
@@ -31,10 +39,11 @@ public abstract class ElevatorState {
 	 */
 	public ElevatorState(ElevatorState state) {
 		this.currentFloor = state.currentFloor;
+		this.doorState = state.doorState;
 		this.direction = state.direction;
 		this.upLamp = state.upLamp;
 		this.downLamp = state.downLamp;
-		this.lamps = this.lamps;
+		this.buttonLamps = state.buttonLamps;
 	}
 
 	/**
@@ -50,6 +59,14 @@ public abstract class ElevatorState {
 	 * @param elevatorDirectionLampEvent the event modeling the on/off of a direction lamp
 	 */
 	public ElevatorState handleElevatorDirectionLampEvent(ElevatorDirectionLampEvent elevatorDirectionLampEvent) {
+		switch(elevatorDirectionLampEvent.getLampDirection()) {
+			case UP:
+				this.upLamp = elevatorDirectionLampEvent.getLampState();
+				break;
+			case DOWN:
+				this.downLamp = elevatorDirectionLampEvent.getLampState();
+				break;
+		}
 		return this;
 	}
 	
@@ -58,6 +75,7 @@ public abstract class ElevatorState {
 	 * @param elevatorButtonLampEvent the event modeling the on/off of a button lamp
 	 */
 	public ElevatorState handleElevatorButtonLampEvent(ElevatorButtonLampEvent elevatorButtonLampEvent) {
+		buttonLamps[elevatorButtonLampEvent.getFloor()] = elevatorButtonLampEvent.getLampState();
 		return this;
 	}
 		

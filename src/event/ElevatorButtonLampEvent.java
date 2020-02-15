@@ -8,18 +8,24 @@ import common.*;
  */
 public class ElevatorButtonLampEvent extends Event {
 	private LampState lampState;
+	private int floor;
 	public static String NAME = "ElevatorFloorLampEvent";
 	
 	/**
 	 * Creates a new ElevatorFloorLampEvent
 	 * @param lampState
 	 */
-	public ElevatorButtonLampEvent(LampState lampState) {
+	public ElevatorButtonLampEvent(LampState lampState, int floor) {
 		super(NAME);
 		this.lampState = lampState;
+		this.floor = floor;
 	}
 	
 	public LampState getLampState() {
 		return lampState;
+	}
+	
+	public int getFloor() {
+		return floor;
 	}
 }
