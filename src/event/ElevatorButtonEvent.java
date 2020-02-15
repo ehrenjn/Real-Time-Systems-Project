@@ -6,7 +6,7 @@ package event;
  */
 public class ElevatorButtonEvent extends Event {
 	private int desiredFloor;
-	public static String NAME = "ElevatorButtonEvent";
+	public static final String NAME = "ElevatorButtonEvent";
 	
 	/**
 	 * Creates a new ElevatorButtonEvent
