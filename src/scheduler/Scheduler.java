@@ -1,7 +1,7 @@
 package scheduler;
 
 import common.CommunicationSocket;
-import event.Event;
+import event.*;
 
 public class Scheduler {
 	private CommunicationSocket elevatorSocket;
@@ -48,5 +48,60 @@ public class Scheduler {
 	 */
 	public Event recieveElevatorEventOut() {
 		return this.elevatorSocket.recieveEventOut();
+	}
+	
+	public void handleEvent(Event event) {
+		switch (event.getName()) {
+		case ElevatorArrivalEvent.NAME:
+			handleElevatorArrivalEvent((ElevatorArrivalEvent) event);
+			break;
+		case ElevatorButtonEvent.NAME:
+			handleElevatorButtonEvent((ElevatorButtonEvent) event);
+			break;
+		case ElevatorDirectionLampEvent.NAME:
+			handleElevatorDirectionLampEvent((ElevatorDirectionLampEvent) event);
+			break;
+		case ElevatorDoorEvent.NAME:
+			handleElevatorDoorEvent((ElevatorDoorEvent) event);
+			break;
+		case ElevatorTransitEvent.NAME:
+			handleElevatorTransitEvent((ElevatorTransitEvent) event);
+			break;
+		case FloorButtonEvent.NAME:
+			handleFloorButtonEvent((FloorButtonEvent) event);
+			break;
+		case FloorLampEvent.NAME:
+			handleFloorLampEvent((FloorLampEvent) event);
+			break;
+		}
+	}
+	
+	
+	private void handleElevatorArrivalEvent(ElevatorArrivalEvent event) {
+		
+	}
+	
+	private void handleElevatorButtonEvent(ElevatorButtonEvent event) {
+		
+	}
+	
+	private void handleElevatorDirectionLampEvent(ElevatorDirectionLampEvent event) {
+		
+	}
+	
+	private void handleElevatorDoorEvent(ElevatorDoorEvent event) {
+		
+	}
+	
+	private void handleElevatorTransitEvent(ElevatorTransitEvent event) {
+		
+	}
+	
+	private void handleFloorButtonEvent(FloorButtonEvent event) {
+		
+	}
+	
+	private void handleFloorLampEvent(FloorLampEvent event) {
+		
 	}
 }
