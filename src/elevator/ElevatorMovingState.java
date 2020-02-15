@@ -31,6 +31,11 @@ public class ElevatorMovingState extends ElevatorState{
 	 * @param elevatorTransitEvent the event modeling the stopping of an elevator
 	 */
 	public ElevatorState handleElevatorTransitEvent(ElevatorTransitEvent elevatorTransitEvent) {
-		return new ElevatorCloseDoorState(this);
+		switch(elevatorTransitEvent.getDirection()) {
+			case IDLE:
+				return new ElevatorCloseDoorState(this);
+			default:
+				return this;
+		}	
 	}
 }
