@@ -123,7 +123,7 @@ public class Scheduler {
 	private void handleElevatorDoorEvent(ElevatorDoorEvent event) {
 		if (event.getDoorState() == DoorState.CLOSE) {
 			int destination = destinationQueue.getFirst();
-			if ()
+			Direction direction = 
 		} else if (event.getDoorState() == DoorState.OPEN) {
 			
 		}
