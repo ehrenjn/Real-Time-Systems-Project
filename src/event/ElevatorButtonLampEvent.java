@@ -8,7 +8,7 @@ import common.*;
  */
 public class ElevatorButtonLampEvent extends Event {
 	private LampState lampState;
-	public static String NAME = "ElevatorFloorLampEvent";
+	public static final String NAME = "ElevatorFloorLampEvent";
 	
 	/**
 	 * Creates a new ElevatorFloorLampEvent
