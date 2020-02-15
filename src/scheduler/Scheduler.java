@@ -1,12 +1,23 @@
 package scheduler;
 
+import java.util.LinkedList;
+
 import common.CommunicationSocket;
+import common.Direction;
+import common.DoorState;
+import common.LampState;
 import event.*;
 
 public class Scheduler {
 	private CommunicationSocket elevatorSocket;
 	private CommunicationSocket floorSocket;
-	private Queue destinations;
+	private static final int SCHEDULER_ID = 0;
+	private static final int ELEVATOR_ID = 0;
+	
+	//elevator state variables
+	private LinkedList<Integer> destinationQueue;
+	private Direction elevatorDirection;
+	private int elevatorCurrentFloor;
 	
 	/**
 	 * Constructs a new Scheduler
@@ -16,7 +27,7 @@ public class Scheduler {
 	public Scheduler(CommunicationSocket elevatorSocket, CommunicationSocket floorSocket) {
 		this.elevatorSocket = elevatorSocket;
 		this.floorSocket = floorSocket;
-		this.destinations = new Queue();
+		this.destinationQueue = new LinkedList<Integer>();
 	}
 	
 	
@@ -52,6 +63,18 @@ public class Scheduler {
 		return this.elevatorSocket.recieveEventOut();
 	}
 	
+	private void scheduleElevator(int floor) {
+		destinationQueue.add(floor);
+		if (elevatorDirection == Direction.IDLE) {
+			elevatorIsIdle = false;
+		}
+	}
+	
+	private void closeElevatorDoors() {
+		ElevatorDoorEvent request = new ElevatorDoorEvent(DoorState.CLOSE, ELEVATOR_ID, SCHEDULER_ID);
+		this.elevatorSocket.sendEventIn(request);
+	}
+	
 	public void handleEvent(Event event) {
 		switch (event.getName()) {
 		case ElevatorArrivalEvent.NAME:
@@ -80,7 +103,11 @@ public class Scheduler {
 	
 	
 	private void handleElevatorArrivalEvent(ElevatorArrivalEvent event) {
-		
+		if (event.getFloor() == destinationQueue.getFirst()) {
+			
+		} else {
+			elevatorSocket.sendEventIn(new ElevatorTransitEvent());
+		}
 	}
 	
 	private void handleElevatorButtonEvent(ElevatorButtonEvent event) {
@@ -99,9 +126,16 @@ public class Scheduler {
 		
 	}
 	
+	
 	private void handleFloorButtonEvent(FloorButtonEvent event) {
-		
+		//do nothing if elevator is already waiting at the correct floor with doors open
+		if (! (elevatorIsIdle && elevatorCurrentFloor == event.getFloor())) {
+			FloorLampEvent response = new FloorLampEvent(LampState.ON, event.getDirection(), event.getSender(), SCHEDULER_ID);
+			floorSocket.sendEventIn(response);
+			scheduleElevator(event.getFloor());
+		}
 	}
+	
 	
 	private void handleFloorLampEvent(FloorLampEvent event) {
 		

@@ -12,7 +12,7 @@ public class ElevatorArrivalEvent extends Event {
 	 * Creates a new ElevatorArrivalEvent
 	 * @param floor the floor that has been arrived
 	 */
-	public ElevatorArrivalEvent(int floor, String recipientId, String senderId) {
+	public ElevatorArrivalEvent(int floor, int recipientId, int senderId) {
 		super(NAME, recipientId, senderId);
 		this.floor = floor;
 	}
