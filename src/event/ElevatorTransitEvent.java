@@ -8,7 +8,7 @@ import common.*;
  */
 public class ElevatorTransitEvent extends Event {
 	private Direction direction;
-	public static String NAME = "ElevatorTransitEvent";
+	public static final String NAME = "ElevatorTransitEvent";
 	
 	/**
 	 * Creates a new ElevatorTransitEvent

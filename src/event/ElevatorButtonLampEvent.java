@@ -10,6 +10,7 @@ public class ElevatorButtonLampEvent extends Event {
 	private LampState lampState;
 	private int floor;
 	public static String NAME = "ElevatorFloorLampEvent";
+
 	
 	/**
 	 * Creates a new ElevatorFloorLampEvent
