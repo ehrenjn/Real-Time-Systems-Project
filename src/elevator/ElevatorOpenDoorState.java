@@ -36,4 +36,12 @@ public class ElevatorOpenDoorState extends ElevatorState{
 	public ElevatorState handleElevatorDoorEvent(ElevatorDoorEvent elevatorDoorEvent) {
 		return new ElevatorClosingDoorState(this);
 	}
+	
+	/**
+	 * Default implementation for the handling of elevatorButtonEvent
+	 * @param elevatorButtonEvent the event modeling the press of a button
+	 */
+	public ElevatorState handleElevatorButtonEvent(ElevatorButtonEvent elevatorButtonEvent) {
+		return this;
+	}
 }
