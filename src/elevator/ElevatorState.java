@@ -1,7 +1,10 @@
 package elevator;
 
 import event.*;
-
+/**
+ * Abstract class that implements the base state for the elevator. Implements getters and setters as well as 
+ * ensures that all states have some base functionality
+ */
 public abstract class ElevatorState {
 	private int currentFloor;
 	private int direction; //-1 get down, 0 get idle, 1 get up
@@ -10,19 +13,51 @@ public abstract class ElevatorState {
 	private boolean downLamp;
 	private boolean[] lamps;
 
+	/**
+	 * Default implementation for the handling of elevatorButtonEvent
+	 * @param elevatorButtonEvent the event modeling the press of a button
+	 */
 	public ElevatorState handleElevatorButtonEvent(Event elevatorButtonEvent) {
 		return this;
 	}
 	
-	public ElevatorState handleElevatorLampEvent(Event elevatorLampEvent) {
+	/**
+	 * Default implementation for the handling of elevatorDirectionLampEvent
+	 * @param elevatorDirectionLampEvent the event modeling the on/off of a direction lamp
+	 */
+	public ElevatorState handleElevatorDirectionLampEvent(Event elevatorDirectionLampEvent) {
 		return this;
 	}
 	
+	/**
+	 * Default implementation for the handling of elevatorButtonLampEvent
+	 * @param elevatorButtonLampEvent the event modeling the on/off of a button lamp
+	 */
+	public ElevatorState handleElevatorButtonLampEvent(Event elevatorButtonLampEvent) {
+		return this;
+	}
+		
+	/**
+	 * Default implementation for the handling of elevatorDoorEvent
+	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
+	 */
 	public ElevatorState handleElevatorDoorEvent(Event elevatorDoorEvent) {
 		return this;
 	}
 	
+	/**
+	 * Default implementation for the handling of elevatorTransitEvent
+	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
+	 */
 	public ElevatorState handleElevatorTransitEvent(Event elevatorTransitEvent) {
+		return this;
+	}
+	
+	/**
+	 * Default implementation for the handling of elevatorArrivalEvent
+	 * @param elevatorArrivalEvent the event modeling the arrival sensor of an elevator
+	 */
+	public ElevatorState handleElevatorArrivalEvent(Event elevatorArrivalEvent) {
 		return this;
 	}
 	
