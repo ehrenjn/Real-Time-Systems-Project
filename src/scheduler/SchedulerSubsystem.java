@@ -1,8 +1,7 @@
 package scheduler;
 
-import common.Event;
-
 import common.CommunicationSocket;
+import event.Event;
 
 public class SchedulerSubsystem implements Runnable{
 	private Scheduler scheduler;

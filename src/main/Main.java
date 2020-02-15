@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 import common.CommunicationSocket;
-import common.Event;
 import elevator.ElevatorSubsystem;
+import event.Event;
 import floor.EventReader;
 import floor.FloorSubsystem;
 import scheduler.SchedulerSubsystem;

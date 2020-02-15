@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import common.Direction;
-import common.Event;
+import event.Event;
 
 public class EventReader {
 	
@@ -103,7 +103,8 @@ public class EventReader {
 	 */
 	public static Direction EventParseDirection(String directionStr, int lineNumber) {
 		try{
-			return Direction.getValue(directionStr);
+			directionStr = directionStr.toUpperCase();
+			return Direction.valueOf(directionStr);
 		}
 		catch (Exception e) {
 			throw new IllegalArgumentException("Direction is not formatted properly in Event file on line " + lineNumber);

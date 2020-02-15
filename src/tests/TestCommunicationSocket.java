@@ -3,6 +3,7 @@ package tests;
 import java.util.Date;
 
 import common.*;
+import event.Event;
 
 import static org.junit.Assert.*;
 import org.junit.Before;

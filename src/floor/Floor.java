@@ -2,7 +2,7 @@ package floor;
 
 import java.util.ArrayList;
 import common.CommunicationSocket;
-import common.Event;
+import event.Event;
 
 public class Floor{
 	private int floorNumber;
