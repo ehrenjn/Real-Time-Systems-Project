@@ -16,7 +16,7 @@ public class ElevatorButtonLampEvent extends Event {
 	 * Creates a new ElevatorFloorLampEvent
 	 * @param lampState
 	 */
-	public ElevatorButtonLampEvent(LampState lampState, int floor, String recipientId, String senderId) {
+	public ElevatorButtonLampEvent(LampState lampState, int floor, int recipientId, int senderId) {
 		super(NAME, recipientId, senderId);
 		this.lampState = lampState;
 		this.floor = floor;

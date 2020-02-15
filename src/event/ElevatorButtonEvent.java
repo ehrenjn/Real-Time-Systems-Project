@@ -12,7 +12,7 @@ public class ElevatorButtonEvent extends Event {
 	 * Creates a new ElevatorButtonEvent
 	 * @param desiredFloor the floor a person would like to go to
 	 */
-	public ElevatorButtonEvent(int desiredFloor, String recipientId, String senderId) {
+	public ElevatorButtonEvent(int desiredFloor, int recipientId, int senderId) {
 		super(NAME, recipientId, senderId);
 		this.desiredFloor = desiredFloor;
 	}

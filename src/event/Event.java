@@ -2,10 +2,10 @@ package event;
 
 public class Event {
 	private String name;
-	private String recipientId;
-	private String senderId;
+	private int recipientId;
+	private int senderId;
 	
-	public Event(String name, String recipientId, String senderId) {
+	public Event(String name, int recipientId, int senderId) {
 		this.name = name;
 		this.recipientId = recipientId;
 		this.senderId = senderId;
@@ -15,11 +15,11 @@ public class Event {
 		return name;
 	}
 	
-	public String getRecipient() {
+	public int getRecipient() {
 		return recipientId;
 	}
 	
-	public String getSender() {
+	public int getSender() {
 		return senderId;
 	}
 }
