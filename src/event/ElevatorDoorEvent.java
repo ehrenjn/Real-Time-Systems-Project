@@ -14,8 +14,8 @@ public class ElevatorDoorEvent extends Event {
 	 * Creates a new ElevatorDoorEvent
 	 * @param direction whether to open or close the doors
 	 */
-	public ElevatorDoorEvent(DoorState direction) {
-		super(NAME);
+	public ElevatorDoorEvent(DoorState direction, String recipientId, String senderId) {
+		super(NAME, recipientId, senderId);
 		this.direction = direction;
 	}
 	

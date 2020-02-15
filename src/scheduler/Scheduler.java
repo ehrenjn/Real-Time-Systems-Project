@@ -6,6 +6,7 @@ import event.*;
 public class Scheduler {
 	private CommunicationSocket elevatorSocket;
 	private CommunicationSocket floorSocket;
+	private Queue destinations;
 	
 	/**
 	 * Constructs a new Scheduler
@@ -15,6 +16,7 @@ public class Scheduler {
 	public Scheduler(CommunicationSocket elevatorSocket, CommunicationSocket floorSocket) {
 		this.elevatorSocket = elevatorSocket;
 		this.floorSocket = floorSocket;
+		this.destinations = new Queue();
 	}
 	
 	

@@ -14,8 +14,8 @@ public class ElevatorTransitEvent extends Event {
 	 * Creates a new ElevatorTransitEvent
 	 * @param direction the direction for the elevator to go
 	 */
-	public ElevatorTransitEvent(Direction direction) {
-		super(NAME);
+	public ElevatorTransitEvent(Direction direction, String recipientId, String senderId) {
+		super(NAME, recipientId, senderId);
 		this.direction = direction;
 	}
 	

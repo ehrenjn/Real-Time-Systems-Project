@@ -16,8 +16,8 @@ public class ElevatorDirectionLampEvent extends Event {
 	 * @param lampState the state that the direction lamp should be in
 	 * @param lampDirection the direction of the lamp to turn on or off
 	 */
-	public ElevatorDirectionLampEvent(LampState lampState, Direction lampDirection) {
-		super(NAME);
+	public ElevatorDirectionLampEvent(LampState lampState, Direction lampDirection, String recipientId, String senderId) {
+		super(NAME, recipientId, senderId);
 		this.lampState = lampState;
 		this.lampDirection = lampDirection;
 	}
