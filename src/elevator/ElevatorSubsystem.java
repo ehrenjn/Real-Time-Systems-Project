@@ -13,10 +13,11 @@ public class ElevatorSubsystem implements Runnable {
 	/**
 	 * Constructor of the ElevatorSubsystem
 	 * @param elevatorSocket the socket for the elevator to receive and send events on
+	 * @param numberOfFloors the number of floors the elevator must service
 	 */	
 	
-	public ElevatorSubsystem(CommunicationSocket elevatorSocket) {
-		elevators = new Elevator[] {new Elevator(elevatorSocket)};
+	public ElevatorSubsystem(CommunicationSocket elevatorSocket, int numberOfFloors) {
+		elevators = new Elevator[] {new Elevator(elevatorSocket, numberOfFloors)};
 	}
 	
 	/**

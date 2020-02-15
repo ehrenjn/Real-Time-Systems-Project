@@ -16,18 +16,18 @@ public abstract class ElevatorState {
 	
 	
 	/**
-	 * Default constructor for the Elevator Open door state. This is considered the default state for an
+	 * Default constructor for an ElevatorState. This is considered the default state for an
 	 * Elevator state
 	 * 
-	 * @param numFloors number of floors the elevator must service
+	 * @param numberOfFloors number of floors the elevator must service
 	 */
-	public ElevatorState(int numFloors) {
+	public ElevatorState(int numberOfFloors) {
 		this.currentFloor = 0;
 		this.doorState = DoorState.OPEN;
 		this.direction = Direction.IDLE;
 		this.upLamp = LampState.OFF;
 		this.downLamp = LampState.OFF;
-		this.buttonLamps = new LampState[numFloors];
+		this.buttonLamps = new LampState[numberOfFloors];
 		for (LampState buttonLamp: buttonLamps) {
 			buttonLamp = LampState.OFF;
 		}
