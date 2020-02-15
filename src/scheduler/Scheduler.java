@@ -67,6 +67,12 @@ public class Scheduler {
 		case ElevatorTransitEvent.NAME:
 			handleElevatorTransitEvent((ElevatorTransitEvent) event);
 			break;
+		case FloorButtonEvent.NAME:
+			handleFloorButtonEvent((FloorButtonEvent) event);
+			break;
+		case FloorLampEvent.NAME:
+			handleFloorLampEvent((FloorLampEvent) event);
+			break;
 		}
 	}
 	
@@ -88,6 +94,14 @@ public class Scheduler {
 	}
 	
 	private void handleElevatorTransitEvent(ElevatorTransitEvent event) {
+		
+	}
+	
+	private void handleFloorButtonEvent(FloorButtonEvent event) {
+		
+	}
+	
+	private void handleFloorLampEvent(FloorLampEvent event) {
 		
 	}
 }

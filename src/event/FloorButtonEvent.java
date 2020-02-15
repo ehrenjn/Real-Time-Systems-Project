@@ -6,7 +6,7 @@ import common.*;
  * Represents a button pressed on a floor
  *
  */
-public class FloorButtonEvent {
+public class FloorButtonEvent extends Event {
 	private Direction direction;
 	private int floor;
 	public static final String NAME = "FloorButtonEvent";
@@ -17,6 +17,7 @@ public class FloorButtonEvent {
 	 * @param floor the floor the person is on
 	 */
 	public FloorButtonEvent(Direction direction, int floor) {
+		super(NAME);
 		this.direction = direction;
 		this.floor = floor;
 	}
