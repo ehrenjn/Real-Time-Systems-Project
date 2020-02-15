@@ -3,10 +3,10 @@ package scheduler;
 import java.util.LinkedList;
 
 import common.CommunicationSocket;
-import common.Direction;
 import common.DoorState;
 import common.LampState;
 import event.*;
+import common.*;
 
 public class Scheduler {
 	private CommunicationSocket elevatorSocket;
@@ -16,6 +16,7 @@ public class Scheduler {
 	
 	//elevator state variables
 	private LinkedList<Integer> destinationQueue;
+	private boolean elevatorIsIdle;
 	private Direction elevatorDirection;
 	private int elevatorCurrentFloor;
 	
@@ -28,6 +29,7 @@ public class Scheduler {
 		this.elevatorSocket = elevatorSocket;
 		this.floorSocket = floorSocket;
 		this.destinationQueue = new LinkedList<Integer>();
+		this.elevatorCurrentFloor = 0;
 	}
 	
 	
@@ -65,7 +67,7 @@ public class Scheduler {
 	
 	private void scheduleElevator(int floor) {
 		destinationQueue.add(floor);
-		if (elevatorDirection == Direction.IDLE) {
+		if (elevatorIsIdle) {
 			elevatorIsIdle = false;
 		}
 	}
@@ -103,11 +105,11 @@ public class Scheduler {
 	
 	
 	private void handleElevatorArrivalEvent(ElevatorArrivalEvent event) {
-		if (event.getFloor() == destinationQueue.getFirst()) {
+		/*if (event.getFloor() == destinationQueue.getFirst()) {
 			
 		} else {
-			elevatorSocket.sendEventIn(new ElevatorTransitEvent());
-		}
+			elevatorSocket.sendEventIn(event);
+		}*/
 	}
 	
 	private void handleElevatorButtonEvent(ElevatorButtonEvent event) {
@@ -119,7 +121,12 @@ public class Scheduler {
 	}
 	
 	private void handleElevatorDoorEvent(ElevatorDoorEvent event) {
-		
+		if (event.getDoorState() == DoorState.CLOSE) {
+			int destination = destinationQueue.getFirst();
+			Direction direction = 
+		} else if (event.getDoorState() == DoorState.OPEN) {
+			
+		}
 	}
 	
 	private void handleElevatorTransitEvent(ElevatorTransitEvent event) {
