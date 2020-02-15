@@ -1,6 +1,8 @@
 package elevator;
 
 import common.*;
+import event.toElevator.*;
+import event.toScheduler.*;
 import event.*;
 /**
  * Abstract class that implements the base state for the elevator. Implements getters and setters as well as 
@@ -50,7 +52,7 @@ public abstract class ElevatorState {
 	 * Default implementation for the handling of elevatorDirectionLampEvent
 	 * @param elevatorDirectionLampEvent the event modeling the on/off of a direction lamp
 	 */
-	public ElevatorState handleElevatorDirectionLampEvent(ElevatorDirectionLampEvent elevatorDirectionLampEvent) {
+	public ElevatorState handleElevatorDirectionLampEvent(ElevatorDirectionLampEvent changeLampStateEvent) {
 		switch(elevatorDirectionLampEvent.getLampDirection()) {
 			case UP:
 				this.upLamp = elevatorDirectionLampEvent.getLampState();
@@ -63,27 +65,28 @@ public abstract class ElevatorState {
 	}
 	
 	/**
-	 * Default implementation for the handling of elevatorButtonLampEvent
-	 * @param elevatorButtonLampEvent the event modeling the on/off of a button lamp
+	 * Default implementation for the handling of ElevatorCloseDoorEvent
+	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
 	 */
-	public ElevatorState handleElevatorButtonLampEvent(ElevatorButtonLampEvent elevatorButtonLampEvent) {
-		buttonLamps[elevatorButtonLampEvent.getFloor()] = elevatorButtonLampEvent.getLampState();
-		return this;
-	}
-		
-	/**
-	 * Default implementation for the handling of elevatorButtonEvent
-	 * @param elevatorButtonEvent the event modeling the press of a button
-	 */
-	public ElevatorState handleElevatorButtonEvent(ElevatorButtonEvent elevatorButtonEvent) {
+	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorCloseDoorEvent) {
 		return new ElevatorFailureState();
 	}
 	
+	
 	/**
-	 * Default implementation for the handling of elevatorDoorEvent
+	 * Default implementation for the handling of ElevatorOpenDoorEvent
 	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
 	 */
-	public ElevatorState handleElevatorDoorEvent(ElevatorDoorEvent elevatorDoorEvent) {
+	public ElevatorState handleElevatorCloseDoorEvent(ElevatorCloseDoorEvent elevatorCloseDoorEvent) {
+		return new ElevatorFailureState();
+	}
+	
+	
+	/**
+	 * Default implementation for the handling of elevatorTransitEvent
+	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
+	 */
+	public ElevatorState handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent elevatorKeepMovingEvent) {
 		return new ElevatorFailureState();
 	}
 	
@@ -91,15 +94,23 @@ public abstract class ElevatorState {
 	 * Default implementation for the handling of elevatorTransitEvent
 	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
 	 */
-	public ElevatorState handleElevatorTransitEvent(ElevatorTransitEvent elevatorTransitEvent) {
+	public ElevatorState handleElevatorStartMovingEvent(ElevatorStartMovingEvent elevatorStartMovingEvent) {
 		return new ElevatorFailureState();
 	}
 	
 	/**
-	 * Default implementation for the handling of elevatorArrivalEvent
-	 * @param elevatorArrivalEvent the event modeling the arrival sensor of an elevator
+	 * Default implementation for the handling of elevatorTransitEvent
+	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
 	 */
-	public ElevatorState handleElevatorArrivalEvent(ElevatorArrivalEvent elevatorArrivalEvent) {
+	public ElevatorState handleElevatorStopMovingEvent(ElevatorStopMovingEvent elevatorStopMovingEvent) {
+		return new ElevatorFailureState();
+	}
+	
+	/**
+	 * Default implementation for the handling of elevatorTransitEvent
+	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
+	 */
+	public ElevatorState handleElevatorPressButtonEvent(ElevatorStopMovingEvent elevatorStopMovingEvent) {
 		return new ElevatorFailureState();
 	}
 	
