@@ -1,13 +1,10 @@
 package elevator;
 
 import common.CommunicationSocket;
+
 import common.Direction;
-import event.ElevatorArrivalEvent;
-import event.ElevatorButtonEvent;
-import event.ElevatorButtonLampEvent;
-import event.ElevatorDirectionLampEvent;
-import event.ElevatorDoorEvent;
-import event.ElevatorTransitEvent;
+import event.toScheduler.*;
+import event.toElevator.*;
 import event.Event;
 
 public class Elevator {
