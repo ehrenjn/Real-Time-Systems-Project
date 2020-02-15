@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import common.Direction;
-import common.Event;
+import event.Event;
 import floor.*;
 
 import java.io.ByteArrayInputStream;

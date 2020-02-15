@@ -1,5 +1,7 @@
 package common;
 
+import event.Event;
+
 /**
  * A placeholder synchronized "box" class for event passing between threads. In the future it will be replaced with a
  * DatagramSocket class.

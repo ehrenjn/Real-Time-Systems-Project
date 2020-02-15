@@ -3,7 +3,7 @@ package elevator;
 import java.util.ArrayList;
 
 import common.CommunicationSocket;
-import common.Event;
+import event.Event;
 import floor.EventReader;
 
 public class ElevatorSubsystem implements Runnable {

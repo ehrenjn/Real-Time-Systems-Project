@@ -3,7 +3,7 @@ package floor;
 import java.util.ArrayList;
 
 import common.CommunicationSocket;
-import common.Event;
+import event.Event;
 import floor.Floor;
 
 public class FloorSubsystem implements Runnable{

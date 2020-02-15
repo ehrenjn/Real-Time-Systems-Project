@@ -1,7 +1,7 @@
 package scheduler;
 
 import common.CommunicationSocket;
-import common.Event;
+import event.Event;
 
 public class Scheduler {
 	private CommunicationSocket elevatorSocket;

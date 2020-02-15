@@ -2,7 +2,7 @@ package elevator;
 
 import common.CommunicationSocket;
 import common.Direction;
-import common.Event;
+import event.Event;
 
 public class Elevator {
 	private Direction direction;
