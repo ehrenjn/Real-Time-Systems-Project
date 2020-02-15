@@ -102,4 +102,8 @@ public abstract class ElevatorState {
 	public ElevatorState handleElevatorArrivalEvent(ElevatorArrivalEvent elevatorArrivalEvent) {
 		return new ElevatorFailureState();
 	}
+	
+	public int getCurrentFloor() {
+		return this.currentFloor;
+	}
 }
