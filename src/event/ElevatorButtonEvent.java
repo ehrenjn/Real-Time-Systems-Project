@@ -12,8 +12,8 @@ public class ElevatorButtonEvent extends Event {
 	 * Creates a new ElevatorButtonEvent
 	 * @param desiredFloor the floor a person would like to go to
 	 */
-	public ElevatorButtonEvent(int desiredFloor) {
-		super(NAME);
+	public ElevatorButtonEvent(int desiredFloor, String recipientId, String senderId) {
+		super(NAME, recipientId, senderId);
 		this.desiredFloor = desiredFloor;
 	}
 	
