@@ -1,6 +1,8 @@
 package elevator;
 
 import common.*;
+import event.toElevator.*;
+import event.toScheduler.*;
 import event.*;
 /**
  * Abstract class that implements the base state for the elevator. Implements getters and setters as well as 
@@ -71,35 +73,79 @@ public abstract class ElevatorState {
 	}
 	
 	/**
-	 * Default implementation for the handling of elevatorButtonLampEvent
-	 * @param elevatorButtonLampEvent the event modeling the on/off of a button lamp
+	 * Default implementation for the handling of ElevatorCloseDoorEvent
+	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
 	 */
-	public ElevatorState handleElevatorButtonLampEvent(ElevatorButtonLampEvent elevatorButtonLampEvent) {
-		buttonLamps[elevatorButtonLampEvent.getFloor()] = elevatorButtonLampEvent.getLampState();
-		return this;
+	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorCloseDoorEvent) {
+		return new ElevatorFailureState();
 	}
-		
+	
+	
 	/**
+<<<<<<< HEAD
 	 * Default implementation for the handling of elevatorDoorEvent
 	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
 	 */
 	public ElevatorState handleElevatorDoorEvent(ElevatorDoorEvent elevatorDoorEvent) {
 		return this;
+=======
+	 * Default implementation for the handling of ElevatorOpenDoorEvent
+	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
+	 */
+	public ElevatorState handleElevatorCloseDoorEvent(ElevatorCloseDoorEvent elevatorCloseDoorEvent) {
+		return new ElevatorFailureState();
+	}
+	
+	
+	/**
+	 * Default implementation for the handling of elevatorTransitEvent
+	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
+	 */
+	public ElevatorState handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent elevatorKeepMovingEvent) {
+		return new ElevatorFailureState();
+>>>>>>> 953f6dec8219a24ec1b0075f394e9c54e4618c2a
 	}
 	
 	/**
 	 * Default implementation for the handling of elevatorTransitEvent
 	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
 	 */
+<<<<<<< HEAD
 	public ElevatorState handleElevatorTransitEvent(ElevatorTransitEvent elevatorTransitEvent) {
 		return this;
+=======
+	public ElevatorState handleElevatorStartMovingEvent(ElevatorStartMovingEvent elevatorStartMovingEvent) {
+		return new ElevatorFailureState();
+>>>>>>> 953f6dec8219a24ec1b0075f394e9c54e4618c2a
 	}
 	
 	/**
-	 * Default implementation for the handling of elevatorArrivalEvent
-	 * @param elevatorArrivalEvent the event modeling the arrival sensor of an elevator
+	 * Default implementation for the handling of elevatorTransitEvent
+	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
 	 */
+<<<<<<< HEAD
 	public ElevatorState handleElevatorArrivalEvent(ElevatorArrivalEvent elevatorArrivalEvent) {
 		return this;
+=======
+	public ElevatorState handleElevatorStopMovingEvent(ElevatorStopMovingEvent elevatorStopMovingEvent) {
+		return new ElevatorFailureState();
+	}
+	
+	/**
+	 * Default implementation for the handling of elevatorTransitEvent
+	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
+	 */
+	public ElevatorState handleElevatorPressButtonEvent(ElevatorPressButtonEvent elevatorPressButtonEvent) {
+		this.buttonLamps[elevatorPressButtonEvent.getButton()] = elevatorPressButtonEvent.getLampState();
+		return this;
+	}
+	
+	public int getCurrentFloor() {
+		return this.currentFloor;
+>>>>>>> 953f6dec8219a24ec1b0075f394e9c54e4618c2a
+	}
+	
+	public void setCurrentFloor(int currentFloor) {
+		this.currentFloor = currentFloor;
 	}
 }

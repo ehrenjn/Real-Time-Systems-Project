@@ -2,12 +2,8 @@ package elevator;
 
 import common.CommunicationSocket;
 import common.Direction;
-import event.ElevatorArrivalEvent;
-import event.ElevatorButtonEvent;
-import event.ElevatorButtonLampEvent;
-import event.ElevatorDirectionLampEvent;
-import event.ElevatorDoorEvent;
-import event.ElevatorTransitEvent;
+import event.toScheduler.*;
+import event.toElevator.*;
 import event.Event;
 
 public class Elevator {
@@ -45,16 +41,46 @@ public class Elevator {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Elevator implementation for the handling of elevatorButtonEvent
 	 * @param elevatorButtonEvent the event modeling the press of a button
 	 */
 	public void handleElevatorButtonEvent(ElevatorButtonEvent elevatorButtonEvent) {
 		this.state = this.state.handleElevatorButtonEvent(elevatorButtonEvent);
 		return;
+=======
+	 * Handles an elevator event
+	 * @param event event to handle
+	 */
+	public void handleElevatorEvent(Event event){;
+		switch (event.getName()) {
+			case ElevatorCloseDoorEvent.NAME:
+				this.handleElevatorCloseDoorEvent((ElevatorCloseDoorEvent) event);
+				break;
+			case ElevatorPressButtonEvent.NAME:
+				this.handleElevatorPressButtonEvent((ElevatorPressButtonEvent) event);
+				break;
+			case ElevatorDirectionLampEvent.NAME:
+				this.handleElevatorDirectionLampEvent((ElevatorDirectionLampEvent) event);
+				break;
+			case ElevatorOpenDoorEvent.NAME:
+				this.handleElevatorOpenDoorEvent((ElevatorOpenDoorEvent) event);
+				break;
+			case ElevatorStartMovingEvent.NAME:
+				this.handleElevatorStartMovingEvent((ElevatorStartMovingEvent) event);
+				break;
+			case ElevatorStopMovingEvent.NAME:
+				this.handleElevatorStopMovingEvent((ElevatorStopMovingEvent) event);
+				break;
+			case ElevatorKeepMovingEvent.NAME:
+				this.handleElevatorKeepMovingEvent((ElevatorKeepMovingEvent) event);
+				break;
+		}
+>>>>>>> 953f6dec8219a24ec1b0075f394e9c54e4618c2a
 	}
 	
 	/**
-	 * Elevator implementation for the handling of elevatorDirectionLampEvent
+	 * Elevator implementation for the handling of ElevatorDirectionLampEvent
 	 * @param elevatorDirectionLampEvent the event modeling the on/off of a direction lamp
 	 */
 	public void handleElevatorDirectionLampEvent(ElevatorDirectionLampEvent elevatorDirectionLampEvent) {
@@ -62,35 +88,114 @@ public class Elevator {
 	}
 	
 	/**
-	 * Elevator implementation for the handling of elevatorButtonLampEvent
-	 * @param elevatorButtonLampEvent the event modeling the on/off of a button lamp
+	 * Elevator implementation for the handling of ElevatorPressButtonEvent
+	 * @param elevatorPressButtonEvent the event modeling the press of a button
 	 */
+<<<<<<< HEAD
 	public void handleElevatorButtonLampEvent(ElevatorButtonLampEvent elevatorButtonLampEvent) {
 		this.state = this.state.handleElevatorButtonLampEvent(elevatorButtonLampEvent);
-	}
-		
+=======
+	public void handleElevatorPressButtonEvent(ElevatorPressButtonEvent elevatorPressButtonEvent) {
+		this.state = this.state.handleElevatorPressButtonEvent(elevatorPressButtonEvent);
+		int recipient = elevatorPressButtonEvent.getRecipient();
+		int sender = elevatorPressButtonEvent.getSender();
+		int button = elevatorPressButtonEvent.getButton();
+		ElevatorPressedButtonEvent event = new ElevatorPressedButtonEvent(sender, recipient, button);
+		this.sendEventOut(event);
+	}	
+
 	/**
-	 * Elevator implementation for the handling of elevatorDoorEvent
-	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
+	 * Elevator implementation for the handling of ElevatorCloseDoorEvent
+	 * @param elevatorCloseDoorEvent the event modeling the closing of a door
 	 */
+	public void handleElevatorCloseDoorEvent(ElevatorCloseDoorEvent elevatorCloseDoorEvent) {
+		this.state = this.state.handleElevatorCloseDoorEvent(elevatorCloseDoorEvent);
+		//Sleep to simulate door closing
+		this.state = this.state.handleElevatorCloseDoorEvent(elevatorCloseDoorEvent);
+		int recipient = elevatorCloseDoorEvent.getRecipient();
+		int sender = elevatorCloseDoorEvent.getSender();
+		ElevatorClosedDoorEvent event = new ElevatorClosedDoorEvent(sender, recipient);
+		this.sendEventOut(event);
+>>>>>>> 953f6dec8219a24ec1b0075f394e9c54e4618c2a
+	}
+	
+	/**
+	 * Elevator implementation for the handling of elevatorOpenDoorEvent
+	 * @param elevatorCloseDoorEvent the event modeling the opening of a door
+	 */
+	public void handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorOpenDoorEvent) {
+		this.state = this.state.handleElevatorOpenDoorEvent(elevatorOpenDoorEvent);
+		//Sleep to simulate door opening
+		this.state = this.state.handleElevatorOpenDoorEvent(elevatorOpenDoorEvent);
+		
+		int recipient = elevatorOpenDoorEvent.getRecipient();
+		int sender = elevatorOpenDoorEvent.getSender();
+		
+		ElevatorOpenedDoorEvent event = new ElevatorOpenedDoorEvent(sender, recipient);
+		this.sendEventOut(event);
+	}
+	
+	/**
+	 * Elevator implementation for the handling of ElevatorStartMovingEvent
+	 * @param elevatorStartMovingEvent the event modeling the start moving
+	 */
+<<<<<<< HEAD
 	public void handleElevatorDoorEvent(ElevatorDoorEvent elevatorDoorEvent) {
 		this.state = this.state.handleElevatorDoorEvent(elevatorDoorEvent);
+=======
+	public void handleElevatorStartMovingEvent(ElevatorStartMovingEvent elevatorStartMovingEvent) {
+		this.state = this.state.handleElevatorStartMovingEvent(elevatorStartMovingEvent);
+		int recipient = elevatorStartMovingEvent.getRecipient();
+		int sender = elevatorStartMovingEvent.getSender();
+		
+		int arrivingFloor = this.state.getCurrentFloor() + getFloorIncrement(elevatorStartMovingEvent.getDirection());
+		this.state.setCurrentFloor(arrivingFloor);
+		
+		ElevatorArrivalSensorEvent event = new ElevatorArrivalSensorEvent(sender, recipient, arrivingFloor);
+		this.sendEventOut(event);
+>>>>>>> 953f6dec8219a24ec1b0075f394e9c54e4618c2a
 	}
 	
 	/**
-	 * Elevator implementation for the handling of elevatorTransitEvent
-	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
+	 * Elevator implementation for the handling of ElevatorKeepMovingEvent
+	 * @param elevatorArrivalEvent the event modeling the keep moving
 	 */
-	public void handleElevatorTransitEvent(ElevatorTransitEvent elevatorTransitEvent) {
-		this.state = this.state.handleElevatorTransitEvent(elevatorTransitEvent);
+	public void handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent elevatorKeepMovingEvent) {
+		this.state = this.state.handleElevatorKeepMovingEvent(elevatorKeepMovingEvent);
+		int recipient = elevatorKeepMovingEvent.getRecipient();
+		int sender = elevatorKeepMovingEvent.getSender();
+		
+		int arrivingFloor = this.state.getCurrentFloor() + getFloorIncrement(elevatorKeepMovingEvent.getDirection());
+		this.state.setCurrentFloor(arrivingFloor);
+		
+		ElevatorArrivalSensorEvent event = new ElevatorArrivalSensorEvent(sender, recipient, arrivingFloor);
+		this.sendEventOut(event);
 	}
 	
 	/**
-	 * Elevator implementation for the handling of elevatorArrivalEvent
-	 * @param elevatorArrivalEvent the event modeling the arrival sensor of an elevator
+	 * Elevator implementation for the handling of ElevatorStopMovingEvent
+	 * @param elevatorStopMovingEvent the event modeling the stop moving
 	 */
-	public void handleElevatorArrivalEvent(ElevatorArrivalEvent elevatorArrivalEvent) {
-		this.state = this.state.handleElevatorArrivalEvent(elevatorArrivalEvent);
+	public void handleElevatorStopMovingEvent(ElevatorStopMovingEvent elevatorStopMovingEvent) {
+		this.state = this.state.handleElevatorStopMovingEvent(elevatorStopMovingEvent);
+		int recipient = elevatorStopMovingEvent.getRecipient();
+		int sender = elevatorStopMovingEvent.getSender();
+		
+		ElevatorStoppedEvent event = new ElevatorStoppedEvent(sender, recipient);
+		this.sendEventOut(event);
 	}
 	
+	/**
+	 * @return the floor increment given a direction
+	 */
+	public static int getFloorIncrement(Direction direction) {
+		switch(direction) {
+			case UP:
+				return 1;
+			case DOWN:
+				return -1;
+			default:
+				return 0;
+		}
+	}
 }

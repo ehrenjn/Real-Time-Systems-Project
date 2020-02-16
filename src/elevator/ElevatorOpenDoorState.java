@@ -2,6 +2,7 @@ package elevator;
 
 import common.*;
 import event.*;
+import event.toElevator.*;
 
 /**
  * Class that implements the open door state for the elevator.
@@ -31,9 +32,20 @@ public class ElevatorOpenDoorState extends ElevatorState{
 
 	/**
 	 * Close door implementation for the handling of elevatorDoorEvent
-	 * @param elevatorDoorEvent the event modeling the closing of a door
+	 * @param elevatorCloseDoorEvent the event modeling the closing of a door
 	 */
-	public ElevatorState handleElevatorDoorEvent(ElevatorDoorEvent elevatorDoorEvent) {
+	public ElevatorState handleElevatorCloseDoorEvent(ElevatorCloseDoorEvent elevatorCloseDoorEvent) {
 		return new ElevatorClosingDoorState(this);
 	}
+<<<<<<< HEAD
+=======
+	
+	/**
+	 * Default implementation for the handling of elevatorButtonEvent
+	 * @param elevatorPressButtonEvent the event modeling the press of a button
+	 */
+	public ElevatorState handleElevatorButtonEvent(ElevatorPressButtonEvent elevatorPressButtonEvent) {
+		return this;
+	}
+>>>>>>> 953f6dec8219a24ec1b0075f394e9c54e4618c2a
 }
