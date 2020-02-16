@@ -29,6 +29,7 @@ public class ElevatorSubsystem implements Runnable {
 				Event event = elevator.recieveEventIn();
 				System.out.println("Elevator recieved elevator event in: " + event);
 				elevator.handleElevatorEvent(event);
+				System.out.println("Elevator State:" + elevator + "\n");
 			}
 		}
 	}
