@@ -36,6 +36,10 @@ public class Elevator {
 	 * @param event event to send
 	 */
 	public void sendEventOut(Event event){
+		System.out.println("Elevator sending: " + event);
+		if (event instanceof ElevatorArrivalSensorEvent) {
+			System.out.println("\tArrival sensor floor: " + ((ElevatorArrivalSensorEvent)event).getArrivingFloor());
+		}
 		this.elevatorSocket.sendEventOut(event);
 	}
 	

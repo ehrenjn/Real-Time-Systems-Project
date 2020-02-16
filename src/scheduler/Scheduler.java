@@ -56,6 +56,7 @@ public class Scheduler {
 	 * sends the elevator event to the client
 	 */
 	public void sendElevatorEventIn(Event event) {
+		System.out.println("Scheduler sending: " + event);
 		this.elevatorSocket.sendEventIn(event);
 	}
 	
@@ -121,12 +122,14 @@ public class Scheduler {
 	
 	
 	public void handleElevatorStoppedEvent(ElevatorStoppedEvent event) {
-		destinationQueue.pop();
 		sendElevatorEventIn(new ElevatorOpenDoorEvent(event.getSender(), SCHEDULER_ID));
 	}
 	
 	
 	public void handleElevatorOpenedDoorEvent(ElevatorOpenedDoorEvent event) {
-		sendElevatorEventIn(new ElevatorCloseDoorEvent(ELEVATOR_ID, SCHEDULER_ID));
+		destinationQueue.pop();
+		if (! destinationQueue.isEmpty()) { //keep visiting more floors if need be
+			sendElevatorEventIn(new ElevatorCloseDoorEvent(ELEVATOR_ID, SCHEDULER_ID));
+		}
 	}
 }

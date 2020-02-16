@@ -24,12 +24,12 @@ public class SchedulerSubsystem implements Runnable{
 	public void run() {
 		while(true) {
 			Event floorEvent = scheduler.recieveFloorEventOut();
-			System.out.println("Scheduler recieved floor event in: " + floorEvent);
+			System.out.println("Scheduler recieved FLOOR event: " + floorEvent);
 			scheduler.handleFloorPressButtonEvent( (FloorPressButtonEvent) floorEvent);
 			
 			while(!scheduler.emptyQueue()) {
 				Event elevatorEvent = scheduler.recieveElevatorEventOut();
-				System.out.println("Scheduler recieved elevator event in: " + elevatorEvent);
+				System.out.println("Scheduler recieved: " + elevatorEvent);
 				scheduler.handleEvent(elevatorEvent);
 			}
 		}
