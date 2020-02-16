@@ -102,6 +102,8 @@ public class Scheduler {
 	public void handleElevatorClosedDoorEvent(ElevatorClosedDoorEvent event) {
 		int floorDelta = destinationQueue.getFirst() - elevatorCurrentFloor;
 		elevatorDirection = floorDelta < 0 ? Direction.DOWN : Direction.UP;
+		sendElevatorEventIn(new ElevatorDirectionLampEvent(
+				event.getSender(), SCHEDULER_ID, elevatorDirection, LampState.ON));
 		sendElevatorEventIn(new ElevatorStartMovingEvent(elevatorDirection, event.getSender(), SCHEDULER_ID));
 	}
 	
@@ -122,6 +124,8 @@ public class Scheduler {
 	
 	
 	public void handleElevatorStoppedEvent(ElevatorStoppedEvent event) {
+		sendElevatorEventIn(new ElevatorDirectionLampEvent(
+				event.getSender(), SCHEDULER_ID, elevatorDirection, LampState.OFF));
 		sendElevatorEventIn(new ElevatorOpenDoorEvent(event.getSender(), SCHEDULER_ID));
 	}
 	

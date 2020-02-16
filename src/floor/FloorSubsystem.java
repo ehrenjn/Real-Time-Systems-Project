@@ -21,8 +21,8 @@ public class FloorSubsystem implements Runnable{
 		this.floors = new Floor[numFloors];
 		
 		for (int i = 0; i < numFloors; i++){
-				this.floors[i] = new Floor(floorSocket, i );
-			}
+			this.floors[i] = new Floor(floorSocket, i );
+		}
 	}
 	
 	/**
