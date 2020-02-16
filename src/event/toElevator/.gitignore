@@ -4,3 +4,10 @@
 /OpenDoorsEvent.class
 /StartMovingEvent.class
 /StopMovingEvent.class
+/ElevatorCloseDoorEvent.class
+/ElevatorDirectionLampEvent.class
+/ElevatorKeepMovingEvent.class
+/ElevatorOpenDoorEvent.class
+/ElevatorPressButtonEvent.class
+/ElevatorStartMovingEvent.class
+/ElevatorStopMovingEvent.class

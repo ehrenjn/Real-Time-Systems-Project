@@ -6,14 +6,11 @@ import common.CommunicationSocket;
 import common.Direction;
 import common.DoorState;
 import common.LampState;
-<<<<<<< HEAD
 import event.*;
-=======
 import event.toElevator.*;
 import event.toScheduler.*;
 import event.Event;
 import common.*;
->>>>>>> 953f6dec8219a24ec1b0075f394e9c54e4618c2a
 
 public class Scheduler {
 	private CommunicationSocket elevatorSocket;
@@ -107,7 +104,6 @@ public class Scheduler {
 	}
 	
 	
-<<<<<<< HEAD
 	private void handleElevatorArrivalEvent(ElevatorArrivalEvent event) {
 		if (event.getFloor() == destinationQueue.getFirst()) {
 			
@@ -126,7 +122,7 @@ public class Scheduler {
 	
 	private void handleElevatorDoorEvent(ElevatorDoorEvent event) {
 		
-=======
+
 	private void handleElevatorArrivalSensorEvent(ElevatorArrivalSensorEvent event) {
 		if (event.getArrivingFloor() == destinationQueue.getFirst()) {
 			//SEND STOP REQUEST EVENT
@@ -138,7 +134,6 @@ public class Scheduler {
 	
 	private void handleElevatorPressedButtonEvent(ElevatorPressedButtonEvent event) {
 		scheduleElevator(event.getDesiredFloor());
->>>>>>> 953f6dec8219a24ec1b0075f394e9c54e4618c2a
 	}
 	
 	private void handleElevatorClosedDoorEvent(ElevatorClosedDoorEvent event) {
