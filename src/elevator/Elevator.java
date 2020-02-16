@@ -2,6 +2,7 @@ package elevator;
 
 import common.CommunicationSocket;
 import common.Direction;
+import common.LampState;
 import event.toScheduler.*;
 import event.toElevator.*;
 import event.Event;
@@ -90,6 +91,7 @@ public class Elevator {
 		int recipient = elevatorPressButtonEvent.getRecipient();
 		int sender = elevatorPressButtonEvent.getSender();
 		int button = elevatorPressButtonEvent.getButton();
+		this.state.setButtonLamp(button, LampState.ON);
 		ElevatorPressedButtonEvent event = new ElevatorPressedButtonEvent(button, sender, recipient);
 		this.sendEventOut(event);
 	}	
@@ -178,6 +180,7 @@ public class Elevator {
 		this.state = this.state.handleElevatorStopMovingEvent(elevatorStopMovingEvent);
 		int recipient = elevatorStopMovingEvent.getRecipient();
 		int sender = elevatorStopMovingEvent.getSender();
+		this.state.setButtonLamp(this.state.currentFloor, LampState.OFF);
 		
 		ElevatorStoppedEvent event = new ElevatorStoppedEvent(sender, recipient);
 		this.sendEventOut(event);

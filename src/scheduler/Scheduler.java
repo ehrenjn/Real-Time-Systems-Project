@@ -39,6 +39,7 @@ public class Scheduler {
 	 * sends the floor event to the client
 	 */
 	public void sendFloorEventIn(Event event) {
+		System.out.println("Scheduler sending FLOOR event: " + event);
 		this.floorSocket.sendEventIn(event);
 	}
 	
@@ -66,6 +67,11 @@ public class Scheduler {
 	 */
 	public Event recieveElevatorEventOut() {
 		return this.elevatorSocket.recieveEventOut();
+	}
+	
+	
+	private Direction floorsToDirection(int initialFloor, int destinationFloor) {
+		return destinationFloor < initialFloor ? Direction.DOWN : Direction.UP;
 	}
 	
 	
@@ -100,8 +106,9 @@ public class Scheduler {
 	}
 	
 	public void handleElevatorClosedDoorEvent(ElevatorClosedDoorEvent event) {
-		int floorDelta = destinationQueue.getFirst() - elevatorCurrentFloor;
-		elevatorDirection = floorDelta < 0 ? Direction.DOWN : Direction.UP;
+		elevatorDirection = floorsToDirection(elevatorCurrentFloor, destinationQueue.getFirst());
+		sendElevatorEventIn(new ElevatorDirectionLampEvent(
+				event.getSender(), SCHEDULER_ID, elevatorDirection, LampState.ON));
 		sendElevatorEventIn(new ElevatorStartMovingEvent(elevatorDirection, event.getSender(), SCHEDULER_ID));
 	}
 	
@@ -122,13 +129,18 @@ public class Scheduler {
 	
 	
 	public void handleElevatorStoppedEvent(ElevatorStoppedEvent event) {
+		sendElevatorEventIn(new ElevatorDirectionLampEvent(
+				event.getSender(), SCHEDULER_ID, elevatorDirection, LampState.OFF));
 		sendElevatorEventIn(new ElevatorOpenDoorEvent(event.getSender(), SCHEDULER_ID));
 	}
 	
 	
 	public void handleElevatorOpenedDoorEvent(ElevatorOpenedDoorEvent event) {
 		destinationQueue.pop();
-		if (! destinationQueue.isEmpty()) { //keep visiting more floors if need be
+		if (! destinationQueue.isEmpty()) { //there was someone waiting for this elevator to go to another floor
+			Direction floorDirectionLamp = floorsToDirection(elevatorCurrentFloor, destinationQueue.getFirst());
+			sendFloorEventIn(new FloorLampEvent(LampState.OFF, floorDirectionLamp, 
+					elevatorCurrentFloor, SCHEDULER_ID));
 			sendElevatorEventIn(new ElevatorCloseDoorEvent(ELEVATOR_ID, SCHEDULER_ID));
 		}
 	}

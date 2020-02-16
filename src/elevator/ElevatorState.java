@@ -132,4 +132,8 @@ public abstract class ElevatorState {
 	public void setCurrentFloor(int currentFloor) {
 		this.currentFloor = currentFloor;
 	}
+	
+	public void setButtonLamp(int button, LampState state) {
+		buttonLamps[button] = state;
+	}
 }
