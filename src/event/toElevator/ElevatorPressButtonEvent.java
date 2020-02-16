@@ -4,6 +4,7 @@ import common.*;
 import event.*;
 
 public class ElevatorPressButtonEvent extends Event{
+	public static final String NAME = "ElevatorPressButtonEvent";
 	private LampState lampState;
 	private int button;
 	public ElevatorPressButtonEvent(String name, int recipientId, int senderId, LampState lampState, int button) {

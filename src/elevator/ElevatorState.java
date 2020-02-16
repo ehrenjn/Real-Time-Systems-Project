@@ -52,7 +52,7 @@ public abstract class ElevatorState {
 	 * Default implementation for the handling of elevatorDirectionLampEvent
 	 * @param elevatorDirectionLampEvent the event modeling the on/off of a direction lamp
 	 */
-	public ElevatorState handleElevatorDirectionLampEvent(ElevatorDirectionLampEvent changeLampStateEvent) {
+	public ElevatorState handleElevatorDirectionLampEvent(ElevatorDirectionLampEvent elevatorDirectionLampEvent) {
 		switch(elevatorDirectionLampEvent.getLampDirection()) {
 			case UP:
 				this.upLamp = elevatorDirectionLampEvent.getLampState();
@@ -110,7 +110,7 @@ public abstract class ElevatorState {
 	 * Default implementation for the handling of elevatorTransitEvent
 	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
 	 */
-	public ElevatorState handleElevatorPressButtonEvent(ElevatorStopMovingEvent elevatorStopMovingEvent) {
+	public ElevatorState handleElevatorPressButtonEvent(ElevatorPressButtonEvent elevatorPressButtonEvent) {
 		return new ElevatorFailureState();
 	}
 	

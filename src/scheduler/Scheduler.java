@@ -87,8 +87,8 @@ public class Scheduler {
 		case ElevatorArrivalSensorEvent.NAME:
 			handleElevatorArrivalSensorEvent((ElevatorArrivalSensorEvent) event);
 			break;
-		case ElevatorButtonPressedEvent.NAME:
-			handleElevatorButtonPressedEvent((ElevatorButtonPressedEvent) event);
+		case ElevatorPressedButtonEvent.NAME:
+			handleElevatorButtonPressedEvent((ElevatorPressedButtonEvent) event);
 			break;
 		case ElevatorClosedDoorEvent.NAME:
 			handleElevatorClosedDoorEvent((ElevatorClosedDoorEvent) event);
@@ -113,7 +113,7 @@ public class Scheduler {
 		elevatorCurrentFloor = event.getFloor();
 	}
 	
-	private void handleElevatorButtonPressedEvent(ElevatorButtonPressedEvent event) {
+	private void handleElevatorButtonPressedEvent(ElevatorPressedButtonEvent event) {
 		scheduleElevator(event.getFloor());
 	}
 	
