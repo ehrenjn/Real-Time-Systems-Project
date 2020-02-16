@@ -3,3 +3,4 @@
 /ElevatorOpenedDoorEvent.class
 /ElevatorPressedButtonEvent.class
 /ElevatorStoppedEvent.class
+/FloorPressButtonEvent.class
