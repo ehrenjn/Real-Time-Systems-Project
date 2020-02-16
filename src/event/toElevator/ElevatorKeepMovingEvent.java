@@ -8,7 +8,7 @@ import event.*;
  */
 public class ElevatorKeepMovingEvent extends Event {
 	public static final String NAME = "ElevatorKeepMovingEvent";
-	public ElevatorKeepMovingEvent(String name, int recipientId, int senderId) {
-		super(name, recipientId, senderId);
+	public ElevatorKeepMovingEvent(int recipientId, int senderId) {
+		super(NAME, recipientId, senderId);
 	}
 }
