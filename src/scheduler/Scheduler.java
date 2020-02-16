@@ -7,6 +7,7 @@ import common.DoorState;
 import common.LampState;
 import event.toElevator.*;
 import event.toScheduler.*;
+import event.Event;
 import common.*;
 
 public class Scheduler {
@@ -77,8 +78,7 @@ public class Scheduler {
 	}
 	
 	private void closeElevatorDoors() {
-		ElevatorDoorEvent request = new ElevatorDoorEvent(DoorState.CLOSE, ELEVATOR_ID, SCHEDULER_ID);
-		this.elevatorSocket.sendEventIn(request);
+		//TODO: SEND ELEVATOR DOOR CLOSE REQUEST TO ELEVATOR
 	}
 	
 	
@@ -88,7 +88,7 @@ public class Scheduler {
 			handleElevatorArrivalSensorEvent((ElevatorArrivalSensorEvent) event);
 			break;
 		case ElevatorPressedButtonEvent.NAME:
-			handleElevatorButtonPressedEvent((ElevatorPressedButtonEvent) event);
+			handleElevatorPressedButtonEvent((ElevatorPressedButtonEvent) event);
 			break;
 		case ElevatorClosedDoorEvent.NAME:
 			handleElevatorClosedDoorEvent((ElevatorClosedDoorEvent) event);
@@ -98,23 +98,23 @@ public class Scheduler {
 			break;
 		case ElevatorStoppedEvent.NAME:
 			handleElevatorStoppedEvent((ElevatorStoppedEvent) event);
-		case ElevatorHeldDoorOpenEvent.NAME:
-			handleElevatorHeldDoorOpenEvent((ElevatorHeldDoorOpenEvent) event);
+		case ElevatorOpenedDoorEvent.NAME:
+			handleElevatorOpenedDoorEvent((ElevatorOpenedDoorEvent) event);
 		}
 	}
 	
 	
 	private void handleElevatorArrivalSensorEvent(ElevatorArrivalSensorEvent event) {
-		if (event.getFloor() == destinationQueue.getFirst()) {
+		if (event.getArrivingFloor() == destinationQueue.getFirst()) {
 			//SEND STOP REQUEST EVENT
 		} else {
 			//SEND ACKNOWLEDGEMENT
 		}
-		elevatorCurrentFloor = event.getFloor();
+		elevatorCurrentFloor = event.getArrivingFloor();
 	}
 	
-	private void handleElevatorButtonPressedEvent(ElevatorPressedButtonEvent event) {
-		scheduleElevator(event.getFloor());
+	private void handleElevatorPressedButtonEvent(ElevatorPressedButtonEvent event) {
+		scheduleElevator(event.getDesiredFloor());
 	}
 	
 	private void handleElevatorClosedDoorEvent(ElevatorClosedDoorEvent event) {
@@ -138,7 +138,7 @@ public class Scheduler {
 		destinationQueue.pop();
 	}
 	
-	private void handleElevatorHeldDoorOpenEvent(ElevatorHeldDoorOpenEvent event) {
+	private void handleElevatorOpenedDoorEvent(ElevatorOpenedDoorEvent event) {
 		if (destinationQueue.isEmpty()) {
 			elevatorIsIdle = true;
 		} else {
