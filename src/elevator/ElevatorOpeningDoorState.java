@@ -2,6 +2,7 @@ package elevator;
 
 import common.*;
 import event.*;
+import event.toElevator.*;
 
 /**
  * Class that implements the opening door state of the elevator. This is considered the default state of the model.
@@ -21,9 +22,9 @@ public class ElevatorOpeningDoorState extends ElevatorState{
 
 	/**
 	 * Close door implementation for the handling of elevatorDoorEvent
-	 * @param elevatorDoorEvent the event modeling the closing of a door
+	 * @param elevatorOpenDoorEvent the event modeling the closing of a door
 	 */
-	public ElevatorState handleElevatorDoorEvent(ElevatorDoorEvent elevatorDoorEvent) {
+	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorOpenDoorEvent) {
 		return new ElevatorOpenDoorState(this);
 	} 
 }

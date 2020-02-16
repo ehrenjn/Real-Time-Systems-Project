@@ -2,6 +2,7 @@ package elevator;
 
 import common.*;
 import event.*;
+import event.toElevator.*;
 
 /**
  * Class that implements the moving state of the elevator.
@@ -17,25 +18,20 @@ public class ElevatorMovingState extends ElevatorState{
 		super(state);
 		this.direction = direction;
 	}
+	
 	/**
-	 * Default implementation for the handling of elevatorArrivalEvent
-	 * @param elevatorArrivalEvent the event modeling the arrival sensor of an elevator
+	 * Stop movement implementation for the handling of ElevatorStopMovingEvent
+	 * @param elevatorTransitEvent the event modeling the continuous moving of an elevator
 	 */
-	public ElevatorState handleElevatorArrivalEvent(ElevatorArrivalEvent elevatorArrivalEvent) {
-		this.currentFloor = elevatorArrivalEvent.getFloor();
+	public ElevatorState handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent ElevatorStopMovingEvent) {
 		return this;
 	}
 	
 	/**
-	 * Stop movement implementation for the handling of elevatorTransitEvent
+	 * Stop movement implementation for the handling of ElevatorStopMovingEvent
 	 * @param elevatorTransitEvent the event modeling the stopping of an elevator
 	 */
-	public ElevatorState handleElevatorTransitEvent(ElevatorTransitEvent elevatorTransitEvent) {
-		switch(elevatorTransitEvent.getDirection()) {
-			case IDLE:
-				return new ElevatorCloseDoorState(this);
-			default:
-				return this;
-		}	
+	public ElevatorState handleElevatorStopMovingEvent(ElevatorStopMovingEvent ElevatorStopMovingEvent) {
+		return new ElevatorCloseDoorState(this);
 	}
 }

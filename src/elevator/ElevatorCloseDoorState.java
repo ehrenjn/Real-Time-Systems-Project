@@ -2,6 +2,7 @@ package elevator;
 
 import common.*;
 import event.*;
+import event.toElevator.*;
 
 /**
  * Class that implements the close door state of the elevator.
@@ -21,9 +22,9 @@ public class ElevatorCloseDoorState extends ElevatorState{
 
 	/**
 	 * Open door implementation for the handling of elevatorDoorEvent
-	 * @param elevatorDoorEvent the event modeling the opening of a door
+	 * @param elevatorOpenDoorEvent the event modeling the opening of a door
 	 */
-	public ElevatorState handleElevatorDoorEvent(ElevatorDoorEvent elevatorDoorEvent) {
+	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorOpenDoorEvent) {
 		return new ElevatorOpeningDoorState(this);
 	}
 	
@@ -31,12 +32,7 @@ public class ElevatorCloseDoorState extends ElevatorState{
 	 * Start movement implementation for the handling of elevatorTransitEvent
 	 * @param elevatorTransitEvent the event modeling the starting of an elevator
 	 */
-	public ElevatorState handleElevatorTransitEvent(ElevatorTransitEvent elevatorTransitEvent) {
-		switch(elevatorTransitEvent.getDirection()) {
-		case IDLE:
-			return this;
-		default:
-			return new ElevatorMovingState(this, elevatorTransitEvent.getDirection());
-		}
+	public ElevatorState handleElevatorStartMovingEvent(ElevatorStartMovingEvent elevatorStartMovingEvent) {
+		return new ElevatorMovingState(this, elevatorStartMovingEvent.getDirection());
 	}
 }

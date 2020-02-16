@@ -4,13 +4,20 @@ import event.*;
 import common.*;
 
 public class ElevatorDirectionLampEvent extends Event{
-	private Direction direction;
-	public ElevatorDirectionLampEvent(String name, int recipientId, int senderId, Direction direction) {
+	public static final String NAME = "ElevatorDirectionLampEvent";
+	private Direction lampDirection;
+	private LampState lampState;
+	public ElevatorDirectionLampEvent(String name, int recipientId, int senderId, Direction lampDirection, LampState lampState) {
 		super(name, recipientId, senderId);
-		this.direction = direction;
+		this.lampDirection = lampDirection;
+		this.lampState = lampState;
 	}
 	
-	public Direction getDirection() {
-		return direction;
+	public Direction getLampDirection() {
+		return lampDirection;
+	}
+	
+	public LampState getLampState() {
+		return lampState;
 	}
 }
