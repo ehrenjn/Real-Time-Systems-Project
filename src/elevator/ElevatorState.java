@@ -39,8 +39,8 @@ public abstract class ElevatorState {
 		this.upLamp = LampState.OFF;
 		this.downLamp = LampState.OFF;
 		this.buttonLamps = new LampState[numberOfFloors];
-		for (LampState buttonLamp: buttonLamps) {
-			buttonLamp = LampState.OFF;
+		for (int i = 0; i < numberOfFloors; i++) {
+			buttonLamps[i] = LampState.OFF;
 		}
 	}
 	
