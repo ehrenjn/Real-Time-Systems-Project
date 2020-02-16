@@ -5,7 +5,7 @@ import event.*;
 /**
  * Represents a response to the elevator holding its door open for enough time for people to get on and off
  */
-public class ElevatorHeldDoorOpenEvent extends Event{
+public class ElevatorOpenedDoorEvent extends Event {
 	public static final String NAME = "ElevatorHeldDoorOpenEvent";
 
 	/**
@@ -13,7 +13,7 @@ public class ElevatorHeldDoorOpenEvent extends Event{
 	 * @param recipientId the id of the recipient of this event
 	 * @param senderId the id of the sender of this event
 	 */
-	public ElevatorHeldDoorOpenEvent(int recipientId, int senderId) {
+	public ElevatorOpenedDoorEvent(int recipientId, int senderId) {
 		super(NAME, recipientId, senderId);
 	}
 
