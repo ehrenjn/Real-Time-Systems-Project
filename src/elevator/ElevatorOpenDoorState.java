@@ -35,6 +35,7 @@ public class ElevatorOpenDoorState extends ElevatorState{
 	/**
 	 * Close door implementation for the handling of elevatorDoorEvent
 	 * @param elevatorCloseDoorEvent the event modeling the closing of a door
+	 * @return new elevator state
 	 */
 	public ElevatorState handleElevatorCloseDoorEvent(ElevatorCloseDoorEvent elevatorCloseDoorEvent) {
 		return new ElevatorClosingDoorState(this);
@@ -43,6 +44,7 @@ public class ElevatorOpenDoorState extends ElevatorState{
 	/**
 	 * Default implementation for the handling of elevatorButtonEvent
 	 * @param elevatorPressButtonEvent the event modeling the press of a button
+	 * @return button that was pressed
 	 */
 	public ElevatorState handleElevatorButtonEvent(ElevatorPressButtonEvent elevatorPressButtonEvent) {
 		return this;

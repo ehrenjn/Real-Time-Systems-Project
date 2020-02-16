@@ -26,6 +26,7 @@ public class ElevatorClosingDoorState extends ElevatorState{
 	/**
 	 * Close door implementation for the handling of elevatorDoorEvent
 	 * @param elevatorCloseDoorEvent the event modeling the closing of a door
+	 * @return new state of the elevator doors
 	 */
 	public ElevatorState handleElevatorCloseDoorEvent(ElevatorCloseDoorEvent elevatorCloseDoorEvent) {
 		return new ElevatorCloseDoorState(this);

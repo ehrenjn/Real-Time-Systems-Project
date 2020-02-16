@@ -25,14 +25,16 @@ public class ElevatorCloseDoorState extends ElevatorState{
 	/**
 	 * Open door implementation for the handling of elevatorDoorEvent
 	 * @param elevatorOpenDoorEvent the event modeling the opening of a door
+	 * @return new state of the elevator Doors
 	 */
 	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorOpenDoorEvent) {
 		return new ElevatorOpeningDoorState(this);
 	}
 	
 	/**
-	 * Start movement implementation for the handling of elevatorTransitEvent
-	 * @param elevatorTransitEvent the event modeling the starting of an elevator
+	 * Start movement implementation for the handling of elevatorStartMovingEvent
+	 * @param elevatorStartMovingEvent the event modeling the starting of an elevator
+	 * @return new state of the elevator
 	 */
 	public ElevatorState handleElevatorStartMovingEvent(ElevatorStartMovingEvent elevatorStartMovingEvent) {
 		return new ElevatorMovingState(this, elevatorStartMovingEvent.getDirection());

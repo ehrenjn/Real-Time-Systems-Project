@@ -22,16 +22,18 @@ public class ElevatorMovingState extends ElevatorState{
 	}
 	
 	/**
-	 * Stop movement implementation for the handling of ElevatorStopMovingEvent
-	 * @param elevatorTransitEvent the event modeling the continuous moving of an elevator
+	 * Continued movement implementation for the handling of ElevatorkeepMovingEvent
+	 * @param ElevatorKeepMovingEvent the event modeling the continuous moving of an elevator
+	 * @return elevator continuing its movement
 	 */
-	public ElevatorState handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent ElevatorStopMovingEvent) {
+	public ElevatorState handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent ElevatorKeepMovingEvent) {
 		return this;
 	}
 	
 	/**
 	 * Stop movement implementation for the handling of ElevatorStopMovingEvent
-	 * @param elevatorTransitEvent the event modeling the stopping of an elevator
+	 * @param ElevatorStopMovingEvent the event modeling the stopping of an elevator
+	 * @return new state of elevator doors
 	 */
 	public ElevatorState handleElevatorStopMovingEvent(ElevatorStopMovingEvent ElevatorStopMovingEvent) {
 		return new ElevatorCloseDoorState(this);

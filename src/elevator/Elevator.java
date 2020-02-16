@@ -105,8 +105,8 @@ public class Elevator {
 	}
 	
 	/**
-	 * Elevator implementation for the handling of elevatorOpenDoorEvent
-	 * @param elevatorCloseDoorEvent the event modeling the opening of a door
+	 * Elevator implementation for the handling of ElevatorOpenDoorEvent
+	 * @param elevatorOpenDoorEvent the event modeling the opening of a door
 	 */
 	public void handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorOpenDoorEvent) {
 		this.state = this.state.handleElevatorOpenDoorEvent(elevatorOpenDoorEvent);
@@ -138,7 +138,7 @@ public class Elevator {
 	
 	/**
 	 * Elevator implementation for the handling of ElevatorKeepMovingEvent
-	 * @param elevatorArrivalEvent the event modeling the keep moving
+	 * @param elevatorKeepMovingEvent the event modeling the continued moving 
 	 */
 	public void handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent elevatorKeepMovingEvent) {
 		this.state = this.state.handleElevatorKeepMovingEvent(elevatorKeepMovingEvent);
@@ -166,6 +166,8 @@ public class Elevator {
 	}
 	
 	/**
+	 * Elevator indication of which direction to move
+	 * @param direction the direction 
 	 * @return the floor increment given a direction
 	 */
 	public static int getFloorIncrement(Direction direction) {

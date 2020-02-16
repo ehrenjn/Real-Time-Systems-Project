@@ -26,7 +26,7 @@ TO IMPORT THE PROJECT INTO ECLIPSE AND RUN PROGRAM
 	- place floorEvents.tsv in the project root (similar to the example)
 	- floorEvents.tsv does not need to be a tab separated file, any whitespace character separation will work
 	- However the extension of floorEvents.tsv MUST be a .tsv file (again please follow the example)
-	- This workaround is because how we are supposed to ingest the event file was never explicitly specified
+	- This workaround is because of how we are supposed to ingest the event file was never explicitly specified
 	
 4. From within the project "Real-Time-Systems-Project"
 	- Right click on the main package in Eclipse IDE
@@ -38,7 +38,13 @@ TO IMPORT THE PROJECT INTO ECLIPSE AND RUN PROGRAM
 FILE EXPLANATIONS:
 	- floorEvents.tsv An example file that contains the 
 	- main.java
-		- When run from main(), this will create new objects from the communicationSocket, ElevatorSubsystem, FloorSubsystem and SchedulerSubsystem. Instance of Java Thread are created for each Subsystem.
+		- When run, this will create new objects from the communicationSocket, ElevatorSubsystem, FloorSubsystem and SchedulerSubsystem. Instances of Java Thread are created for each Subsystem.
+	- ElevatorSubsystem.java
+		- When run from main(), initializes an elevator object with an elevator socket and an array of floors the elevator has to visit.
+	- FloorSubsystem.java
+		- When run from main(), initializes an array of floors, each with an associated floor socket.
+	- SchedulerSubsystem.java 
+		- When run from main(), initializes a scheduler object with a floor socket and a elevator socket.
 
 
 All Diagrams are located in the 'doc' folder
@@ -55,7 +61,7 @@ Ehran Julien-Neitzert (101046053)
 	- Responsible for project implementation, project validation, and design insights
 	- EventReader.java, Elevator.java, TestCommunicationSocket.java, javadoc
 
-Naomi Lui-hing (101040800)
+Naomi Lui-Hing (101040800)
 	- Responsible for project implementation, project validation, and design insights
 	- Floor.java, javadoc
 	
@@ -70,3 +76,31 @@ Nathan Fohkens (100946190)
 
 The Github repository containing the branch for iteration 1:  
 	- https://github.com/ehrenjn/Real-Time-Systems-Project/tree/christopher-wang-lean
+
+
+BREAKDOWN OF RESPONSIBILITIES for Iteration 2
+
+
+Chris Wang (100951354) 
+	- Responsible for Elevator Subsystem state machine design, Floor state Subsystem machine design, Scheduler Subsystem state machine design, project documentation, 
+	- 
+	
+Ehran Julien-Neitzert (101046053)
+	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design,  Scheduler Subsystem state machine design, project documentation, 
+	- 
+
+Naomi Lui-Hing (101040800)
+	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design, project documentation, 
+	- 
+
+Manel Oudjida (100945382)
+	- Responsible for project documentation, sequence diagram, UML class diagram
+	- 
+	
+Nathan Fohkens (100946190) 
+	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design, Scheduler Subsystem state machine, project documentation, 
+	- 
+
+The Github repository containing the branch for iteration 1:  
+	- https://github.com/ehrenjn/Real-Time-Systems-Project/tree/
+
