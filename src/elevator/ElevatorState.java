@@ -122,7 +122,6 @@ public abstract class ElevatorState {
 	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
 	 */
 	public ElevatorState handleElevatorPressButtonEvent(ElevatorPressButtonEvent elevatorPressButtonEvent) {
-		this.buttonLamps[elevatorPressButtonEvent.getButton()] = elevatorPressButtonEvent.getLampState();
 		return this;
 	}
 	
