@@ -1,7 +1,9 @@
 package scheduler;
 
 import common.CommunicationSocket;
+
 import event.Event;
+import event.toScheduler.*;
 
 public class SchedulerSubsystem implements Runnable{
 	private Scheduler scheduler;
@@ -23,13 +25,17 @@ public class SchedulerSubsystem implements Runnable{
 		while(true) {
 			Event event = scheduler.recieveFloorEventOut();
 			System.out.println("Scheduler recieved floor event in: " + event);
-			scheduler.handleEvent(event);
-			while (! scheduler.getElevatorIsIdle()) {
-				System.out.println("Scheduler sent elevator event out: " + event);
-				event = scheduler.recieveElevatorEventOut();
-				System.out.println("Scheduler recieved elevator event in:" + event);
-				scheduler.handleEvent(event);
-				System.out.println("Scheduler sent elevator event out: " + event);
+			scheduler.handleFloorPressButtonEvent( (FloorPressButtonEvent) event);
+			
+			while(!scheduler.emptyQueue()) {
+				try {
+					Thread.sleep(400);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				Event q = scheduler.recieveElevatorEventOut();
+				scheduler.handleEvent(q);
 			}
 		}
 	}

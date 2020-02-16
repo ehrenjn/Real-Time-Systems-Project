@@ -22,7 +22,7 @@ public abstract class ElevatorState {
 	
 	@Override
 	public String toString() {
-		return "ElevatorState [currentFloor=" + currentFloor + ", direction=" + direction + ", doorState=" + doorState
+		return "ElevatorState [name=" + name + ", currentFloor=" + currentFloor + ", direction=" + direction + ", doorState=" + doorState
 				+ ", upLamp=" + upLamp + ", downLamp=" + downLamp + ", \n buttonLamps=" + Arrays.toString(buttonLamps)
 				+ "]";
 	}
@@ -80,7 +80,7 @@ public abstract class ElevatorState {
 	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
 	 */
 	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorCloseDoorEvent) {
-		return new ElevatorFailureState();
+		return this;
 	}
 	
 	
@@ -89,7 +89,7 @@ public abstract class ElevatorState {
 	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
 	 */
 	public ElevatorState handleElevatorCloseDoorEvent(ElevatorCloseDoorEvent elevatorCloseDoorEvent) {
-		return new ElevatorFailureState();
+		return this;
 	}
 	
 	
@@ -98,7 +98,7 @@ public abstract class ElevatorState {
 	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
 	 */
 	public ElevatorState handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent elevatorKeepMovingEvent) {
-		return new ElevatorFailureState();
+		return this;
 	}
 	
 	/**
@@ -106,7 +106,7 @@ public abstract class ElevatorState {
 	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
 	 */
 	public ElevatorState handleElevatorStartMovingEvent(ElevatorStartMovingEvent elevatorStartMovingEvent) {
-		return new ElevatorFailureState();
+		return this;
 	}
 	
 	/**
@@ -114,7 +114,7 @@ public abstract class ElevatorState {
 	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
 	 */
 	public ElevatorState handleElevatorStopMovingEvent(ElevatorStopMovingEvent elevatorStopMovingEvent) {
-		return new ElevatorFailureState();
+		return this;
 	}
 	
 	/**
