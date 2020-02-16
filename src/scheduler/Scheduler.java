@@ -33,6 +33,11 @@ public class Scheduler {
 	}
 	
 	
+	public boolean getElevatorIsIdle() {
+		return elevatorIsIdle;
+	}
+	
+	
 	/**
 	 * sends the floor event to the client
 	 */
