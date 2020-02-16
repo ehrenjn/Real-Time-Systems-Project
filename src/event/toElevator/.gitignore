@@ -1,0 +1,6 @@
+/ChangeLampStateEvent.class
+/CloseDoorsEvent.class
+/KeepMovingEvent.class
+/OpenDoorsEvent.class
+/StartMovingEvent.class
+/StopMovingEvent.class
