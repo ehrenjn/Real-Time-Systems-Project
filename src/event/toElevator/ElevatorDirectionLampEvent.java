@@ -7,8 +7,8 @@ public class ElevatorDirectionLampEvent extends Event{
 	public static final String NAME = "ElevatorDirectionLampEvent";
 	private Direction lampDirection;
 	private LampState lampState;
-	public ElevatorDirectionLampEvent(String name, int recipientId, int senderId, Direction lampDirection, LampState lampState) {
-		super(name, recipientId, senderId);
+	public ElevatorDirectionLampEvent(int recipientId, int senderId, Direction lampDirection, LampState lampState) {
+		super(NAME, recipientId, senderId);
 		this.lampDirection = lampDirection;
 		this.lampState = lampState;
 	}

@@ -7,8 +7,8 @@ public class ElevatorPressButtonEvent extends Event{
 	public static final String NAME = "ElevatorPressButtonEvent";
 	private LampState lampState;
 	private int button;
-	public ElevatorPressButtonEvent(String name, int recipientId, int senderId, LampState lampState, int button) {
-		super(name, recipientId, senderId);
+	public ElevatorPressButtonEvent(int recipientId, int senderId, LampState lampState, int button) {
+		super(NAME, recipientId, senderId);
 		this.lampState = lampState;
 		this.button = button;
 	}
@@ -17,7 +17,7 @@ public class ElevatorPressButtonEvent extends Event{
 		return lampState;
 	}
 	
-	public int button() {
+	public int getButton() {
 		return button;
 	}
 }
