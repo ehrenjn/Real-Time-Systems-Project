@@ -76,6 +76,14 @@ public abstract class ElevatorState {
 	}
 	
 	/**
+	 * Default implementation for the handling of ElevatorButtonLampEvents
+	 */
+	public ElevatorState handleElevatorButtonLampEvent(ElevatorButtonLampEvent elevatorButtonLampEvent) {
+		buttonLamps[elevatorButtonLampEvent.getButton()] = elevatorButtonLampEvent.getLampState();
+		return this;
+	}
+	
+	/**
 	 * Default implementation for the handling of ElevatorCloseDoorEvent
 	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
 	 */
