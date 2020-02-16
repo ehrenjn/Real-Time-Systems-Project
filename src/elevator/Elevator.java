@@ -61,10 +61,10 @@ public class Elevator {
 				this.handleElevatorStartMovingEvent((ElevatorStartMovingEvent) event);
 				break;
 			case ElevatorStopMovingEvent.NAME:
-				this.handleElevatorStartMovingEvent((ElevatorStopMovingEvent) event);
+				this.handleElevatorStopMovingEvent((ElevatorStopMovingEvent) event);
 				break;
 			case ElevatorKeepMovingEvent.NAME:
-				this.handleElevatorStartMovingEvent((ElevatorKeepMovingEvent) event);
+				this.handleElevatorKeepMovingEvent((ElevatorKeepMovingEvent) event);
 				break;
 		}
 	}
@@ -76,6 +76,7 @@ public class Elevator {
 	public void handleElevatorDirectionLampEvent(ElevatorDirectionLampEvent elevatorDirectionLampEvent) {
 		
 		this.state = this.state.handleElevatorDirectionLampEvent(elevatorDirectionLampEvent);
+		
 	}
 	
 	/**
@@ -83,6 +84,7 @@ public class Elevator {
 	 * @param elevatorPressButtonEvent the event modeling the press of a button
 	 */
 	public void handleElevatorPressButtonEvent(ElevatorPressButtonEvent elevatorPressButtonEvent) {
+		this.state = this.state.handleElevatorPressButtonEvent(elevatorPressButtonEvent);
 	}	
 
 	/**
@@ -90,6 +92,7 @@ public class Elevator {
 	 * @param elevatorCloseDoorEvent the event modeling the closing of a door
 	 */
 	public void handleElevatorCloseDoorEvent(ElevatorCloseDoorEvent elevatorCloseDoorEvent) {
+		this.state = this.state.handleElevatorCloseDoorEvent(elevatorCloseDoorEvent);
 	}
 	
 	/**
@@ -97,6 +100,7 @@ public class Elevator {
 	 * @param elevatorCloseDoorEvent the event modeling the opening of a door
 	 */
 	public void handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorOpenDoorEvent) {
+		this.state = this.state.handleElevatorOpenDoorEvent(elevatorOpenDoorEvent);
 	}
 	
 	/**
@@ -104,19 +108,22 @@ public class Elevator {
 	 * @param elevatorStartMovingEvent the event modeling the start moving
 	 */
 	public void handleElevatorStartMovingEvent(ElevatorStartMovingEvent elevatorStartMovingEvent) {
+		this.state = this.state.handleElevatorStartMovingEvent(elevatorStartMovingEvent);
 	}
 	
 	/**
 	 * Elevator implementation for the handling of ElevatorStopMovingEvent
 	 * @param elevatorStopMovingEvent the event modeling the stop moving
 	 */
-	public void handleElevatorStartMovingEvent(ElevatorStopMovingEvent elevatorStopMovingEvent) {
+	public void handleElevatorStopMovingEvent(ElevatorStopMovingEvent elevatorStopMovingEvent) {
+		this.state = this.state.handleElevatorStopMovingEvent(elevatorStopMovingEvent);
 	}
 	
 	/**
 	 * Elevator implementation for the handling of ElevatorKeepMovingEvent
 	 * @param elevatorArrivalEvent the event modeling the keep moving
 	 */
-	public void handleElevatorStartMovingEvent(ElevatorKeepMovingEvent elevatorArrivalEvent) {
+	public void handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent elevatorArrivalEvent) {
+		this.state = this.state.handleElevatorKeepMovingEvent(elevatorArrivalEvent);
 	}
 }
