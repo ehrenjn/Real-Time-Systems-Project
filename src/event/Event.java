@@ -22,4 +22,9 @@ public class Event {
 	public int getSender() {
 		return senderId;
 	}
+
+	@Override
+	public String toString() {
+		return "Event [name=" + name + ", recipientId=" + recipientId + ", senderId=" + senderId + "]";
+	}
 }

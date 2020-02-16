@@ -29,6 +29,11 @@ public class Scheduler {
 	}
 	
 	
+	public boolean getElevatorIsIdle() {
+		return elevatorIsIdle;
+	}
+	
+	
 	/**
 	 * sends the floor event to the client
 	 */
@@ -143,11 +148,7 @@ public class Scheduler {
 	
 	private void handleFloorPressButtonEvent(FloorPressButtonEvent event) {
 		//forward event to elevator
-		FloorPressButtonEvent forwardedEvent = new FloorPressButtonEvent(event.getTime(), 
-				event.getCurrentFloor(), event.getDirection(), event.getDesiredFloor(), 
-				event.getSender(), SCHEDULER_ID
-		);
-		sendElevatorEventIn(forwardedEvent);
+		sendElevatorEventIn(new ElevatorPressButtonEvent(ELEVATOR_ID, SCHEDULER_ID, event.getDesiredFloor()));
 		
 		//schedule an elevator if one is not already waiting at the correct floor with doors open
 		if (! (elevatorIsIdle && elevatorCurrentFloor == event.getCurrentFloor())) {

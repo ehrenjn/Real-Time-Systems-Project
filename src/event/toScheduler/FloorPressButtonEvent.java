@@ -33,11 +33,6 @@ public class FloorPressButtonEvent extends Event{
 		this.desiredFloor = desiredFloor;
 	}
 	
-	public String toString() {
-		String formatStr = "Event[time=%tr and %tN ns, currentFloor=%d, direction=%s, desiredFloor=%d]";
-		return String.format(formatStr, time, time, currentFloor, direction, desiredFloor);
-	}
-	
 	/**
 	 * Returns the time of the event as a Date Object
 	 * @return the time of this event

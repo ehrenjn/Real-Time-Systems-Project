@@ -11,6 +11,7 @@ import event.*;
  * ensures that all states have some base functionality
  */
 public abstract class ElevatorState {
+	protected String name;
 	protected int currentFloor;
 	protected Direction direction;
 	protected DoorState doorState;
@@ -33,14 +34,15 @@ public abstract class ElevatorState {
 	 * @param numberOfFloors number of floors the elevator must service
 	 */
 	public ElevatorState(int numberOfFloors) {
+		this.name = "ElevatorState";
 		this.currentFloor = 0;
 		this.doorState = DoorState.OPEN;
 		this.direction = Direction.IDLE;
 		this.upLamp = LampState.OFF;
 		this.downLamp = LampState.OFF;
 		this.buttonLamps = new LampState[numberOfFloors];
-		for (LampState buttonLamp: buttonLamps) {
-			buttonLamp = LampState.OFF;
+		for (int i = 0; i < numberOfFloors; i++) {
+			buttonLamps[i] = LampState.OFF;
 		}
 	}
 	
@@ -145,7 +147,6 @@ public abstract class ElevatorState {
 	 * @param elevatorTransitEvent the event modeling the acceleration/deceleration of an elevator
 	 */
 	public ElevatorState handleElevatorPressButtonEvent(ElevatorPressButtonEvent elevatorPressButtonEvent) {
-		this.buttonLamps[elevatorPressButtonEvent.getButton()] = elevatorPressButtonEvent.getLampState();
 		return this;
 	}
 	
