@@ -98,23 +98,23 @@ public class Scheduler {
 			break;
 		case ElevatorStoppedEvent.NAME:
 			handleElevatorStoppedEvent((ElevatorStoppedEvent) event);
-		case ElevatorHeldDoorOpenEvent.NAME:
-			handleElevatorHeldDoorOpenEvent((ElevatorHeldDoorOpenEvent) event);
+		case ElevatorOpenedDoorEvent.NAME:
+			handleElevatorOpenedDoorEvent((ElevatorOpenedDoorEvent) event);
 		}
 	}
 	
 	
 	private void handleElevatorArrivalSensorEvent(ElevatorArrivalSensorEvent event) {
-		if (event.getFloor() == destinationQueue.getFirst()) {
+		if (event.getArrivingFloor() == destinationQueue.getFirst()) {
 			//SEND STOP REQUEST EVENT
 		} else {
 			//SEND ACKNOWLEDGEMENT
 		}
-		elevatorCurrentFloor = event.getFloor();
+		elevatorCurrentFloor = event.getArrivingFloor();
 	}
 	
-	private void handleElevatorButtonPressedEvent(ElevatorPressedButtonEvent event) {
-		scheduleElevator(event.getFloor());
+	private void handleElevatorButtonPressedEvent(ElevatorButtonPressedEvent event) {
+		scheduleElevator(event.getDesiredFloor());
 	}
 	
 	private void handleElevatorClosedDoorEvent(ElevatorClosedDoorEvent event) {
@@ -138,7 +138,7 @@ public class Scheduler {
 		destinationQueue.pop();
 	}
 	
-	private void handleElevatorHeldDoorOpenEvent(ElevatorHeldDoorOpenEvent event) {
+	private void handleElevatorOpenedDoorEvent(ElevatorOpenedDoorEvent event) {
 		if (destinationQueue.isEmpty()) {
 			elevatorIsIdle = true;
 		} else {
