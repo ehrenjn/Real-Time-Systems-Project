@@ -7,6 +7,7 @@ import common.DoorState;
 import common.LampState;
 import event.toElevator.*;
 import event.toScheduler.*;
+import event.Event;
 import common.*;
 
 public class Scheduler {
@@ -77,8 +78,7 @@ public class Scheduler {
 	}
 	
 	private void closeElevatorDoors() {
-		ElevatorDoorEvent request = new ElevatorDoorEvent(DoorState.CLOSE, ELEVATOR_ID, SCHEDULER_ID);
-		this.elevatorSocket.sendEventIn(request);
+		//TODO: SEND ELEVATOR DOOR CLOSE REQUEST TO ELEVATOR
 	}
 	
 	
@@ -88,7 +88,7 @@ public class Scheduler {
 			handleElevatorArrivalSensorEvent((ElevatorArrivalSensorEvent) event);
 			break;
 		case ElevatorPressedButtonEvent.NAME:
-			handleElevatorButtonPressedEvent((ElevatorPressedButtonEvent) event);
+			handleElevatorPressedButtonEvent((ElevatorPressedButtonEvent) event);
 			break;
 		case ElevatorClosedDoorEvent.NAME:
 			handleElevatorClosedDoorEvent((ElevatorClosedDoorEvent) event);
@@ -113,7 +113,7 @@ public class Scheduler {
 		elevatorCurrentFloor = event.getArrivingFloor();
 	}
 	
-	private void handleElevatorButtonPressedEvent(ElevatorButtonPressedEvent event) {
+	private void handleElevatorPressedButtonEvent(ElevatorPressedButtonEvent event) {
 		scheduleElevator(event.getDesiredFloor());
 	}
 	
