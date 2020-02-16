@@ -118,4 +118,8 @@ public abstract class ElevatorState {
 	public int getCurrentFloor() {
 		return this.currentFloor;
 	}
+	
+	public void setCurrentFloor(int currentFloor) {
+		this.currentFloor = currentFloor;
+	}
 }

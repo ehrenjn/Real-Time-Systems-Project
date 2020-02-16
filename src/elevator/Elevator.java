@@ -112,8 +112,10 @@ public class Elevator {
 		this.state = this.state.handleElevatorOpenDoorEvent(elevatorOpenDoorEvent);
 		//Sleep to simulate door opening
 		this.state = this.state.handleElevatorOpenDoorEvent(elevatorOpenDoorEvent);
+		
 		int recipient = elevatorOpenDoorEvent.getRecipient();
 		int sender = elevatorOpenDoorEvent.getSender();
+		
 		ElevatorOpenedDoorEvent event = new ElevatorOpenedDoorEvent(sender, recipient);
 		this.sendEventOut(event);
 	}
@@ -126,7 +128,10 @@ public class Elevator {
 		this.state = this.state.handleElevatorStartMovingEvent(elevatorStartMovingEvent);
 		int recipient = elevatorStartMovingEvent.getRecipient();
 		int sender = elevatorStartMovingEvent.getSender();
-		int arrivingFloor = this.state.getCurrentFloor();
+		
+		int arrivingFloor = this.state.getCurrentFloor() + getFloorIncrement(elevatorStartMovingEvent.getDirection());
+		this.state.setCurrentFloor(arrivingFloor);
+		
 		ElevatorArrivalSensorEvent event = new ElevatorArrivalSensorEvent(sender, recipient, arrivingFloor);
 		this.sendEventOut(event);
 	}
@@ -137,6 +142,14 @@ public class Elevator {
 	 */
 	public void handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent elevatorKeepMovingEvent) {
 		this.state = this.state.handleElevatorKeepMovingEvent(elevatorKeepMovingEvent);
+		int recipient = elevatorKeepMovingEvent.getRecipient();
+		int sender = elevatorKeepMovingEvent.getSender();
+		
+		int arrivingFloor = this.state.getCurrentFloor() + getFloorIncrement(elevatorKeepMovingEvent.getDirection());
+		this.state.setCurrentFloor(arrivingFloor);
+		
+		ElevatorArrivalSensorEvent event = new ElevatorArrivalSensorEvent(sender, recipient, arrivingFloor);
+		this.sendEventOut(event);
 	}
 	
 	/**
@@ -145,5 +158,24 @@ public class Elevator {
 	 */
 	public void handleElevatorStopMovingEvent(ElevatorStopMovingEvent elevatorStopMovingEvent) {
 		this.state = this.state.handleElevatorStopMovingEvent(elevatorStopMovingEvent);
+		int recipient = elevatorStopMovingEvent.getRecipient();
+		int sender = elevatorStopMovingEvent.getSender();
+		
+		ElevatorStoppedEvent event = new ElevatorStoppedEvent(sender, recipient);
+		this.sendEventOut(event);
+	}
+	
+	/**
+	 * @return the floor increment given a direction
+	 */
+	public static int getFloorIncrement(Direction direction) {
+		switch(direction) {
+			case UP:
+				return 1;
+			case DOWN:
+				return -1;
+			default:
+				return 0;
+		}
 	}
 }

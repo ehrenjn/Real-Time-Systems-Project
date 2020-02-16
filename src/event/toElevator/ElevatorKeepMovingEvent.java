@@ -1,5 +1,6 @@
 package event.toElevator;
 
+import common.Direction;
 import event.*;
 
 /**
@@ -8,7 +9,13 @@ import event.*;
  */
 public class ElevatorKeepMovingEvent extends Event {
 	public static final String NAME = "ElevatorKeepMovingEvent";
-	public ElevatorKeepMovingEvent(int recipientId, int senderId) {
+	private Direction direction;
+	public ElevatorKeepMovingEvent(int recipientId, int senderId, Direction direction) {
 		super(NAME, recipientId, senderId);
+		this.direction = direction;
+	}
+	
+	public Direction getDirection() {
+		return direction;
 	}
 }
