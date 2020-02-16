@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import common.Direction;
-import event.Event;
+import scheduler.*;
+import event.toScheduler.*;
 
 public class EventReader {
 	
@@ -22,7 +23,7 @@ public class EventReader {
 	 * @param fileLocation The file name of the file in relative terms to the project
 	 * @return an ArrayList containing all the events read from a file
 	 */
-	public static ArrayList<Event> fromEventFile(String fileLocation) {
+	public static ArrayList<FloorPressButtonEvent> fromEventFile(String fileLocation) {
 		try (FileInputStream stream = new FileInputStream(new File(fileLocation))) {
 			return fromEventFile(stream);
 		} catch (IOException e) {
@@ -33,12 +34,12 @@ public class EventReader {
 	}
 	
 	/**
-	 * Creates an array of Events from a Event file
-	 * @param Event the Event input stream to read a list of events from
+	 * Creates an array of Events from a FloorPressButtonEvent file
+	 * @param FloorPressButtonEvent the FloorPressButtonEvent input stream to read a list of events from
 	 * @return An array of Events
 	 */
-	public static ArrayList<Event> fromEventFile(InputStream eventFile) {
-		ArrayList<Event> events = new ArrayList<Event>();
+	public static ArrayList<FloorPressButtonEvent> fromEventFile(InputStream eventFile) {
+		ArrayList<FloorPressButtonEvent> events = new ArrayList<FloorPressButtonEvent>();
 		
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(eventFile))) {
 			for (String line = reader.readLine(); line != null; line = reader.readLine()) {
@@ -46,15 +47,15 @@ public class EventReader {
 				String[] columns = line.split("\\s+");
 				
 				if (columns.length != 4) {
-					throw new IllegalArgumentException("Event file does not contain the correct number of columns on line " + lineNumber);
+					throw new IllegalArgumentException("FloorPressButtonEvent file does not contain the correct number of columns on line " + lineNumber);
 				}
 				
 				Date newTime = EventParseTime(columns[0], lineNumber);
 				int newCurrentFloor = EventParseInt(columns[1], lineNumber);
 				Direction newDirection = EventParseDirection(columns[2], lineNumber);
 				int newDesiredFloor = EventParseInt(columns[3], lineNumber);
-				
-				events.add(new Event(newTime, newCurrentFloor, newDirection, newDesiredFloor));
+				//Fix this
+				events.add(new FloorPressButtonEvent(newTime, newCurrentFloor, newDirection, newDesiredFloor, Scheduler.SCHEDULER_ID, newCurrentFloor));
 			}
 		}
 		
@@ -77,7 +78,7 @@ public class EventReader {
 		try {
 			return timeParser.parse(timeStr);
 		} catch (ParseException e) {
-			throw new IllegalArgumentException("Time is not formatted properly in Event file on line " + lineNumber);
+			throw new IllegalArgumentException("Time is not formatted properly in FloorPressButtonEvent file on line " + lineNumber);
 		}  
 	}
 	
@@ -91,7 +92,7 @@ public class EventReader {
 		try {
 			return Integer.parseInt(intStr);
 		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException("Floor number is not formatted properly in Event file on line " + lineNumber);
+			throw new IllegalArgumentException("Floor number is not formatted properly in FloorPressButtonEvent file on line " + lineNumber);
 		}
 	}
 	
@@ -107,7 +108,7 @@ public class EventReader {
 			return Direction.valueOf(directionStr);
 		}
 		catch (Exception e) {
-			throw new IllegalArgumentException("Direction is not formatted properly in Event file on line " + lineNumber);
+			throw new IllegalArgumentException("Direction is not formatted properly in FloorPressButtonEvent file on line " + lineNumber);
 		}
  	}
 }
