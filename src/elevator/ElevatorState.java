@@ -22,7 +22,7 @@ public abstract class ElevatorState {
 	
 	@Override
 	public String toString() {
-		return "ElevatorState [name" + name + ", currentFloor=" + currentFloor + ", direction=" + direction + ", doorState=" + doorState
+		return "ElevatorState [name=" + name + ", currentFloor=" + currentFloor + ", direction=" + direction + ", doorState=" + doorState
 				+ ", upLamp=" + upLamp + ", downLamp=" + downLamp + ", \n buttonLamps=" + Arrays.toString(buttonLamps)
 				+ "]";
 	}
