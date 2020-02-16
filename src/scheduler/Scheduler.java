@@ -138,10 +138,13 @@ public class Scheduler {
 	public void handleElevatorOpenedDoorEvent(ElevatorOpenedDoorEvent event) {
 		destinationQueue.pop();
 		if (! destinationQueue.isEmpty()) { //there was someone waiting for this elevator to go to another floor
-			Direction floorDirectionLamp = floorsToDirection(elevatorCurrentFloor, destinationQueue.getFirst());
+			int nextDestination = destinationQueue.getFirst();
+			Direction floorDirectionLamp = floorsToDirection(elevatorCurrentFloor, nextDestination);
 			sendFloorEventIn(new FloorLampEvent(LampState.OFF, floorDirectionLamp, 
 					elevatorCurrentFloor, SCHEDULER_ID));
-			sendElevatorEventIn(new ElevatorCloseDoorEvent(ELEVATOR_ID, SCHEDULER_ID));
+			sendElevatorEventIn(new ElevatorButtonLampEvent(event.getSender(), SCHEDULER_ID, 
+					nextDestination, LampState.ON));
+			sendElevatorEventIn(new ElevatorCloseDoorEvent(event.getSender(), SCHEDULER_ID));
 		}
 	}
 }

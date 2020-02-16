@@ -38,9 +38,6 @@ public class Elevator {
 	 */
 	public void sendEventOut(Event event){
 		System.out.println("Elevator sending: " + event);
-		if (event instanceof ElevatorArrivalSensorEvent) {
-			System.out.println("\tArrival sensor floor: " + ((ElevatorArrivalSensorEvent)event).getArrivingFloor());
-		}
 		this.elevatorSocket.sendEventOut(event);
 	}
 	
@@ -58,6 +55,9 @@ public class Elevator {
 				break;
 			case ElevatorDirectionLampEvent.NAME:
 				this.handleElevatorDirectionLampEvent((ElevatorDirectionLampEvent) event);
+				break;
+			case ElevatorButtonLampEvent.NAME:
+				this.handleElevatorButtonLampEvent((ElevatorButtonLampEvent) event);
 				break;
 			case ElevatorOpenDoorEvent.NAME:
 				this.handleElevatorOpenDoorEvent((ElevatorOpenDoorEvent) event);
@@ -91,7 +91,6 @@ public class Elevator {
 		int recipient = elevatorPressButtonEvent.getRecipient();
 		int sender = elevatorPressButtonEvent.getSender();
 		int button = elevatorPressButtonEvent.getButton();
-		this.state.setButtonLamp(button, LampState.ON);
 		ElevatorPressedButtonEvent event = new ElevatorPressedButtonEvent(button, sender, recipient);
 		this.sendEventOut(event);
 	}	
@@ -184,6 +183,14 @@ public class Elevator {
 		
 		ElevatorStoppedEvent event = new ElevatorStoppedEvent(sender, recipient);
 		this.sendEventOut(event);
+	}
+	
+	/**
+	 * Handles ElevatorButtonLampEvents
+	 * @param elevatorButtonLampEvent the event modeling the button lamp state change
+	 */
+	public void handleElevatorButtonLampEvent(ElevatorButtonLampEvent elevatorButtonLampEvent) {
+		this.state = this.state.handleElevatorButtonLampEvent(elevatorButtonLampEvent);
 	}
 	
 	/**
