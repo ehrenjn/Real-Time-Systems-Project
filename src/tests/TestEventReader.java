@@ -3,11 +3,13 @@ package tests;
 import static org.junit.Assert.*;
 
 
+
 import org.junit.Before;
 import org.junit.Test;
 
 import common.Direction;
-import event.Event;
+import event.*;
+import event.toScheduler.*;
 import floor.*;
 
 import java.io.ByteArrayInputStream;
@@ -15,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 
 
 public class TestEventReader {
@@ -33,10 +36,10 @@ public class TestEventReader {
 	@Test
 	public void TestFromEventFile() {
 		ByteArrayInputStream stream = new ByteArrayInputStream(csv.getBytes());
-		ArrayList<Event> events = EventReader.fromEventFile(stream);
+		ArrayList<FloorPressButtonEvent> events = EventReader.fromEventFile(stream);
 		
 		assertEquals("initial floor should be parsed correctly", 0, events.get(0).getCurrentFloor());
-		assertEquals("direction should be parsed correctly", Direction.DOWN, events.get(1).getDoorState());
+		assertEquals("direction should be parsed correctly", Direction.DOWN, events.get(1).getDirection());
 		assertEquals("destination floor should be parsed correctly", 4, events.get(1).getDesiredFloor());
 		
 		try {

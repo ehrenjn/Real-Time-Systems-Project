@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 
 import common.CommunicationSocket;
+import event.Event;
 import event.toScheduler.*;
 import floor.Floor;
 
@@ -36,8 +37,8 @@ public class FloorSubsystem implements Runnable{
 		for (FloorPressButtonEvent event: events) {
 			this.floors[event.getSender()].sendEventOut(event);
 			System.out.println("Floor sent floor event out: " + event);
-			event = this.floors[event.getRecipient()].recieveEventIn();
-			System.out.println("Floor recieved floor event In: " + event);
+			//Event eventIn = this.floors[event.getRecipient()].recieveEventIn();
+			//System.out.println("Floor recieved floor event In: " + eventIn);
 		}
 	}
 }
