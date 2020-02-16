@@ -8,6 +8,7 @@ import event.toElevator.*;
  * Class that implements the moving state of the elevator.
  */
 public class ElevatorMovingState extends ElevatorState{
+	public static final String NAME = "ElevatorMovingState";
 	
 	/**
 	 * Copy constructor given a previous state for the closed door state
@@ -16,6 +17,7 @@ public class ElevatorMovingState extends ElevatorState{
 	 */
 	public ElevatorMovingState(ElevatorState state, Direction direction) {
 		super(state);
+		this.name = NAME;
 		this.direction = direction;
 	}
 	

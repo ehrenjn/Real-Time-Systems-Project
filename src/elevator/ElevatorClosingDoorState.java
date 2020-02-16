@@ -8,6 +8,7 @@ import event.toElevator.*;
  * Class that implements the closing door state of the elevator.
  */
 public class ElevatorClosingDoorState extends ElevatorState{
+	public static final String NAME = "ElevatorClosingDoorState";
 	
 	/**
 	 * Copy constructor given a previous state for the door closing state. The door open state must always
@@ -16,6 +17,7 @@ public class ElevatorClosingDoorState extends ElevatorState{
 	 */
 	public ElevatorClosingDoorState(ElevatorState state) {
 		super(state);
+		this.name = NAME;
 		this.doorState = DoorState.CLOSING;
 		this.direction = Direction.IDLE;
 	}
