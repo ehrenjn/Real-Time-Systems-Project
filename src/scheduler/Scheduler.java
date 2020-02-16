@@ -3,18 +3,16 @@ package scheduler;
 import java.util.LinkedList;
 
 import common.CommunicationSocket;
-import common.DoorState;
-import common.LampState;
-import event.toElevator.*;
 import event.toScheduler.*;
-import event.Event;
+import event.toElevator.*;
+import event.*;
 import common.*;
 
 public class Scheduler {
 	private CommunicationSocket elevatorSocket;
 	private CommunicationSocket floorSocket;
-	private static final int SCHEDULER_ID = 0;
-	private static final int ELEVATOR_ID = 0;
+	public static final int SCHEDULER_ID = 0;
+	public static final int ELEVATOR_ID = 0;
 	
 	//elevator state variables
 	private LinkedList<Integer> destinationQueue;
@@ -78,7 +76,7 @@ public class Scheduler {
 	}
 	
 	private void closeElevatorDoors() {
-		//TODO: SEND ELEVATOR DOOR CLOSE REQUEST TO ELEVATOR
+		elevatorSocket.sendEventIn(new ElevatorCloseDoorEvent(ELEVATOR_ID, SCHEDULER_ID));
 	}
 	
 	
@@ -106,9 +104,9 @@ public class Scheduler {
 	
 	private void handleElevatorArrivalSensorEvent(ElevatorArrivalSensorEvent event) {
 		if (event.getArrivingFloor() == destinationQueue.getFirst()) {
-			//SEND STOP REQUEST EVENT
+			elevatorSocket.sendEventIn(new ElevatorStopMovingEvent(ELEVATOR_ID, SCHEDULER_ID));
 		} else {
-			//SEND ACKNOWLEDGEMENT
+			elevatorSocket.sendEventIn(new ElevatorKeepMovingEvent(elevatorDirection, ELEVATOR_ID, SCHEDULER_ID));
 		}
 		elevatorCurrentFloor = event.getArrivingFloor();
 	}
@@ -118,24 +116,28 @@ public class Scheduler {
 	}
 	
 	private void handleElevatorClosedDoorEvent(ElevatorClosedDoorEvent event) {
-		int destination = destinationQueue.getFirst();
-		//TODO: TELL ELEVATOR TO START MOVING IN CORRECT DIRECTION AND SET ELEVATOR DIRECTION
+		int floorDelta = destinationQueue.getFirst() - elevatorCurrentFloor;
+		elevatorDirection = floorDelta < 0 ? Direction.DOWN : Direction.UP;
+		elevatorSocket.sendEventIn(new ElevatorStartMovingEvent(
+				elevatorDirection, event.getSender(), SCHEDULER_ID
+		));
 	}
 	
 	
 	private void handleFloorButtonEvent(FloorButtonEvent event) {
 		//do nothing if elevator is already waiting at the correct floor with doors open
 		if (! (elevatorIsIdle && elevatorCurrentFloor == event.getFloor())) {
-			FloorLampEvent response = new FloorLampEvent(LampState.ON, event.getDirection(), event.getSender(), SCHEDULER_ID);
-			floorSocket.sendEventIn(response);
+			FloorButtonEvent forwardedEvent = new FloorButtonEvent(
+					event.getDirection(), event.getFloor(), event.getSender(), SCHEDULER_ID);
+			elevatorSocket.sendEventIn(forwardedEvent);
 			scheduleElevator(event.getFloor());
 		}
 	}
 	
 	private void handleElevatorStoppedEvent(ElevatorStoppedEvent event) {
 		//TODO: TELL FLOOR TO TURN OFF APPROPRIATE DIRECTION LAMP
-		//TODO: TELL ELEVATOR TO OPEN DOORS
 		destinationQueue.pop();
+		elevatorSocket.sendEventIn(new ElevatorOpenDoorEvent(event.getSender(), SCHEDULER_ID));
 	}
 	
 	private void handleElevatorOpenedDoorEvent(ElevatorOpenedDoorEvent event) {
