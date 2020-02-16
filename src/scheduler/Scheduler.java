@@ -5,7 +5,8 @@ import java.util.LinkedList;
 import common.CommunicationSocket;
 import common.DoorState;
 import common.LampState;
-import event.*;
+import event.toElevator.*;
+import event.toScheduler.*;
 import common.*;
 
 public class Scheduler {
@@ -65,10 +66,13 @@ public class Scheduler {
 		return this.elevatorSocket.recieveEventOut();
 	}
 	
+	
+	
 	private void scheduleElevator(int floor) {
 		destinationQueue.add(floor);
 		if (elevatorIsIdle) {
 			elevatorIsIdle = false;
+			closeElevatorDoors();
 		}
 	}
 	
@@ -77,60 +81,45 @@ public class Scheduler {
 		this.elevatorSocket.sendEventIn(request);
 	}
 	
+	
 	public void handleEvent(Event event) {
 		switch (event.getName()) {
-		case ElevatorArrivalEvent.NAME:
-			handleElevatorArrivalEvent((ElevatorArrivalEvent) event);
+		case ElevatorArrivalSensorEvent.NAME:
+			handleElevatorArrivalSensorEvent((ElevatorArrivalSensorEvent) event);
 			break;
-		case ElevatorButtonEvent.NAME:
-			handleElevatorButtonEvent((ElevatorButtonEvent) event);
+		case ElevatorButtonPressedEvent.NAME:
+			handleElevatorButtonPressedEvent((ElevatorButtonPressedEvent) event);
 			break;
-		case ElevatorDirectionLampEvent.NAME:
-			handleElevatorDirectionLampEvent((ElevatorDirectionLampEvent) event);
-			break;
-		case ElevatorDoorEvent.NAME:
-			handleElevatorDoorEvent((ElevatorDoorEvent) event);
-			break;
-		case ElevatorTransitEvent.NAME:
-			handleElevatorTransitEvent((ElevatorTransitEvent) event);
+		case ElevatorClosedDoorEvent.NAME:
+			handleElevatorClosedDoorEvent((ElevatorClosedDoorEvent) event);
 			break;
 		case FloorButtonEvent.NAME:
 			handleFloorButtonEvent((FloorButtonEvent) event);
 			break;
-		case FloorLampEvent.NAME:
-			handleFloorLampEvent((FloorLampEvent) event);
-			break;
+		case ElevatorStoppedEvent.NAME:
+			handleElevatorStoppedEvent((ElevatorStoppedEvent) event);
+		case ElevatorHeldDoorOpenEvent.NAME:
+			handleElevatorHeldDoorOpenEvent((ElevatorHeldDoorOpenEvent) event);
 		}
 	}
 	
 	
-	private void handleElevatorArrivalEvent(ElevatorArrivalEvent event) {
-		/*if (event.getFloor() == destinationQueue.getFirst()) {
-			
+	private void handleElevatorArrivalSensorEvent(ElevatorArrivalSensorEvent event) {
+		if (event.getFloor() == destinationQueue.getFirst()) {
+			//SEND STOP REQUEST EVENT
 		} else {
-			elevatorSocket.sendEventIn(event);
-		}*/
-	}
-	
-	private void handleElevatorButtonEvent(ElevatorButtonEvent event) {
-		
-	}
-	
-	private void handleElevatorDirectionLampEvent(ElevatorDirectionLampEvent event) {
-		
-	}
-	
-	private void handleElevatorDoorEvent(ElevatorDoorEvent event) {
-		if (event.getDoorState() == DoorState.CLOSE) {
-			int destination = destinationQueue.getFirst();
-			Direction direction = 
-		} else if (event.getDoorState() == DoorState.OPEN) {
-			
+			//SEND ACKNOWLEDGEMENT
 		}
+		elevatorCurrentFloor = event.getFloor();
 	}
 	
-	private void handleElevatorTransitEvent(ElevatorTransitEvent event) {
-		
+	private void handleElevatorButtonPressedEvent(ElevatorButtonPressedEvent event) {
+		scheduleElevator(event.getFloor());
+	}
+	
+	private void handleElevatorClosedDoorEvent(ElevatorClosedDoorEvent event) {
+		int destination = destinationQueue.getFirst();
+		//TODO: TELL ELEVATOR TO START MOVING IN CORRECT DIRECTION AND SET ELEVATOR DIRECTION
 	}
 	
 	
@@ -143,8 +132,17 @@ public class Scheduler {
 		}
 	}
 	
+	private void handleElevatorStoppedEvent(ElevatorStoppedEvent event) {
+		//TODO: TELL FLOOR TO TURN OFF APPROPRIATE DIRECTION LAMP
+		//TODO: TELL ELEVATOR TO OPEN DOORS
+		destinationQueue.pop();
+	}
 	
-	private void handleFloorLampEvent(FloorLampEvent event) {
-		
+	private void handleElevatorHeldDoorOpenEvent(ElevatorHeldDoorOpenEvent event) {
+		if (destinationQueue.isEmpty()) {
+			elevatorIsIdle = true;
+		} else {
+			closeElevatorDoors();
+		}
 	}
 }
