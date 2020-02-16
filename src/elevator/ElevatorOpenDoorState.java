@@ -28,6 +28,7 @@ public class ElevatorOpenDoorState extends ElevatorState{
 	 */
 	public ElevatorOpenDoorState(ElevatorState state) {
 		super(state);
+		this.name = NAME;
 		this.doorState = DoorState.OPEN;
 		this.direction = Direction.IDLE;
 	}
