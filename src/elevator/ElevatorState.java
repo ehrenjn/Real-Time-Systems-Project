@@ -11,6 +11,7 @@ import event.*;
  * ensures that all states have some base functionality
  */
 public abstract class ElevatorState {
+	protected String name;
 	protected int currentFloor;
 	protected Direction direction;
 	protected DoorState doorState;
@@ -33,6 +34,7 @@ public abstract class ElevatorState {
 	 * @param numberOfFloors number of floors the elevator must service
 	 */
 	public ElevatorState(int numberOfFloors) {
+		this.name = "ElevatorState";
 		this.currentFloor = 0;
 		this.doorState = DoorState.OPEN;
 		this.direction = Direction.IDLE;

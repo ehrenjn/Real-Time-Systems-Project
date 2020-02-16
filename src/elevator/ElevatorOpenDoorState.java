@@ -8,6 +8,7 @@ import event.toElevator.*;
  * Class that implements the open door state for the elevator.
  */
 public class ElevatorOpenDoorState extends ElevatorState{
+	public static final String NAME = "ElevatorOpenDoorState";
 	
 	/**
 	 * Default constructor for the Elevator Open door state. This is considered the default state for an
@@ -17,6 +18,7 @@ public class ElevatorOpenDoorState extends ElevatorState{
 	 */
 	public ElevatorOpenDoorState(int numberOfFloors) {
 		super(numberOfFloors);
+		this.name = NAME;
 	}
 	
 	/**
