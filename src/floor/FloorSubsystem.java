@@ -37,8 +37,6 @@ public class FloorSubsystem implements Runnable{
 		for (FloorPressButtonEvent event: events) {
 			this.floors[event.getSender()].sendEventOut(event);
 			System.out.println("Floor sent floor event out: " + event);
-			//Event eventIn = this.floors[event.getRecipient()].recieveEventIn();
-			//System.out.println("Floor recieved floor event In: " + eventIn);
 		}
 	}
 }

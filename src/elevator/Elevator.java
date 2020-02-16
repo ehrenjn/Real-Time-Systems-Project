@@ -86,7 +86,7 @@ public class Elevator {
 		int recipient = elevatorPressButtonEvent.getRecipient();
 		int sender = elevatorPressButtonEvent.getSender();
 		int button = elevatorPressButtonEvent.getButton();
-		ElevatorPressedButtonEvent event = new ElevatorPressedButtonEvent(sender, recipient, button);
+		ElevatorPressedButtonEvent event = new ElevatorPressedButtonEvent(button, sender, recipient);
 		this.sendEventOut(event);
 	}	
 
@@ -97,6 +97,11 @@ public class Elevator {
 	public void handleElevatorCloseDoorEvent(ElevatorCloseDoorEvent elevatorCloseDoorEvent) {
 		this.state = this.state.handleElevatorCloseDoorEvent(elevatorCloseDoorEvent);
 		//Sleep to simulate door closing
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		this.state = this.state.handleElevatorCloseDoorEvent(elevatorCloseDoorEvent);
 		int recipient = elevatorCloseDoorEvent.getRecipient();
 		int sender = elevatorCloseDoorEvent.getSender();
@@ -111,6 +116,11 @@ public class Elevator {
 	public void handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorOpenDoorEvent) {
 		this.state = this.state.handleElevatorOpenDoorEvent(elevatorOpenDoorEvent);
 		//Sleep to simulate door opening
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		this.state = this.state.handleElevatorOpenDoorEvent(elevatorOpenDoorEvent);
 		
 		int recipient = elevatorOpenDoorEvent.getRecipient();
@@ -128,11 +138,15 @@ public class Elevator {
 		this.state = this.state.handleElevatorStartMovingEvent(elevatorStartMovingEvent);
 		int recipient = elevatorStartMovingEvent.getRecipient();
 		int sender = elevatorStartMovingEvent.getSender();
-		
+		try {
+			Thread.sleep(800);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		int arrivingFloor = this.state.getCurrentFloor() + getFloorIncrement(elevatorStartMovingEvent.getDirection());
 		this.state.setCurrentFloor(arrivingFloor);
 		
-		ElevatorArrivalSensorEvent event = new ElevatorArrivalSensorEvent(sender, recipient, arrivingFloor);
+		ElevatorArrivalSensorEvent event = new ElevatorArrivalSensorEvent(arrivingFloor, sender, recipient);
 		this.sendEventOut(event);
 	}
 	
@@ -148,7 +162,7 @@ public class Elevator {
 		int arrivingFloor = this.state.getCurrentFloor() + getFloorIncrement(elevatorKeepMovingEvent.getDirection());
 		this.state.setCurrentFloor(arrivingFloor);
 		
-		ElevatorArrivalSensorEvent event = new ElevatorArrivalSensorEvent(sender, recipient, arrivingFloor);
+		ElevatorArrivalSensorEvent event = new ElevatorArrivalSensorEvent(this.state.getCurrentFloor(), sender, recipient);
 		this.sendEventOut(event);
 	}
 	
