@@ -2,8 +2,10 @@ package floor;
 
 import java.util.ArrayList;
 
+
 import common.CommunicationSocket;
 import event.Event;
+import event.toScheduler.*;
 import floor.Floor;
 
 public class FloorSubsystem implements Runnable{
@@ -30,13 +32,13 @@ public class FloorSubsystem implements Runnable{
 		//The relative filepath to read events from (starting from the project root)
 		String fileLocation = "floorEvents.tsv";
 		
-		ArrayList<Event> events = EventReader.fromEventFile(fileLocation);
+		ArrayList<FloorPressButtonEvent> events = EventReader.fromEventFile(fileLocation);
 		
-		for (Event event: events) {
-			this.floors[event.getCurrentFloor()].sendEventOut(event);
+		for (FloorPressButtonEvent event: events) {
+			this.floors[event.getSender()].sendEventOut(event);
 			System.out.println("Floor sent floor event out: " + event);
-			event = this.floors[event.getCurrentFloor()].recieveEventIn();
-			System.out.println("Floor recieved floor event In: " + event);
+			//Event eventIn = this.floors[event.getRecipient()].recieveEventIn();
+			//System.out.println("Floor recieved floor event In: " + eventIn);
 		}
 	}
 }

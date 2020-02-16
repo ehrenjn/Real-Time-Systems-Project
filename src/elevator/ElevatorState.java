@@ -1,5 +1,7 @@
 package elevator;
 
+import java.util.Arrays;
+
 import common.*;
 import event.toElevator.*;
 import event.toScheduler.*;
@@ -17,6 +19,13 @@ public abstract class ElevatorState {
 	protected LampState[] buttonLamps;
 	
 	
+	@Override
+	public String toString() {
+		return "ElevatorState [currentFloor=" + currentFloor + ", direction=" + direction + ", doorState=" + doorState
+				+ ", upLamp=" + upLamp + ", downLamp=" + downLamp + ", \n buttonLamps=" + Arrays.toString(buttonLamps)
+				+ "]";
+	}
+
 	/**
 	 * Default constructor for an ElevatorState. This is considered the default state for an
 	 * Elevator state

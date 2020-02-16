@@ -2,8 +2,10 @@ package tests;
 
 import java.util.Date;
 
+
 import common.*;
-import event.Event;
+import event.*;
+import event.toScheduler.*;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -15,7 +17,7 @@ public class TestCommunicationSocket {
 	@Test
 	public void testCommunicationSocket() {
 		CommunicationSocket sock = new CommunicationSocket();
-		Event event = new Event(new Date(), 5, Direction.UP, 7);
+		FloorPressButtonEvent event = new FloorPressButtonEvent(new Date(), 5, Direction.UP, 7, 0, 0);
 		sock.sendEventIn(event);
 		Event receivedEvent = sock.recieveEventIn();
 		assertEquals("received event should be the same as sent event", event, receivedEvent);
