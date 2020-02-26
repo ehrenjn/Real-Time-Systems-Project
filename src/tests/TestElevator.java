@@ -39,11 +39,22 @@ public class TestElevator {
 	@Test
 	public void TestSendEventOut() {
 		
+		Event testEvent = new Event("test",2,1);
+		elevatorSock.sendEventOut(testEvent);
+		assertEquals("Elevator should have sent event", testEvent, elevatorSock.recieveEventOut());
 	}
+
 	
 	@Test
-	public void TestHandleElevatorEvent() {
+	public void TesthandleElevatorPressButtonEvent() {
 		
+		ElevatorPressButtonEvent elevatorPBE = new ElevatorPressButtonEvent(0,0,10);
+		testElevator.handleElevatorPressButtonEvent(elevatorPBE);
+		
+		ElevatorPressedButtonEvent elevatorPressed = new ElevatorPressedButtonEvent(10,0,0);
+
+		assertEquals("Elevator button is pressed", elevatorPressed, elevatorSock.recieveEventOut());
+
 	}
 	
 	@Test
