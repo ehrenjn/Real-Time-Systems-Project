@@ -186,10 +186,6 @@ public class Elevator {
 	}
 	
 	/**
-<<<<<<< HEAD
-	 * Elevator indication of which direction to move
-	 * @param direction the direction 
-=======
 	 * Handles ElevatorButtonLampEvents
 	 * @param elevatorButtonLampEvent the event modeling the button lamp state change
 	 */
@@ -198,7 +194,6 @@ public class Elevator {
 	}
 	
 	/**
->>>>>>> 5794880d2396c8959ac788ca526f5b9627f69b07
 	 * @return the floor increment given a direction
 	 */
 	public static int getFloorIncrement(Direction direction) {

@@ -78,14 +78,6 @@ public abstract class ElevatorState {
 	}
 	
 	/**
-<<<<<<< HEAD
-	 * Default implementation for the handling of ElevatorOpenDoorEvent
-	 * @param elevatorOpenDoorEvent the event modeling the opening of a door
-	 * @return elevator failure state
-	 */
-	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorOpenDoorEvent) {
-		return new ElevatorFailureState();
-=======
 	 * Default implementation for the handling of ElevatorButtonLampEvents
 	 */
 	public ElevatorState handleElevatorButtonLampEvent(ElevatorButtonLampEvent elevatorButtonLampEvent) {
@@ -99,7 +91,6 @@ public abstract class ElevatorState {
 	 */
 	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorCloseDoorEvent) {
 		return this;
->>>>>>> 5794880d2396c8959ac788ca526f5b9627f69b07
 	}
 	
 	
@@ -158,7 +149,7 @@ public abstract class ElevatorState {
 	
 	/**
 	 * set the current floor of the elevator
-	 * @param currentFloor currnet flooor of the elevator
+	 * @param currentFloor current floor of the elevator
 	 */
 	public void setCurrentFloor(int currentFloor) {
 		this.currentFloor = currentFloor;

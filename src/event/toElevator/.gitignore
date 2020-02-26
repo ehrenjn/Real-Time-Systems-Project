@@ -11,3 +11,4 @@
 /ElevatorPressButtonEvent.class
 /ElevatorStartMovingEvent.class
 /ElevatorStopMovingEvent.class
+/ElevatorButtonLampEvent.class

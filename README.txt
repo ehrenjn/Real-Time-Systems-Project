@@ -105,7 +105,7 @@ Ehran Julien-Neitzert (101046053)
 	- package: scheduler floor, event, event.toScheduler
 
 Naomi Lui-Hing (101040800)
-	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design, project documentation, 
+	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design, project documentation 
 	- javadoc 
 
 Manel Oudjida (100945382)
@@ -117,36 +117,4 @@ Nathan Fohkens (100946190)
 	- Cooperative State Machine.png
 
 The Github repository containing the branch for iteration 1:  
-<<<<<<< HEAD
-	- https://github.com/ehrenjn/Real-Time-Systems-Project/tree/christopher-wang-lean
-
-
-BREAKDOWN OF RESPONSIBILITIES for Iteration 2
-
-
-Chris Wang (100951354) 
-	- Responsible for Elevator Subsystem state machine design, Floor state Subsystem machine design, Scheduler Subsystem state machine design, project documentation, 
-	- 
-	
-Ehran Julien-Neitzert (101046053)
-	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design,  Scheduler Subsystem state machine design, project documentation, 
-	- 
-
-Naomi Lui-Hing (101040800)
-	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design, project documentation, 
-	- 
-
-Manel Oudjida (100945382)
-	- Responsible for project documentation, sequence diagram, UML class diagram
-	- 
-	
-Nathan Fohkens (100946190) 
-	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design, Scheduler Subsystem state machine, project documentation, 
-	- 
-
-The Github repository containing the branch for iteration 1:  
 	- https://github.com/ehrenjn/Real-Time-Systems-Project/tree/
-
-=======
-	- https://github.com/ehrenjn/Real-Time-Systems-Project/tree/
->>>>>>> 5794880d2396c8959ac788ca526f5b9627f69b07
