@@ -19,6 +19,7 @@ public class FloorLampEvent extends Event {
 	public FloorLampEvent(LampState lampState, Direction direction, int recipientId, int senderId) {
 		super(NAME, recipientId, senderId);
 		this.lampState = lampState;
+		this.direction = direction;
 	}
 	
 	public LampState getLampState() {

@@ -22,8 +22,8 @@ public abstract class ElevatorState {
 	
 	@Override
 	public String toString() {
-		return "ElevatorState [currentFloor=" + currentFloor + ", direction=" + direction + ", doorState=" + doorState
-				+ ", upLamp=" + upLamp + ", downLamp=" + downLamp + ", \n buttonLamps=" + Arrays.toString(buttonLamps)
+		return "ElevatorState [name=" + name + ", currentFloor=" + currentFloor + ", direction=" + direction + ", doorState=" + doorState
+				+ ", upLamp=" + upLamp + ", downLamp=" + downLamp + ", buttonLamps=" + Arrays.toString(buttonLamps)
 				+ "]";
 	}
 
@@ -78,12 +78,28 @@ public abstract class ElevatorState {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Default implementation for the handling of ElevatorOpenDoorEvent
 	 * @param elevatorOpenDoorEvent the event modeling the opening of a door
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorOpenDoorEvent) {
 		return new ElevatorFailureState();
+=======
+	 * Default implementation for the handling of ElevatorButtonLampEvents
+	 */
+	public ElevatorState handleElevatorButtonLampEvent(ElevatorButtonLampEvent elevatorButtonLampEvent) {
+		buttonLamps[elevatorButtonLampEvent.getButton()] = elevatorButtonLampEvent.getLampState();
+		return this;
+	}
+	
+	/**
+	 * Default implementation for the handling of ElevatorCloseDoorEvent
+	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
+	 */
+	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorCloseDoorEvent) {
+		return this;
+>>>>>>> 5794880d2396c8959ac788ca526f5b9627f69b07
 	}
 	
 	
@@ -93,7 +109,7 @@ public abstract class ElevatorState {
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorCloseDoorEvent(ElevatorCloseDoorEvent elevatorCloseDoorEvent) {
-		return new ElevatorFailureState();
+		return this;
 	}
 	
 	
@@ -103,7 +119,7 @@ public abstract class ElevatorState {
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent elevatorKeepMovingEvent) {
-		return new ElevatorFailureState();
+		return this;
 	}
 	
 	/**
@@ -112,7 +128,7 @@ public abstract class ElevatorState {
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorStartMovingEvent(ElevatorStartMovingEvent elevatorStartMovingEvent) {
-		return new ElevatorFailureState();
+		return this;
 	}
 	
 	/**
@@ -121,7 +137,7 @@ public abstract class ElevatorState {
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorStopMovingEvent(ElevatorStopMovingEvent elevatorStopMovingEvent) {
-		return new ElevatorFailureState();
+		return this;
 	}
 	
 	/**
@@ -146,5 +162,9 @@ public abstract class ElevatorState {
 	 */
 	public void setCurrentFloor(int currentFloor) {
 		this.currentFloor = currentFloor;
+	}
+	
+	public void setButtonLamp(int button, LampState state) {
+		buttonLamps[button] = state;
 	}
 }
