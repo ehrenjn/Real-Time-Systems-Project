@@ -109,14 +109,14 @@ public class Scheduler {
 		elevatorDirection = floorsToDirection(elevatorCurrentFloor, destinationQueue.getFirst());
 		sendElevatorEventIn(new ElevatorDirectionLampEvent(
 				event.getSender(), SCHEDULER_ID, elevatorDirection, LampState.ON));
-		sendElevatorEventIn(new ElevatorStartMovingEvent(elevatorDirection, event.getSender(), SCHEDULER_ID));
+		sendElevatorEventIn(new ElevatorStartMovingEvent(event.getSender(), SCHEDULER_ID, elevatorDirection));
 	}
 	
 	public void handleElevatorArrivalSensorEvent(ElevatorArrivalSensorEvent event) {
 		if (destinationQueue.getFirst() == event.getArrivingFloor()) {
 			sendElevatorEventIn(new ElevatorStopMovingEvent(ELEVATOR_ID, SCHEDULER_ID));
 		} else {
-			sendElevatorEventIn(new ElevatorKeepMovingEvent(elevatorDirection, ELEVATOR_ID, SCHEDULER_ID));
+			sendElevatorEventIn(new ElevatorKeepMovingEvent(ELEVATOR_ID, SCHEDULER_ID, elevatorDirection));
 		}
 		elevatorCurrentFloor = event.getArrivingFloor();
 	}
@@ -140,8 +140,8 @@ public class Scheduler {
 		if (! destinationQueue.isEmpty()) { //there was someone waiting for this elevator to go to another floor
 			int nextDestination = destinationQueue.getFirst();
 			Direction floorDirectionLamp = floorsToDirection(elevatorCurrentFloor, nextDestination);
-			sendFloorEventIn(new FloorLampEvent(LampState.OFF, floorDirectionLamp, 
-					elevatorCurrentFloor, SCHEDULER_ID));
+			sendFloorEventIn(new FloorLampEvent(elevatorCurrentFloor, SCHEDULER_ID, 
+					LampState.OFF, floorDirectionLamp));
 			sendElevatorEventIn(new ElevatorButtonLampEvent(event.getSender(), SCHEDULER_ID, 
 					nextDestination, LampState.ON));
 			sendElevatorEventIn(new ElevatorCloseDoorEvent(event.getSender(), SCHEDULER_ID));

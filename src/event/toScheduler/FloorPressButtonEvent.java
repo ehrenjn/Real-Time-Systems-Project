@@ -25,7 +25,7 @@ public class FloorPressButtonEvent extends Event{
 	 * @param direction the direction that the person has selected
 	 * @param desiredFloor the floor the person would like to travel to
 	 */
-	public FloorPressButtonEvent(Date time, int currentFloor, Direction direction, int desiredFloor, int recipientId, int senderId) {
+	public FloorPressButtonEvent(int recipientId, int senderId, Date time, int currentFloor, Direction direction, int desiredFloor) {
 		super(NAME, recipientId, senderId);
 		this.time = time;
 		this.currentFloor = currentFloor;

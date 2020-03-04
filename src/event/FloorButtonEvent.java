@@ -16,7 +16,7 @@ public class FloorButtonEvent extends Event {
 	 * @param direction the direction the person would like to go
 	 * @param floor the floor the person is on
 	 */
-	public FloorButtonEvent(Direction direction, int floor, int recipientId, int senderId) {
+	public FloorButtonEvent(int recipientId, int senderId, Direction direction, int floor) {
 		super(NAME, recipientId, senderId);
 		this.direction = direction;
 		this.floor = floor;

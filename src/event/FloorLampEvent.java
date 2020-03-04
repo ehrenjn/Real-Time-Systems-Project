@@ -16,7 +16,7 @@ public class FloorLampEvent extends Event {
 	 * @param lampState the state that the direction lamp should be in
 	 * @param direction the direction lamp you would like to change
 	 */
-	public FloorLampEvent(LampState lampState, Direction direction, int recipientId, int senderId) {
+	public FloorLampEvent(int recipientId, int senderId, LampState lampState, Direction direction) {
 		super(NAME, recipientId, senderId);
 		this.lampState = lampState;
 		this.direction = direction;

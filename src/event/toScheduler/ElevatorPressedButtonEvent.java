@@ -11,11 +11,11 @@ public class ElevatorPressedButtonEvent extends Event {
 	
 	/**
 	 * 
-	 * @param desiredFloor the floor the person is requesting
 	 * @param recipientId the id of the recipient of this event
 	 * @param senderId the id of the sender of this event
+	 * @param desiredFloor the floor the person is requesting
 	 */
-	public ElevatorPressedButtonEvent(int desiredFloor, int recipientId, int senderId) {
+	public ElevatorPressedButtonEvent(int recipientId, int senderId, int desiredFloor) {
 		super(NAME, recipientId, senderId);
 		this.desiredFloor = desiredFloor;
 	}
