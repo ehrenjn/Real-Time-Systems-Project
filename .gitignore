@@ -3,6 +3,9 @@
 .project
 .settings/*
 
-# ignore compiled files
+# Ignore compiled files
 bin/*
 /bin/
+
+# Ignore Ehren's todo.txt
+todo.txt
