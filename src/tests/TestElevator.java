@@ -2,7 +2,6 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +10,7 @@ import common.*;
 import elevator.*;
 import event.*;
 import event.toElevator.*;
-import event.toScheduler.FloorPressButtonEvent;
+import event.toScheduler.*;
 
 
 
@@ -21,12 +20,11 @@ public class TestElevator {
 	int numOfFloors = 22;
 	
 	/*
-	 * Test Elevator class
+	 * Test ElevatorState class
 	 */
 	//@Before
 	//public void setUp() {
-		Elevator testElevator = new Elevator(elevatorSock,numOfFloors);
-		
+		Elevator testElevator = new Elevator(elevatorSock,numOfFloors);		
 	//}
 	
 	@Test
@@ -54,7 +52,6 @@ public class TestElevator {
 		ElevatorPressedButtonEvent elevatorPressed = new ElevatorPressedButtonEvent(10,0,0);
 
 		assertEquals("Elevator button is pressed", elevatorPressed, elevatorSock.recieveEventOut());
-
 	}
 	
 	@Test
@@ -62,10 +59,6 @@ public class TestElevator {
 		
 	}
 	
-	@Test
-	public void TesthandleElevatorPressButtonEvent() {
-		
-	}
 	
 	@Test
 	public void TestHandleElevatorCloseDoorEvent() {
@@ -94,8 +87,13 @@ public class TestElevator {
 	
 	@Test
 	public void TestHandleElevatorButtonLampEvent() {
-	//	ElevatorButtonLampEvent elevatorButtonLampEvent = new ElevatorButtonLampEvent(2,1,3,LampState.ON);
-	//	assertEquals("Elevator Button Lamp should change state", testElevator.state, );
+		ElevatorButtonLampEvent elevatorButtonLampEvent = new ElevatorButtonLampEvent(2,1,3,LampState.ON);
+		testElevator.handleElevatorButtonLampEvent(elevatorButtonLampEvent);
+		
+		ElevatorButton
+		
+		
+		assertEquals("Event should match", elevatorButtonLampEvent,  );
 	}
 	
 	@Test
@@ -108,39 +106,6 @@ public class TestElevator {
 	}
 
 	
-	/*
-	 * Test ElevatorCloseDoorState
-	 * 
-	 */
-	
-	
-	/*
-	 * Test ElevatorClosingDoorState
-	 * 
-	 */
-	public void () {
-		
-	}
-	
-	/*
-	 * Test ElevatorFailureState
-	 * 
-	 */
-	
-	/*
-	 * Test ElevatorMovingState
-	 * 
-	 */
-	
-	/*
-	 * Test ElevatorOpenDoorState
-	 * 
-	 */
-	
-	/*
-	 * Test ElevatorOpeningDoorState
-	 * 
-	 */
 	
 }
 
