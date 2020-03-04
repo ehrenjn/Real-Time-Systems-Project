@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 	tests.TestEventReader.class,
-	tests.TestCommunicationSocket.class
+	tests.TestCommunicationSocket.class,
+	tests.TestElevator.class
 })
 
 public class AllTests {}

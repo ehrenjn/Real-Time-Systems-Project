@@ -10,7 +10,7 @@ import event.Event;
 public class Elevator {
 	
 	private CommunicationSocket elevatorSocket;
-	private ElevatorState state;
+	private ElevatorState state; 
 	
 	/**
 	 * Creates a new Elevator
@@ -205,6 +205,13 @@ public class Elevator {
 			default:
 				return 0;
 		}
+	}
+	
+	/**
+	 * @return state of the elevator
+	 */
+	public ElevatorState getState() {
+		return state;
 	}
 
 
