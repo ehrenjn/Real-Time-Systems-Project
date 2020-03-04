@@ -55,7 +55,7 @@ public class EventReader {
 				Direction newDirection = EventParseDirection(columns[2], lineNumber);
 				int newDesiredFloor = EventParseInt(columns[3], lineNumber);
 				//Fix this
-				events.add(new FloorPressButtonEvent(newTime, newCurrentFloor, newDirection, newDesiredFloor, Scheduler.SCHEDULER_ID, newCurrentFloor));
+				events.add(new FloorPressButtonEvent(Scheduler.SCHEDULER_ID, newCurrentFloor, newTime, newCurrentFloor, newDirection, newDesiredFloor));
 			}
 		}
 		

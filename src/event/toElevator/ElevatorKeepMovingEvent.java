@@ -14,11 +14,11 @@ public class ElevatorKeepMovingEvent extends Event {
 	
 	/**
 	 * Creates a new ElevatorKeepMovingEvent
-	 * @param direction the direction to keep moving in
 	 * @param recipientId the id of the recipient 
 	 * @param senderId id of the sender
+	 * @param direction the direction to keep moving in
 	 */
-	public ElevatorKeepMovingEvent(Direction direction, int recipientId, int senderId) {
+	public ElevatorKeepMovingEvent(int recipientId, int senderId, Direction direction) {
 		super(NAME, recipientId, senderId);
 		this.direction = direction;
 	}

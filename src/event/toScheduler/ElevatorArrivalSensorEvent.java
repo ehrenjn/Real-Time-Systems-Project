@@ -11,11 +11,11 @@ public class ElevatorArrivalSensorEvent extends Event {
 	
 	/**
 	 * Creates a new ElevatorArrivalSensorEvent
-	 * @param arrivingFloor the floor we are arriving at
 	 * @param recipientId the id of the recipient of this event
 	 * @param senderId the id of the sender of this event
+	 * @param arrivingFloor the floor we are arriving at
 	 */
-	public ElevatorArrivalSensorEvent(int arrivingFloor, int recipientId, int senderId) {
+	public ElevatorArrivalSensorEvent(int recipientId, int senderId, int arrivingFloor) {
 		super(NAME, recipientId, senderId);
 		this.arrivingFloor = arrivingFloor;
 	}

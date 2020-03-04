@@ -51,7 +51,7 @@ public class TestElevator {
 		ElevatorPressButtonEvent elevatorPBE = new ElevatorPressButtonEvent(0,0,10);
 		testElevator.handleElevatorPressButtonEvent(elevatorPBE);
 		
-		ElevatorPressedButtonEvent elevatorPressed = new ElevatorPressedButtonEvent(10,0,0);
+		ElevatorPressedButtonEvent elevatorPressed = new ElevatorPressedButtonEvent(0,0,10);
 
 		assertEquals("Elevator button is pressed", elevatorPressed, elevatorSock.recieveEventOut());
 	}
@@ -93,12 +93,12 @@ public class TestElevator {
 	@Test
 	public void TestHandleElevatorStartMovingEvent() {
 		
-		ElevatorStartMovingEvent elevatorSME = new ElevatorStartMovingEvent(common.Direction.UP, 0, 0);
+		ElevatorStartMovingEvent elevatorSME = new ElevatorStartMovingEvent(0, 0, common.Direction.UP);
 		testElevator.handleElevatorStartMovingEvent(elevatorSME);
 		
 		ElevatorState testState = testElevator.getState();
 		int nextFloor = testState.getCurrentFloor() +1;
-		ElevatorArrivalSensorEvent elevatorMove = new ElevatorArrivalSensorEvent(nextFloor, 0, 0);
+		ElevatorArrivalSensorEvent elevatorMove = new ElevatorArrivalSensorEvent(0, 0, nextFloor);
 		
 		assertEquals("Elevator is moving", elevatorMove, elevatorSock.recieveEventOut());
 		
@@ -107,12 +107,12 @@ public class TestElevator {
 	@Test
 	public void TestHandleElevatorKeepMovingEvent() {
 		
-		ElevatorKeepMovingEvent elevatorKME = new ElevatorKeepMovingEvent(common.Direction.UP, 0, 0);
+		ElevatorKeepMovingEvent elevatorKME = new ElevatorKeepMovingEvent(0, 0, common.Direction.UP);
 		testElevator.handleElevatorKeepMovingEvent(elevatorKME);
 		
 		ElevatorState testState = testElevator.getState();
 		int currFloor = testState.getCurrentFloor();
-		ElevatorArrivalSensorEvent elevatorMoving = new ElevatorArrivalSensorEvent(currFloor, 0, 0);
+		ElevatorArrivalSensorEvent elevatorMoving = new ElevatorArrivalSensorEvent(0, 0, currFloor);
 		
 		assertEquals("Elevator is still moving", elevatorMoving, elevatorSock.recieveEventOut());
 		

@@ -9,11 +9,11 @@ public class ElevatorStartMovingEvent extends Event{
 	
 	/**
 	 * Creates a new ElevatorStartMovingEvent
-	 * @param direction the direction the elevator should move
 	 * @param recipientId the id of the recipient 
 	 * @param senderId id of the sender
+	 * @param direction the direction the elevator should move
 	 */
-	public ElevatorStartMovingEvent(Direction direction, int recipientId, int senderId) {
+	public ElevatorStartMovingEvent(int recipientId, int senderId, Direction direction) {
 		super(NAME, recipientId, senderId);
 		this.direction = direction;
 	}
