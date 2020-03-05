@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import common.CommunicationSocket;
+import common.Constants;
 import elevator.ElevatorSubsystem;
 import event.Event;
 import floor.EventReader;
@@ -17,8 +18,8 @@ public class Main {
 		CommunicationSocket floorSocket = new CommunicationSocket();
 		int numberOfFloors = 22;
 		
-		ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem(elevatorSocket, numberOfFloors);
-		FloorSubsystem floorSubsystem = new FloorSubsystem(floorSocket, numberOfFloors);
+		ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem(elevatorSocket, Constants.NUM_ELEVATORS, Constants.NUM_FLOORS);
+		FloorSubsystem floorSubsystem = new FloorSubsystem(floorSocket, Constants.NUM_FLOORS);
 		SchedulerSubsystem schedulerSubsystem = new SchedulerSubsystem(elevatorSocket, floorSocket);
 		
 		Thread elevatorThread = new Thread(elevatorSubsystem);

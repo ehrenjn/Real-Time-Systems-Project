@@ -1,6 +1,7 @@
 package elevator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import common.CommunicationSocket;
 import event.Event;
@@ -16,8 +17,11 @@ public class ElevatorSubsystem implements Runnable {
 	 * @param numberOfFloors the number of floors the elevator must service
 	 */	
 	
-	public ElevatorSubsystem(CommunicationSocket elevatorSocket, int numberOfFloors) {
-		elevators = new Elevator[] {new Elevator(elevatorSocket, numberOfFloors)};
+	public ElevatorSubsystem(CommunicationSocket elevatorSocket, int numElevators, int numberOfFloors) {
+		elevators = new Elevator[numElevators];
+		for (int id = 0; id < numElevators; id++) {
+			elevators[id] = new Elevator(elevatorSocket, numberOfFloors);
+		}
 	}
 	
 	/**
