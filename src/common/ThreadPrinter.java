@@ -65,39 +65,8 @@ public class ThreadPrinter {
 	/**
 	 * @param width the width of the columns
 	 */
-	public static void setColumnWidth(int width) {
+	public synchronized static void setColumnWidth(int width) {
 		columnSize = width;
 	}
 	
-	
-	public static void main(String[] args) {
-		new Thread() {
-			public void run() {
-				for (int i = 0; i < 10; i++) {
-					ThreadPrinter.print("this is thread 1");
-				}
-			}
-		}.start();
-		new Thread() {
-			public void run() {
-				for (int i = 0; i < 10; i++) {
-					ThreadPrinter.print("this is thread 2");
-				}
-			}
-		}.start();
-		new Thread() {
-			public void run() {
-				for (int i = 0; i < 10; i++) {
-					ThreadPrinter.print("this is thread 3");
-				}
-			}
-		}.start();
-		new Thread() {
-			public void run() {
-				for (int i = 0; i < 10; i++) {
-					ThreadPrinter.print("this is thread 4");
-				}
-			}
-		}.start();
-	}
 }
