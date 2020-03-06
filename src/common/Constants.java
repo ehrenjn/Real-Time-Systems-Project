@@ -1,0 +1,11 @@
+package common;
+
+/**
+ * Constants for running each subsystem
+ */
+
+
+public class Constants {
+	public static final int NUM_ELEVATORS = 4;
+	public static final int NUM_FLOORS = 20;
+}

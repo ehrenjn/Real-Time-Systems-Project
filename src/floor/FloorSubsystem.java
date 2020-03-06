@@ -1,7 +1,7 @@
 package floor;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 import common.CommunicationSocket;
 import common.LampState;
@@ -23,8 +23,8 @@ public class FloorSubsystem implements Runnable{
 		this.floors = new Floor[numFloors];
 		this.floorSocket = floorSocket;
 		
-		for (int i = 0; i < numFloors; i++) {
-			this.floors[i] = new Floor(floorSocket, i);
+		for (int id = 0; id < numFloors; id++) {
+			this.floors[id] = new Floor(floorSocket, id);
 		}
 	}
 	

@@ -15,9 +15,8 @@ public class Scheduler {
 	public static final int ELEVATOR_ID = 0;
 	
 	//elevator state variables
-	private LinkedList<Integer> destinationQueue;
-	private Direction elevatorDirection;
-	private int elevatorCurrentFloor;
+	private ElevatorInfo[] elevators;
+	private LinkedList<FloorPressButtonEvent> unfulfilledRequests;
 	
 	/**
 	 * Constructs a new Scheduler
@@ -27,13 +26,13 @@ public class Scheduler {
 	public Scheduler(CommunicationSocket elevatorSocket, CommunicationSocket floorSocket) {
 		this.elevatorSocket = elevatorSocket;
 		this.floorSocket = floorSocket;
-		this.destinationQueue = new LinkedList<Integer>();
-		this.elevatorCurrentFloor = 0;
+		this.elevators = new ElevatorInfo[Constants.NUM_ELEVATORS];
+		for (int id = 0; id < elevators.length; id++) {
+			elevators[id] = new ElevatorInfo(id);
+		}
+		unfulfilledRequests = new LinkedList<FloorPressButtonEvent>();
 	}
 	
-	public boolean emptyQueue() {
-		return destinationQueue.isEmpty();
-	}
 	
 	/**
 	 * sends the floor event to the client
@@ -100,51 +99,85 @@ public class Scheduler {
 		}
 	}
 	
+	
 	public void handleFloorPressButtonEvent(FloorPressButtonEvent event) {
-		sendElevatorEventIn(new ElevatorPressButtonEvent(ELEVATOR_ID, SCHEDULER_ID, event.getDesiredFloor()));
-		destinationQueue.add(event.getCurrentFloor());
+		ElevatorInfo bestElevator = ALGORITHM(event);
+		
+		// no available elevator was found
+		if (bestElevator == null) {
+			unfulfilledRequests.add(event);
+		} 
+		
+		// we found an elevator, let's make it move
+		else {
+			// start moving the elevator if it isn't moving already
+			if (! bestElevator.hasStops() && bestElevator.getDirectionOfMovement() == Direction.IDLE) {
+				sendElevatorEventIn(new ElevatorPressButtonEvent(bestElevator.getId(), SCHEDULER_ID, event.getDesiredFloor()));
+			}
+			bestElevator.addStop(event.getCurrentFloor());
+		}
 	}
 	
+	
 	public void handleElevatorClosedDoorEvent(ElevatorClosedDoorEvent event) {
-		elevatorDirection = floorsToDirection(elevatorCurrentFloor, destinationQueue.getFirst());
+		ElevatorInfo sender = elevators[event.getSender()];
+		Direction elevatorDirection = floorsToDirection(sender.getCurrentFloor(), sender.getNextStop());
+		sender.setDirectionOfMovement(elevatorDirection);
 		sendElevatorEventIn(new ElevatorDirectionLampEvent(
-				event.getSender(), SCHEDULER_ID, elevatorDirection, LampState.ON));
+				sender.getId(), SCHEDULER_ID, elevatorDirection, LampState.ON));
 		sendElevatorEventIn(new ElevatorStartMovingEvent(event.getSender(), SCHEDULER_ID, elevatorDirection));
 	}
 	
+	
 	public void handleElevatorArrivalSensorEvent(ElevatorArrivalSensorEvent event) {
-		if (destinationQueue.getFirst() == event.getArrivingFloor()) {
-			sendElevatorEventIn(new ElevatorStopMovingEvent(ELEVATOR_ID, SCHEDULER_ID));
+		ElevatorInfo sender = elevators[event.getSender()];
+		if (event.getArrivingFloor() == sender.getNextStop()) {
+			sendElevatorEventIn(new ElevatorStopMovingEvent(sender.getId(), SCHEDULER_ID));
 		} else {
-			sendElevatorEventIn(new ElevatorKeepMovingEvent(ELEVATOR_ID, SCHEDULER_ID, elevatorDirection));
+			sendElevatorEventIn(new ElevatorKeepMovingEvent(sender.getId(), SCHEDULER_ID, sender.getDirectionOfMovement()));
 		}
-		elevatorCurrentFloor = event.getArrivingFloor();
+		sender.setCurrentFloor(event.getArrivingFloor());
 	}
 	
 	
 	public void handleElevatorPressedButtonEvent(ElevatorPressedButtonEvent event) {
-		destinationQueue.add(event.getDesiredFloor());
+		ElevatorInfo sender = elevators[event.getSender()];
+		sender.addStop(event.getDesiredFloor());
 		sendElevatorEventIn(new ElevatorCloseDoorEvent(ELEVATOR_ID, SCHEDULER_ID));
 	}
 	
 	
 	public void handleElevatorStoppedEvent(ElevatorStoppedEvent event) {
+		ElevatorInfo sender = elevators[event.getSender()];
 		sendElevatorEventIn(new ElevatorDirectionLampEvent(
-				event.getSender(), SCHEDULER_ID, elevatorDirection, LampState.OFF));
-		sendElevatorEventIn(new ElevatorOpenDoorEvent(event.getSender(), SCHEDULER_ID));
+				event.getSender(), SCHEDULER_ID, sender.getDirectionOfMovement(), LampState.OFF));
+		sendElevatorEventIn(new ElevatorOpenDoorEvent(sender.getId(), SCHEDULER_ID));
 	}
 	
 	
 	public void handleElevatorOpenedDoorEvent(ElevatorOpenedDoorEvent event) {
-		destinationQueue.pop();
-		if (! destinationQueue.isEmpty()) { //there was someone waiting for this elevator to go to another floor
-			int nextDestination = destinationQueue.getFirst();
-			Direction floorDirectionLamp = floorsToDirection(elevatorCurrentFloor, nextDestination);
-			sendFloorEventIn(new FloorLampEvent(elevatorCurrentFloor, SCHEDULER_ID, 
+		ElevatorInfo sender = elevators[event.getSender()];
+		sender.popNextStop();
+		if (sender.hasStops()) { //there was someone waiting for this elevator to go to another floor
+			int nextDestination = sender.getNextStop();
+			Direction floorDirectionLamp = floorsToDirection(sender.getCurrentFloor(), nextDestination);
+			sendFloorEventIn(new FloorLampEvent(sender.getCurrentFloor(), SCHEDULER_ID, 
 					LampState.OFF, floorDirectionLamp));
-			sendElevatorEventIn(new ElevatorButtonLampEvent(event.getSender(), SCHEDULER_ID, 
+			sendElevatorEventIn(new ElevatorButtonLampEvent(sender.getId(), SCHEDULER_ID, 
 					nextDestination, LampState.ON));
-			sendElevatorEventIn(new ElevatorCloseDoorEvent(event.getSender(), SCHEDULER_ID));
+			sendElevatorEventIn(new ElevatorCloseDoorEvent(sender.getId(), SCHEDULER_ID));
+		} 
+		
+		// do one of the unfulfilled requests if there's nowhere else to go
+		else if (! unfulfilledRequests.isEmpty()) { 
+			FloorPressButtonEvent request = unfulfilledRequests.pop();
+			sendElevatorEventIn(new ElevatorPressButtonEvent(sender.getId(), SCHEDULER_ID, request.getDesiredFloor()));
+			sender.addStop(request.getCurrentFloor());
+		} 
+		
+		// there's no unfulfilled requests so just chill
+		else {
+			sender.setDirectionOfMovement(Direction.IDLE);
 		}
 	}
 }
