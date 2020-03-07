@@ -81,6 +81,23 @@ public class EventSocket {
 			e.printStackTrace();
 			System.exit(1);
 		}
-		return EventSerializer.deserialize(buffer);
+		Event event = EventSerializer.deserialize(buffer);
+		return event;
+	}
+	
+	
+	/**
+	 * Gets the port of this event socket
+	 */
+	public int getPort() {
+		return socket.getLocalPort();
+	}
+	
+	
+	/**
+	 * Closes this EventSocket
+	 */
+	public void close() {
+		socket.close();
 	}
 }
