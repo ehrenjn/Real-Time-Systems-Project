@@ -1,9 +1,10 @@
 package event;
 
-import java.io.Serializable;
 import java.net.InetAddress;
+import java.io.*;
 
-public class Event implements Serializable {
+public class Event implements java.io.Serializable {
+
 	private String name;
 	private int recipientId;
 	private int senderId;
