@@ -7,3 +7,4 @@
 /Event.class
 /FloorButtonEvent.class
 /FloorLampEvent.class
+/EventSerializer.class

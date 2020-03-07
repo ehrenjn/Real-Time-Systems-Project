@@ -1,6 +1,7 @@
 package main;
 //import java.io.File;
 import java.io.*;
+import java.net.*;
 import java.util.ArrayList;
 
 import common.CommunicationSocket;
@@ -15,7 +16,7 @@ import scheduler.SchedulerSubsystem;
 
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 //		CommunicationSocket elevatorSocket = new CommunicationSocket();
 //		CommunicationSocket floorSocket = new CommunicationSocket();
 //		int numberOfFloors = 22;
@@ -37,32 +38,33 @@ public class Main {
 		ByteArrayOutputStream byteOut = null;
 		ByteArrayInputStream byteIn = null;
 		
-		try {
-			byteOut = new ByteArrayOutputStream();
-			
-			ObjectOutputStream out = new ObjectOutputStream(byteOut);
-			out.writeObject(sockEvent);
-			out.close();
-			
-		}catch(IOException e){
-			System.out.println("IOException caught.");
-		}
-		try {
-			byteIn = new ByteArrayInputStream(byteOut.toByteArray());
-			
-			ObjectInputStream in = new ObjectInputStream(byteIn);
-			FloorButtonEvent recEvent = (FloorButtonEvent)in.readObject();
-			in.close();
-			
-			System.out.println(recEvent);
-			System.out.println(recEvent.getFloor());
-			
-		}catch(IOException e){
-			System.out.println("IOException caught.");
-		}catch(ClassNotFoundException e){
-			System.out.println("ClassNotFoundException is caught.");
-		}
-		
-		
+
+		byteOut = new ByteArrayOutputStream();
+
+		ObjectOutputStream out = new ObjectOutputStream(byteOut);
+		out.writeObject(sockEvent);
+		out.close();
+		System.out.println("Event serialized.");
+
+		DatagramSocket dS = new DatagramSocket();
+		InetAddress ip = InetAddress.getByName("127.0.0.1");  
+		DatagramPacket dP = new DatagramPacket(byteOut.toByteArray(), byteOut.size(), ip, 3000);
+
+		dS.send(dP);
+		dS.close();
+		System.out.println("Datagram sent.");
+
+
+
+//		byteIn = new ByteArrayInputStream(byteOut.toByteArray());
+//
+//		ObjectInputStream in = new ObjectInputStream(byteIn);
+//		FloorButtonEvent recEvent = (FloorButtonEvent)in.readObject();
+//		in.close();
+//
+//		System.out.println(recEvent);
+//		System.out.println(recEvent.getFloor());
+
+
 	}
 }
