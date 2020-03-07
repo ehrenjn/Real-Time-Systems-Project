@@ -1,6 +1,8 @@
-package scheduler;
+package network;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
@@ -9,7 +11,7 @@ import java.util.LinkedList;
 import event.Event;
 
 public class RPCReceiver {
-	private DatagramSocket socket;
+	private EventSocket socket;
 	private EventQueue schedulerEventQueue;
 	private MultiRecipientEventQueue floorEventQueue;
 	private MultiRecipientEventQueue elevatorEventQueue;
@@ -24,30 +26,17 @@ public class RPCReceiver {
 		this.schedulerEventQueue = schedulerEventQueue;
 		this.floorEventQueue = floorEventQueue;
 		this.elevatorEventQueue = elevatorEventQueue;
-		try {
-			socket = new DatagramSocket(port);
-		} catch (SocketException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		socket = new EventSocket(port);
 	}
 	
 	
-	/**
-	 * Receives a DatagramPacket
-	 * @return the datagram packet sent to this socket
-	 */
-	private DatagramPacket receive() {
-		byte[] buffer = new byte[MAX_PACKET_SIZE];
-		DatagramPacket receiver = new DatagramPacket(buffer, buffer.length);
-		try {
-			socket.receive(receiver);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-		NetworkHelpers.printPacketInfo(receiver);
-		return receiver;
+	private Event receiveEvent() {
+		CODE();
+	}
+	
+	
+	private Event sendEvent() {
+		CODE();
 	}
 	
 	
@@ -71,7 +60,7 @@ public class RPCReceiver {
 			public void run() {
 				while (true) {
 					Event event = elevatorEventQueue.getEventForRecipients();
-					send(event);
+					sendEvent(event);
 				}
 			}
 		};
@@ -80,7 +69,7 @@ public class RPCReceiver {
 			public void run() {
 				while (true) {
 					Event event = floorEventQueue.getEventForRecipients();
-					send(event);
+					sendEvent(event);
 				}
 			}
 		};
