@@ -2,17 +2,20 @@ package floor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.net.InetAddress;
 
 import common.CommunicationSocket;
 import common.LampState;
 import event.*;
 import event.toScheduler.*;
 import floor.Floor;
+import network.NetworkHelpers;
 
 public class FloorSubsystem implements Runnable{
 	
 	private Floor[] floors;
 	private CommunicationSocket floorSocket;
+
 	
 	/**
 	 * Constructor of the FloorSubsystem

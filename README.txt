@@ -106,7 +106,32 @@ Ehran Julien-Neitzert (101046053)
 
 Naomi Lui-Hing (101040800)
 	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design, project documentation 
-	- javadoc 
+	- javadoc, tests
+
+Manel Oudjida (100945382)
+	- Responsible for Elevator Subsystem state machine design, project documentation, sequence diagram and UML class diagram.
+	- javadoc , sequenceDiagram.png , UMLClassDiagram.png
+	
+Nathan Fohkens (100946190) 
+	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design and Scheduler Subsystem state machine.
+	- Cooperative State Machine.png
+
+The Github repository containing the branch for iteration 1:  
+	- https://github.com/ehrenjn/Real-Time-Systems-Project/tree/
+	
+~ITERATION 3~
+
+Chris Wang (100951354) 
+	- Responsible for the implementation of the Elevator Subsystem state machine design, Floor state Subsystem machine design and Scheduler Subsystem state machine design.
+	- package: elevator, event.toElevator, floor, event, event.toScheduler, test
+	
+Ehran Julien-Neitzert (101046053)
+	- Responsible for the implementation of the Elevator Subsystem state machine design, Floor state Subsystem machine design and Scheduler Subsystem state machine design.
+	- package: scheduler floor, event, event.toScheduler
+
+Naomi Lui-Hing (101040800)
+	- Responsible for Serialization and Datagram Socket implementations,testing, project documentation 
+	- package: floor, elevator, network, tests
 
 Manel Oudjida (100945382)
 	- Responsible for Elevator Subsystem state machine design, project documentation, sequence diagram and UML class diagram.
