@@ -17,6 +17,7 @@ import event.Event;
 
 public class EventSocket {
 	private DatagramSocket socket;
+	private static final int MAX_PACKET_SIZE = 1024;
 	
 	
 	/**
@@ -71,7 +72,7 @@ public class EventSocket {
 	 * Receives a DatagramPacket
 	 * @return the datagram packet sent to this socket
 	 */
-	private Event receiveEvent() {
+	public Event receiveEvent() {
 		byte[] buffer = new byte[MAX_PACKET_SIZE];
 		DatagramPacket receiver = new DatagramPacket(buffer, buffer.length);
 		try {
