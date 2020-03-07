@@ -5,3 +5,5 @@
 /ElevatorStoppedEvent.class
 /ElevatorPressedButtonEvent.class
 /FloorPressButtonEvent.class
+/RequestForElevatorMessageEvent.class
+/RequestForFloorMessageEvent.class

@@ -4,3 +4,5 @@
 /TestEventReader.class
 /TestElevatorDoorCloseState.class
 /TestElevator.class
+/TestEvent.class
+/TestEventSocket.class

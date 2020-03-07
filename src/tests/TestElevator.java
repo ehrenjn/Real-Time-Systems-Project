@@ -1,8 +1,6 @@
 package tests;
 
 import static org.junit.Assert.*;
-
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,6 +9,7 @@ import elevator.*;
 import event.*;
 import event.toElevator.*;
 import event.toScheduler.*;
+import network.*;
 
 
 
