@@ -20,6 +20,13 @@ public class ElevatorInfo {
 		return id;
 	}
 	
+	/**
+	 * Returns the integer position of the floor the elevator was most recently at.
+	 * This can be either the floor that the elevator is currently stopped at,
+	 * or the floor that the elevator most recently passed while in transit. 
+	 * 
+	 * @return integer position of the floor the elevator was most recently at
+	 */
 	public int getCurrentFloor() {
 		return currentFloor;
 	}

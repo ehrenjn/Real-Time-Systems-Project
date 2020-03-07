@@ -1,4 +1,4 @@
-SYSC 3303 - Project Specification - Iteration 2 -
+SYSC 3303 - Project Specification - Iteration 3 -
 
 -----------------------------------------------------------------
 
@@ -55,6 +55,7 @@ FILE EXPLANATIONS:
 	- SchedulerSubsystem.java 
 		- When run from main(), initializes a scheduler object with a floor socket and a elevator socket.
 
+
 All Diagrams are located in the 'doc' folder
 	- ClassDiagram.png: The UML diagram of the System for Iteration 1
 	- ClassDiagramIteration2.png: The UML class diagrams for all of the state systems for Iteration2.
@@ -109,31 +110,28 @@ Manel Oudjida (100945382)
 Nathan Fohkens (100946190) 
 	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design and Scheduler Subsystem state machine.
 	- Cooperative State Machine.png
-
-The Github repository containing the branch for iteration 1:  
-	- https://github.com/ehrenjn/Real-Time-Systems-Project/tree/
 	
 ~ITERATION 3~
 
 Chris Wang (100951354) 
-	- Responsible for the implementation of the Elevator Subsystem state machine design, Floor state Subsystem machine design and Scheduler Subsystem state machine design.
-	- package: elevator, event.toElevator, floor, event, event.toScheduler, test
+	- Responsible for the implementation of the Elevator side of the RPC, and testing.
+	- package: RPCSender, test
 	
 Ehren Julien-Neitzert (101046053)
-	- Responsible for the implementation of the Elevator Subsystem state machine design, Floor state Subsystem machine design and Scheduler Subsystem state machine design.
-	- package: scheduler floor, event, event.toScheduler, network
+	- Responsible for the implementation of the Scheduler side of the RPC, and the Serialization and Datagram/socket stuff.
+	- package: RPCReceiver, network, common, elevator, event, event.toElevator, event.toScheduler, floor, scheduler
 
 Naomi Lui-Hing (101040800)
-	- Responsible for Serialization and DatagramSocket implementations,testing, project documentation 
+	- Responsible for Serialization and DatagramSocket implementations, testing, and project documentation.
 	- package: floor, elevator, network, tests
 
 Manel Oudjida (100945382)
-	- Responsible for Elevator Subsystem state machine design, project documentation, sequence diagram and UML class diagram.
-	- javadoc , sequenceDiagram.png
+	- Responsible for sequence diagram, readme and UML class diagram
+	- javadoc, sequenceDiagram.png , UMLClassDiagram.png
 	
 Nathan Fohkens (100946190) 
-	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design and Scheduler Subsystem state machine.
-	- package: scheduler, 
+	- Responsible for Scheduling Algorithm
+	- package: scheduler
 
 The Github repository containing the branch for iteration 1:  
 	- https://github.com/ehrenjn/Real-Time-Systems-Project/tree/
