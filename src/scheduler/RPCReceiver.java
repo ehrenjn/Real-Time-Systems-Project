@@ -10,15 +10,20 @@ import event.Event;
 
 public class RPCReceiver {
 	private DatagramSocket socket;
-	private SchedulerMessageQueue messageQueue;
+	private EventQueue schedulerEventQueue;
+	private MultiRecipientEventQueue floorEventQueue;
+	private MultiRecipientEventQueue elevatorEventQueue;
 	
 	
 	/**
 	 * Creates a new RPCReceiver
 	 * @param port the port to listen on
 	 */
-	public RPCReceiver(int port, SchedulerMessageQueue messageQueue) {
-		this.messageQueue = messageQueue;
+	public RPCReceiver(int port, EventQueue schedulerEventQueue, MultiRecipientEventQueue floorEventQueue, 
+	MultiRecipientEventQueue elevatorEventQueue) {
+		this.schedulerEventQueue = schedulerEventQueue;
+		this.floorEventQueue = floorEventQueue;
+		this.elevatorEventQueue = elevatorEventQueue;
 		try {
 			socket = new DatagramSocket(port);
 		} catch (SocketException e) {
@@ -52,23 +57,36 @@ public class RPCReceiver {
 				while (true) {
 					Event event = receiveEvent();
 					if (EVENT_FOR_SCHEDULER) {
-						messageQueue.sendToScheduler(event);
-					} else {
-						messageQueue.addElevatorWaitingForResponse(event.getSender());
+						schedulerEventQueue.addEvent(event);
+					} else if (REQUEST_FROM_ELEVATORS) {
+						elevatorEventQueue.addRecipientWaitingForEvent(event.getSender());
+					} else if (REQUEST_FROM_FLOORS) {
+						floorEventQueue.addRecipientWaitingForEvent(event.getSender());
 					}
 				}
 			}
 		};
-		Thread responseSender = new Thread() {
+		
+		Thread elevatorResponseSender = new Thread() {
 			public void run() {
 				while (true) {
-					Event event = messageQueue.getEventForElevators();
+					Event event = elevatorEventQueue.getEventForRecipients();
+					send(event);
+				}
+			}
+		};
+		
+		Thread floorResponseSender = new Thread() {
+			public void run() {
+				while (true) {
+					Event event = floorEventQueue.getEventForRecipients();
 					send(event);
 				}
 			}
 		};
 		
 		eventReceiver.start();
-		responseSender.start();
+		elevatorResponseSender.start();
+		floorResponseSender.start();
 	}
 }
