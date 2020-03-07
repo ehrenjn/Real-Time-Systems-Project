@@ -8,6 +8,7 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.LinkedList;
 
+import common.ThreadPrinter;
 import event.AcknowledgementEvent;
 import event.Event;
 import event.toScheduler.RequestForElevatorMessageEvent;
@@ -36,15 +37,22 @@ public class RPCReceiver {
 	public void start() {
 		Thread eventReceiver = new Thread() {
 			public void run() {
+				ThreadPrinter.print("This is the eventReceiver thread");
 				while (true) {
 					Event event = socket.receiveEvent();
-					if (event.getName() == RequestForElevatorMessageEvent.NAME) {
+					ThreadPrinter.print("Received event: " + event);
+					ThreadPrinter.print("event name: " + event.getName());
+					if (event.getName().equals(RequestForElevatorMessageEvent.NAME)) {
+						ThreadPrinter.print("got a request for elevator message");
 						elevatorEventQueue.addRecipientWaitingForEvent(event.getSender());
-					} else if (event.getName() == RequestForFloorMessageEvent.NAME) {
+					} else if (event.getName().equals(RequestForFloorMessageEvent.NAME)) {
+						ThreadPrinter.print("got a request for floor message");
 						floorEventQueue.addRecipientWaitingForEvent(event.getSender());
 					} else { // this is an event for the scheduler
+						ThreadPrinter.print("This event is for the scheduler");
 						AcknowledgementEvent ack = new AcknowledgementEvent(event.getSender(), event.getRecipient());
 						socket.sendEvent(ack, event.getSenderIp(), event.getSenderPort());
+						ThreadPrinter.print("Ack sent back to sender");
 						schedulerEventQueue.addEvent(event);
 					}
 				}
@@ -53,8 +61,10 @@ public class RPCReceiver {
 		
 		Thread elevatorResponseSender = new Thread() {
 			public void run() {
+				ThreadPrinter.print("This is the elevatorResponseSender thread");
 				while (true) {
 					Event event = elevatorEventQueue.getEventForRecipients();
+					ThreadPrinter.print("Received response: " + event);
 					socket.sendEvent(event, event.getToIp(), event.getToPort());
 				}
 			}
@@ -62,8 +72,10 @@ public class RPCReceiver {
 		
 		Thread floorResponseSender = new Thread() {
 			public void run() {
+				ThreadPrinter.print("This is the floorResponseSender thread");
 				while (true) {
 					Event event = floorEventQueue.getEventForRecipients();
+					ThreadPrinter.print("Received response: " + event);
 					socket.sendEvent(event, event.getToIp(), event.getToPort());
 				}
 			}

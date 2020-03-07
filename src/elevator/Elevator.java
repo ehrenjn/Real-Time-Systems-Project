@@ -213,7 +213,7 @@ public class Elevator implements Runnable {
 	 * The method to run as in a Thread. Runs forever as it waits for incoming event
 	 */
 	public void run() {
-		Event event = rpcSender.receiveEvent(id);
+		Event event = rpcSender.receiveElevatorEvent(id);
 		ThreadPrinter.print("\nElevator recieved: " + event);
 		handleElevatorEvent(event);
 		ThreadPrinter.print("Elevator State:" + this + "\n");
