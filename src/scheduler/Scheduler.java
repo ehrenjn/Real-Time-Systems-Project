@@ -2,7 +2,6 @@ package scheduler;
 
 import java.util.LinkedList;
 
-import common.CommunicationSocket;
 import event.toScheduler.*;
 import network.MultiRecipientEventQueue;
 import event.toElevator.*;
@@ -15,6 +14,10 @@ public class Scheduler {
 	public static final int SCHEDULER_ID = 0;
 	
 	//elevator state variables
+	
+	/**
+	 * @param elevators An array of elevators available to the scheduler. 
+	 */
 	private ElevatorInfo[] elevators;
 	private LinkedList<FloorPressButtonEvent> unfulfilledRequests;
 	
@@ -62,9 +65,12 @@ public class Scheduler {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param event
+	 */
 	public void handleFloorPressButtonEvent(FloorPressButtonEvent event) {
-		ElevatorInfo bestElevator = ALGORITHM(event);
+		ElevatorInfo bestElevator = findBestElevator(event);
 		
 		// no available elevator was found
 		if (bestElevator == null) {
@@ -79,6 +85,46 @@ public class Scheduler {
 						bestElevator.getId(), SCHEDULER_ID, event.getDesiredFloor()));
 			}
 			bestElevator.addStop(event.getCurrentFloor());
+		}
+	}
+	
+	/**
+	 * Returns the nearest elevator to the eventFloor that is either idle, or in transit towards the eventFloor & traveling in the same direction of the event.
+	 * 
+	 * @param inputEvent Expect a floor event from a user pushing an "UP" or "DOWN" button.
+	 * @return bestElevator the nearest elevator to the eventFloor
+	 */
+	private ElevatorInfo findBestElevator(FloorPressButtonEvent inputEvent) {
+		ElevatorInfo bestElevator;
+		
+		for (ElevatorInfo elevatorInfo : elevators) {
+			if (elevatorCanPickup(elevatorInfo, inputEvent) || elevatorInfo.getDirectionOfMovement() == Direction.IDLE) {
+				if((bestElevator.getCurrentFloor() - inputEvent.getCurrentFloor()) < (bestElevator.getCurrentFloor() - inputEvent.getCurrentFloor())) {
+					bestElevator = elevatorInfo;
+				}
+			}
+		}
+		return bestElevator;
+	}
+	
+	/**
+	 * Returns true IF the elevator is moving toward the floor of the buttonEvent.
+	 * 
+	 * @param elevatorInfo
+	 * @param inputEvent
+	 * @return boolean
+	 */
+	private boolean elevatorCanPickup(ElevatorInfo elevatorInfo, FloorPressButtonEvent inputEvent) {
+		if ((elevatorInfo.getDirectionOfMovement() == Direction.UP && inputEvent.getDirection() == Direction.UP) &&
+				(elevatorInfo.getCurrentFloor() - inputEvent.getCurrentFloor()) < 0) {
+			return true;
+		}
+		else if ((elevatorInfo.getDirectionOfMovement() == Direction.DOWN && inputEvent.getDirection() == Direction.DOWN) &&
+				(elevatorInfo.getCurrentFloor() - inputEvent.getCurrentFloor() > 0)) {
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 	
