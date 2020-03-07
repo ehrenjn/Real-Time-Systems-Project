@@ -8,7 +8,10 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.LinkedList;
 
+import event.AcknowledgementEvent;
 import event.Event;
+import event.toScheduler.RequestForElevatorMessageEvent;
+import event.toScheduler.RequestForFloorMessageEvent;
 
 public class RPCReceiver {
 	private EventSocket socket;
@@ -30,27 +33,19 @@ public class RPCReceiver {
 	}
 	
 	
-	private Event receiveEvent() {
-		CODE();
-	}
-	
-	
-	private Event sendEvent() {
-		CODE();
-	}
-	
-	
 	public void start() {
 		Thread eventReceiver = new Thread() {
 			public void run() {
 				while (true) {
-					Event event = receiveEvent();
-					if (EVENT_FOR_SCHEDULER) {
-						schedulerEventQueue.addEvent(event);
-					} else if (REQUEST_FROM_ELEVATORS) {
+					Event event = socket.receiveEvent();
+					if (event.getName() == RequestForElevatorMessageEvent.NAME) {
 						elevatorEventQueue.addRecipientWaitingForEvent(event.getSender());
-					} else if (REQUEST_FROM_FLOORS) {
+					} else if (event.getName() == RequestForFloorMessageEvent.NAME) {
 						floorEventQueue.addRecipientWaitingForEvent(event.getSender());
+					} else { // this is an event for the scheduler
+						AcknowledgementEvent ack = new AcknowledgementEvent(event.getSender(), event.getRecipient());
+						socket.sendEvent(ack, event.getSenderIp(), event.getSenderPort());
+						schedulerEventQueue.addEvent(event);
 					}
 				}
 			}
@@ -60,7 +55,7 @@ public class RPCReceiver {
 			public void run() {
 				while (true) {
 					Event event = elevatorEventQueue.getEventForRecipients();
-					sendEvent(event);
+					socket.sendEvent(event, event.getToIp(), event.getToPort());
 				}
 			}
 		};
@@ -69,7 +64,7 @@ public class RPCReceiver {
 			public void run() {
 				while (true) {
 					Event event = floorEventQueue.getEventForRecipients();
-					sendEvent(event);
+					socket.sendEvent(event, event.getToIp(), event.getToPort());
 				}
 			}
 		};
