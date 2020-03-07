@@ -1,30 +1,26 @@
 package scheduler;
 
-import common.CommunicationSocket;
-
+import common.Constants;
+import common.*;
 import event.Event;
-import event.toScheduler.*;
 
-public class SchedulerSubsystem implements Runnable {
-	private Scheduler scheduler;
-	
-	/**
-	 * Constructor of the SchedulerSubsystem
-	 * @param elevatorSocket the socket for the elevator to receive and send events on
-	 * @param floorSocket the socket for the floor to receive and send events on
-	 */
-	
-	public SchedulerSubsystem(CommunicationSocket elevatorSocket, CommunicationSocket floorSocket) {
-		this.scheduler = new Scheduler(elevatorSocket, floorSocket);
-	}
+public class SchedulerSubsystem {
 	
 	/**
 	 * The method to run as in a Thread. Runs forever as it waits for incoming event
 	 */
-	public void run() {
+	public static void main(String[] args) {
+		EventQueue schedulerEventQueue = new EventQueue();
+		MultiRecipientEventQueue floorEventQueue = new MultiRecipientEventQueue();
+		MultiRecipientEventQueue elevatorEventQueue = new MultiRecipientEventQueue();
+		
+		RPCReceiver server = new RPCReceiver(Constants.SCHEDULER_PORT, schedulerEventQueue, floorEventQueue, elevatorEventQueue);
+		server.start();
+		
+		Scheduler scheduler = new Scheduler(floorEventQueue, elevatorEventQueue);
 		while(true) {
-			Event event = getNextEvent();
-			System.out.println("Scheduler recieved: " + event);
+			Event event = schedulerEventQueue.getNextEvent();
+			ThreadPrinter.print("Scheduler recieved: " + event);
 			scheduler.handleEvent(event);
 		}
 	}
