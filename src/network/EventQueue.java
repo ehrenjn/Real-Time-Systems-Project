@@ -1,4 +1,4 @@
-package scheduler;
+package network;
 
 import java.util.LinkedList;
 

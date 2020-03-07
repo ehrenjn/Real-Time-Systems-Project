@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import common.CommunicationSocket;
 import event.toScheduler.*;
+import network.MultiRecipientEventQueue;
 import event.toElevator.*;
 import event.*;
 import common.*;
