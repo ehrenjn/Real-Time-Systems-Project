@@ -4,3 +4,5 @@
 /LampState.class
 /ToElevatorEvent.class
 /ToSchedulerEvent.class
+/Constants.class
+/ThreadPrinter.class

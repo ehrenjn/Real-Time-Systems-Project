@@ -1,6 +1,8 @@
 package event;
 
-public class Event {
+import java.io.*;
+
+public class Event implements java.io.Serializable {
 	private String name;
 	private int recipientId;
 	private int senderId;
