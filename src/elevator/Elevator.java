@@ -1,44 +1,32 @@
 package elevator;
 
+import java.net.InetAddress;
+
 import common.CommunicationSocket;
+import common.Constants;
 import common.Direction;
 import common.LampState;
+import common.ThreadPrinter;
 import event.toScheduler.*;
+import network.RPCSender;
 import event.toElevator.*;
 import event.Event;
 
-public class Elevator {
+public class Elevator implements Runnable {
 	
-	private CommunicationSocket elevatorSocket;
+	private RPCSender rpcSender;
 	private ElevatorState state; 
+	private int id;
 	
 	/**
 	 * Creates a new Elevator
 	 * @param elevatorSocket the socket for the elevator to receive and send events on
 	 * @param numberOfFloors the number of floors the elevator must service
 	 */
-	public Elevator(CommunicationSocket elevatorSocket, int numberOfFloors) {
-		this.elevatorSocket = elevatorSocket;
+	public Elevator(int numberOfFloors, int id, InetAddress schedulerIp) {
+		this.id = id;
+		this.rpcSender = new RPCSender(schedulerIp, Constants.SCHEDULER_PORT);
 		this.state = new ElevatorOpenDoorState(numberOfFloors);
-	}
-	
-	
-	/**
-	 * Receives an event
-	 * @return the received event
-	 */
-	public Event recieveEventIn(){
-		Event event = this.elevatorSocket.recieveEventIn();
-		return event;
-	}
-	
-	/**
-	 * Sends an event
-	 * @param event event to send
-	 */
-	public void sendEventOut(Event event){
-		System.out.println("Elevator sending: " + event);
-		this.elevatorSocket.sendEventOut(event);
 	}
 	
 	/**
@@ -92,7 +80,7 @@ public class Elevator {
 		int sender = elevatorPressButtonEvent.getSender();
 		int button = elevatorPressButtonEvent.getButton();
 		ElevatorPressedButtonEvent event = new ElevatorPressedButtonEvent(sender, recipient, button);
-		this.sendEventOut(event);
+		rpcSender.sendEvent(event);
 	}	
 
 	/**
@@ -111,7 +99,7 @@ public class Elevator {
 		int recipient = elevatorCloseDoorEvent.getRecipient();
 		int sender = elevatorCloseDoorEvent.getSender();
 		ElevatorClosedDoorEvent event = new ElevatorClosedDoorEvent(sender, recipient);
-		this.sendEventOut(event);
+		rpcSender.sendEvent(event);
 	}
 	
 	/**
@@ -120,7 +108,7 @@ public class Elevator {
 	 */
 	public void handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorOpenDoorEvent) {
 		this.state = this.state.handleElevatorOpenDoorEvent(elevatorOpenDoorEvent);
-		//Sleep to simulate door opening
+		// sleep to simulate door opening
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -132,7 +120,7 @@ public class Elevator {
 		int sender = elevatorOpenDoorEvent.getSender();
 		
 		ElevatorOpenedDoorEvent event = new ElevatorOpenedDoorEvent(sender, recipient);
-		this.sendEventOut(event);
+		rpcSender.sendEvent(event);
 	}
 	
 	/**
@@ -152,7 +140,7 @@ public class Elevator {
 		this.state.setCurrentFloor(arrivingFloor);
 		
 		ElevatorArrivalSensorEvent event = new ElevatorArrivalSensorEvent(sender, recipient, arrivingFloor);
-		this.sendEventOut(event);
+		rpcSender.sendEvent(event);
 	}
 	
 	/**
@@ -168,7 +156,7 @@ public class Elevator {
 		this.state.setCurrentFloor(arrivingFloor);
 		
 		ElevatorArrivalSensorEvent event = new ElevatorArrivalSensorEvent(sender, recipient, this.state.getCurrentFloor());
-		this.sendEventOut(event);
+		rpcSender.sendEvent(event);
 	}
 	
 	/**
@@ -182,7 +170,7 @@ public class Elevator {
 		this.state.setButtonLamp(this.state.currentFloor, LampState.OFF);
 		
 		ElevatorStoppedEvent event = new ElevatorStoppedEvent(sender, recipient);
-		this.sendEventOut(event);
+		rpcSender.sendEvent(event);
 	}
 	
 	/**
@@ -218,5 +206,16 @@ public class Elevator {
 	@Override
 	public String toString() {
 		return state.toString();
+	}
+	
+	
+	/**
+	 * The method to run as in a Thread. Runs forever as it waits for incoming event
+	 */
+	public void run() {
+		Event event = rpcSender.receiveEvent(id);
+		ThreadPrinter.print("\nElevator recieved: " + event);
+		handleElevatorEvent(event);
+		ThreadPrinter.print("Elevator State:" + this + "\n");
 	}
 }

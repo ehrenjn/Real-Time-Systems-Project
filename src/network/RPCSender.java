@@ -4,7 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 
+import common.Constants;
 import event.Event;
+import event.toScheduler.RequestForElevatorMessageEvent;
 
 public class RPCSender {
 	private EventSocket socket;
@@ -22,19 +24,27 @@ public class RPCSender {
 		socket = new EventSocket();
 	}
 	
-	/**
-	 * Receives a new message from an RPCReceiver
-	 * @return the message received
-	 */
-	private Event receiveEvent() {
-		CODE();
-	}
 	
 	/**
-	 * Sends a message to an RPCReceiver
-	 * @param data the message to send
+	 * Receives an event
+	 * @param fromId the id of the object calling this RPCSender
+	 * @return the received event
 	 */
-	private Event sendEvent() {
-		CODE();
+	public Event receiveEvent(int thisId) {
+		RequestForElevatorMessageEvent request = new RequestForElevatorMessageEvent(Constants.DUMMY_ID, thisId);
+		request.setSenderIp(NetworkHelpers.getLocalIp());
+		request.setSenderPort(socket.getPort());
+		socket.sendEvent(request, destinationIp, destinationPort);
+		return socket.receiveEvent();
+	}
+	
+
+	/**
+	 * Sends an event 
+	 * @param event the event to send
+	 */
+	public void sendEvent(Event event) {
+		socket.sendEvent(event, destinationIp, destinationPort);
+		socket.receiveEvent(); // wait for acknowledgement
 	}
 }
