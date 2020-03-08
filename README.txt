@@ -65,6 +65,10 @@ All Diagrams are located in the 'doc' folder
 
 -----------------------------------------------------------------
 
+Iteration 3 Reflection
+	In iteration 3, there are now multiple threads in the Scheduler, compared to Iteration 2, so that the scheduler can handle event requests asynchronously.
+
+-----------------------------------------------------------------
 BREAKDOWN OF RESPONSIBILITIES
  ~ITERATION 1~
 
