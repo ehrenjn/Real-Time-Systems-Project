@@ -2,6 +2,7 @@ package floor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.net.InetAddress;
 
 import common.CommunicationSocket;
 import common.Constants;
@@ -15,6 +16,7 @@ import network.RPCSender;
 
 public class FloorSubsystem {
 	
+
 	// The relative filepath to read events from (starting from the project root)
 	private static final String fileLocation = "floorEvents.tsv";
 	

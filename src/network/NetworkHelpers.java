@@ -33,7 +33,7 @@ public class NetworkHelpers {
 	public static InetAddress getIPFromInput() {
 		
 		try(Scanner scanner = new Scanner(System.in)){
-			System.out.print("EnterIP of the Scheduler: ");
+			System.out.print("Enter IP of the Scheduler: ");
 			
 			String input = scanner.nextLine();
 			
