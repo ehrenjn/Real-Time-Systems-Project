@@ -83,7 +83,10 @@ public class Scheduler {
 			if (! bestElevator.hasStops() && bestElevator.getDirectionOfMovement() == Direction.IDLE) {
 				elevatorEventQueue.addEvent(new ElevatorPressButtonEvent(
 						bestElevator.getId(), SCHEDULER_ID, event.getDesiredFloor()));
-				bestElevator.appendStop(event.getCurrentFloor());
+				// don't move the elevator if it's already on the right floor
+				if (bestElevator.getCurrentFloor() != event.getCurrentFloor()) {
+					bestElevator.appendStop(event.getCurrentFloor());
+				}
 			} else {
 				bestElevator.addIntermediateStop(event.getCurrentFloor());
 				bestElevator.addIntermediateStop(event.getDesiredFloor());
@@ -201,7 +204,7 @@ public class Scheduler {
 			FloorPressButtonEvent request = unfulfilledRequests.pop();
 			elevatorEventQueue.addEvent(new ElevatorPressButtonEvent(
 					sender.getId(), SCHEDULER_ID, request.getDesiredFloor()));
-			sender.addIntermediateStop(request.getCurrentFloor());
+			sender.appendStop(request.getCurrentFloor());
 		} 
 		
 		// there's no unfulfilled requests so just chill
