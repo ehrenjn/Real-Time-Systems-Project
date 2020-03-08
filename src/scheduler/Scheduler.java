@@ -65,17 +65,17 @@ public class Scheduler {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param event
-	 */
+
 	public void handleFloorPressButtonEvent(FloorPressButtonEvent event) {
+		ThreadPrinter.print("in handleFloorPressButtonEvent");
 		ElevatorInfo bestElevator = findBestElevator(event);
+		ThreadPrinter.print("best elevator found: " + bestElevator);
 		
 		// no available elevator was found
 		if (bestElevator == null) {
+			ThreadPrinter.print("no best elevator found");
 			unfulfilledRequests.add(event);
-		} 
+		}
 		
 		// we found an elevator, let's make it move
 		else {
@@ -95,11 +95,15 @@ public class Scheduler {
 	 * @return bestElevator the nearest elevator to the eventFloor
 	 */
 	private ElevatorInfo findBestElevator(FloorPressButtonEvent inputEvent) {
-		ElevatorInfo bestElevator;
+		ElevatorInfo bestElevator = null;
 		
 		for (ElevatorInfo elevatorInfo : elevators) {
-			if (elevatorCanPickup(elevatorInfo, inputEvent) || elevatorInfo.getDirectionOfMovement() == Direction.IDLE) {
-				if((bestElevator.getCurrentFloor() - inputEvent.getCurrentFloor()) < (bestElevator.getCurrentFloor() - inputEvent.getCurrentFloor())) {
+			if (elevatorCanPickup(elevatorInfo, inputEvent)) {
+				if (bestElevator == null) {
+					bestElevator = elevatorInfo;
+				}
+				else if((bestElevator.getCurrentFloor() - inputEvent.getCurrentFloor()) < 
+				(bestElevator.getCurrentFloor() - inputEvent.getCurrentFloor())) {
 					bestElevator = elevatorInfo;
 				}
 			}
@@ -114,23 +118,28 @@ public class Scheduler {
 	 * @param inputEvent
 	 * @return boolean
 	 */
-	private boolean elevatorCanPickup(ElevatorInfo elevatorInfo, FloorPressButtonEvent inputEvent) {
-		if ((elevatorInfo.getDirectionOfMovement() == Direction.UP && inputEvent.getDirection() == Direction.UP) &&
-				(elevatorInfo.getCurrentFloor() - inputEvent.getCurrentFloor()) < 0) {
+	private boolean elevatorCanPickup(ElevatorInfo elevator, FloorPressButtonEvent event) {
+		ThreadPrinter.print(elevator);
+		if (elevator.hasStops()) {
+			if ((elevator.getDirectionOfMovement() == Direction.UP) && (event.getDirection() == Direction.UP) &&
+			(elevator.getCurrentFloor() < event.getCurrentFloor()) && (elevator.getNextStop() > event.getDesiredFloor())) {
+				return true;
+			}
+			if ((elevator.getDirectionOfMovement() == Direction.DOWN) && (event.getDirection() == Direction.DOWN) &&
+			(elevator.getCurrentFloor() > event.getCurrentFloor()) && (elevator.getNextStop() < event.getDesiredFloor())) {
+				return true;
+			}
+		}
+		else if (elevator.getDirectionOfMovement() == Direction.IDLE) {
 			return true;
 		}
-		else if ((elevatorInfo.getDirectionOfMovement() == Direction.DOWN && inputEvent.getDirection() == Direction.DOWN) &&
-				(elevatorInfo.getCurrentFloor() - inputEvent.getCurrentFloor() > 0)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return false;
 	}
 	
 	
 	public void handleElevatorClosedDoorEvent(ElevatorClosedDoorEvent event) {
 		ElevatorInfo sender = elevators[event.getSender()];
+		ThreadPrinter.print("elevator info: " + sender);
 		Direction elevatorDirection = floorsToDirection(sender.getCurrentFloor(), sender.getNextStop());
 		sender.setDirectionOfMovement(elevatorDirection);
 		elevatorEventQueue.addEvent(new ElevatorDirectionLampEvent(
@@ -141,6 +150,8 @@ public class Scheduler {
 	
 	public void handleElevatorArrivalSensorEvent(ElevatorArrivalSensorEvent event) {
 		ElevatorInfo sender = elevators[event.getSender()];
+		ThreadPrinter.print("Arriving at floor " + event.getArrivingFloor());
+		ThreadPrinter.print("elevator info: " + sender);
 		if (event.getArrivingFloor() == sender.getNextStop()) {
 			elevatorEventQueue.addEvent(new ElevatorStopMovingEvent(sender.getId(), SCHEDULER_ID));
 		} else {
@@ -153,6 +164,7 @@ public class Scheduler {
 	
 	public void handleElevatorPressedButtonEvent(ElevatorPressedButtonEvent event) {
 		ElevatorInfo sender = elevators[event.getSender()];
+		ThreadPrinter.print("elevator info: " + sender);
 		sender.addStop(event.getDesiredFloor());
 		elevatorEventQueue.addEvent(new ElevatorCloseDoorEvent(sender.getId(), SCHEDULER_ID));
 	}
@@ -160,6 +172,7 @@ public class Scheduler {
 	
 	public void handleElevatorStoppedEvent(ElevatorStoppedEvent event) {
 		ElevatorInfo sender = elevators[event.getSender()];
+		ThreadPrinter.print("elevator info: " + sender);
 		elevatorEventQueue.addEvent(new ElevatorDirectionLampEvent(
 				event.getSender(), SCHEDULER_ID, sender.getDirectionOfMovement(), LampState.OFF));
 		elevatorEventQueue.addEvent(new ElevatorOpenDoorEvent(sender.getId(), SCHEDULER_ID));
@@ -168,6 +181,7 @@ public class Scheduler {
 	
 	public void handleElevatorOpenedDoorEvent(ElevatorOpenedDoorEvent event) {
 		ElevatorInfo sender = elevators[event.getSender()];
+		ThreadPrinter.print("elevator info: " + sender);
 		sender.popNextStop();
 		if (sender.hasStops()) { //there was someone waiting for this elevator to go to another floor
 			int nextDestination = sender.getNextStop();

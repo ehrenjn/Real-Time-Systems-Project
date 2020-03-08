@@ -4,48 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 import common.CommunicationSocket;
+import common.Constants;
 import common.LampState;
+import common.ThreadPrinter;
 import event.*;
 import event.toScheduler.*;
 import floor.Floor;
+import network.NetworkHelpers;
+import network.RPCSender;
 
-public class FloorSubsystem implements Runnable{
+public class FloorSubsystem {
 	
-	private Floor[] floors;
-	private CommunicationSocket floorSocket;
+	// The relative filepath to read events from (starting from the project root)
+	private static final String fileLocation = "floorEvents.tsv";
 	
-	/**
-	 * Constructor of the FloorSubsystem
-	 * @param floorSocket the socket for the floor to receive and send events on
-	 * @param numFloors the number of floors of the system
-	 */
-	public FloorSubsystem(CommunicationSocket floorSocket, int numFloors) { 
-		this.floors = new Floor[numFloors];
-		this.floorSocket = floorSocket;
-		
-		for (int id = 0; id < numFloors; id++) {
-			this.floors[id] = new Floor(floorSocket, id);
+	
+	public static void main(String[] args) {
+		ThreadPrinter.setColumnWidth(100);
+		Floor[] floors = new Floor[Constants.NUM_FLOORS];
+		for (int floorNum = 0; floorNum < floors.length; floorNum++) {
+			floors[floorNum] = new Floor(floorNum);
 		}
-	}
-	
-	/**
-	 * The method to run as in a Thread
-	 */
-	public void run() {
-		//The relative filepath to read events from (starting from the project root)
-		String fileLocation = "floorEvents.tsv";
-		
+		RPCSender rpcSender = new RPCSender(NetworkHelpers.getIPFromInput(), Constants.SCHEDULER_PORT);
 		ArrayList<FloorPressButtonEvent> events = EventReader.fromEventFile(fileLocation);
 		
 		for (FloorPressButtonEvent event: events) {
-			Floor floor = this.floors[event.getSender()];
+			ThreadPrinter.print(event);
+			Floor floor = floors[event.getSender()];
 			floor.changeButtonLampState(event.getDirection(), LampState.ON);
-			floor.sendEventOut(event);
-			System.out.println("Floor sent floor event out: " + event);
+			rpcSender.sendEvent(event);
+			ThreadPrinter.print("Floor sent floor event out: " + event);
 			
-			FloorLampEvent lampEvent = (FloorLampEvent) floorSocket.recieveEventIn();
+			FloorLampEvent lampEvent = (FloorLampEvent) rpcSender.receiveFloorEvent(floor.getFloorNumber());
 			System.out.println("Floor receieved event: " + lampEvent);
-			this.floors[lampEvent.getRecipient()].changeButtonLampState(
+			floors[lampEvent.getRecipient()].changeButtonLampState(
 					lampEvent.getDirection(), lampEvent.getLampState());
 		}
 	}
