@@ -25,7 +25,7 @@ public class SchedulerSubsystem {
 		RPCReceiver server = new RPCReceiver(Constants.SCHEDULER_PORT, schedulerEventQueue, floorEventQueue, elevatorEventQueue);
 		server.start();
 		
-		Scheduler scheduler = new Scheduler(floorEventQueue, elevatorEventQueue);
+		Scheduler scheduler = new Scheduler(elevatorEventQueue, floorEventQueue);
 		while(true) {
 			Event event = schedulerEventQueue.getNextEvent();
 			ThreadPrinter.print("Scheduler recieved: " + event);

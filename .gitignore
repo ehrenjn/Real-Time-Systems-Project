@@ -9,3 +9,6 @@ bin/*
 
 # Ignore Ehren's todo.txt
 todo.txt
+
+# Ignore temp files
+floorEvents - Copy.tsv

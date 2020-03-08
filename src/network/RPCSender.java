@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 
 import common.Constants;
+import common.ThreadPrinter;
 import event.Event;
 import event.toScheduler.RequestForElevatorMessageEvent;
 import event.toScheduler.RequestForFloorMessageEvent;
@@ -23,6 +24,7 @@ public class RPCSender {
 		destinationIp = toIp;
 		destinationPort = toPort;
 		socket = new EventSocket();
+		ThreadPrinter.print("starting RPCSender on " + NetworkHelpers.getLocalIp() + ":" + socket.getPort());
 	}
 	
 	

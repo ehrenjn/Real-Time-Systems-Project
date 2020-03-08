@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.LinkedList;
 
@@ -19,6 +20,8 @@ public class RPCReceiver {
 	private EventQueue schedulerEventQueue;
 	private MultiRecipientEventQueue floorEventQueue;
 	private MultiRecipientEventQueue elevatorEventQueue;
+	private InetAddress elevatorSubsystemAddress;
+	private InetAddress floorSubsystemAddress;
 	
 	
 	/**
@@ -41,13 +44,14 @@ public class RPCReceiver {
 				while (true) {
 					Event event = socket.receiveEvent();
 					ThreadPrinter.print("Received event: " + event);
-					ThreadPrinter.print("event name: " + event.getName());
 					if (event.getName().equals(RequestForElevatorMessageEvent.NAME)) {
 						ThreadPrinter.print("got a request for elevator message");
-						elevatorEventQueue.addRecipientWaitingForEvent(event.getSender());
+						RecipientAddress recipient = RecipientAddress.fromEvent(event);
+						elevatorEventQueue.addRecipientWaitingForEvent(recipient);
 					} else if (event.getName().equals(RequestForFloorMessageEvent.NAME)) {
 						ThreadPrinter.print("got a request for floor message");
-						floorEventQueue.addRecipientWaitingForEvent(event.getSender());
+						RecipientAddress recipient = RecipientAddress.fromEvent(event);
+						floorEventQueue.addRecipientWaitingForEvent(recipient);
 					} else { // this is an event for the scheduler
 						ThreadPrinter.print("This event is for the scheduler");
 						AcknowledgementEvent ack = new AcknowledgementEvent(event.getSender(), event.getRecipient());
@@ -55,6 +59,7 @@ public class RPCReceiver {
 						ThreadPrinter.print("Ack sent back to sender");
 						schedulerEventQueue.addEvent(event);
 					}
+					ThreadPrinter.print(" ");
 				}
 			}
 		};
