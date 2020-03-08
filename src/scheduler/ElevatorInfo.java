@@ -58,13 +58,19 @@ public class ElevatorInfo {
 	}
 	
 	/**
-	 * Adds a stop to this elevator
+	 * Adds a stop to this elevator thats before the final stop
 	 * @param floor the stop to add
 	 */
-	public void addStop(int floor) {
-		if (destinationQueue.size() <= 1) {
-			destinationQueue.add(floor);
-		} 
+	public void addIntermediateStop(int floor) {
+		if (destinationQueue.size() == 0) {
+			throw new IllegalArgumentException(String.format(
+					"Invalid intermediate stop (%d) for elevator: %s (can't add an intermediate stop on an elevator with no stops)",
+					floor, this)
+			);
+		}
+		if (destinationQueue.size() == 1) {
+			destinationQueue.push(floor);
+		}
 		else { // figure out where the stop can be squeezed in
 			for (int stop = 1; stop < destinationQueue.size(); stop++) {
 				int previousStop = destinationQueue.get(stop - 1);
@@ -73,17 +79,37 @@ public class ElevatorInfo {
 				(floor < previousStop && floor > nextStop)) {
 					destinationQueue.add(stop, floor);
 					ThreadPrinter.print("stop inserted at: " + stop);
-					break;
+					return;
 				}
 			}
+			throw new IllegalArgumentException(String.format("Invalid intermediate stop (%d) for elevator: %s", floor, this));
 		}
+	}
+	
+	
+	/**
+	 * Adds a stop to the end of this elevator's travels
+	 * @param floor the floor to stop at
+	 */
+	public void appendStop(int floor) {
+		destinationQueue.add(floor);
 	}
 	
 	
 	public String toString() {
 		return String.format(
-				"ElevatorInfo[id=%d, currentFloor=%d, direction=%s, nextDest=%d, totalDests=%d]", 
-				id, currentFloor, directionOfMovement, destinationQueue.peek(), destinationQueue.size()
+				"ElevatorInfo[id=%d, currentFloor=%d, direction=%s, destinationQueue=%s, totalDests=%d]", 
+				id, currentFloor, directionOfMovement, queueToString(), destinationQueue.size()
 		);
+	}
+	
+	private String queueToString() {
+		String result = "{ ";
+		for (Integer floor: destinationQueue) {
+			result += floor.toString();
+			result += " ";
+		}
+		result += "}";
+		return result;
 	}
 }

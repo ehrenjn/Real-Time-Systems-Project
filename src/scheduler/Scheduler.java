@@ -83,8 +83,11 @@ public class Scheduler {
 			if (! bestElevator.hasStops() && bestElevator.getDirectionOfMovement() == Direction.IDLE) {
 				elevatorEventQueue.addEvent(new ElevatorPressButtonEvent(
 						bestElevator.getId(), SCHEDULER_ID, event.getDesiredFloor()));
+				bestElevator.appendStop(event.getCurrentFloor());
+			} else {
+				bestElevator.addIntermediateStop(event.getCurrentFloor());
+				bestElevator.addIntermediateStop(event.getDesiredFloor());
 			}
-			bestElevator.addStop(event.getCurrentFloor());
 		}
 	}
 	
@@ -165,7 +168,7 @@ public class Scheduler {
 	public void handleElevatorPressedButtonEvent(ElevatorPressedButtonEvent event) {
 		ElevatorInfo sender = elevators[event.getSender()];
 		ThreadPrinter.print("elevator info: " + sender);
-		sender.addStop(event.getDesiredFloor());
+		sender.appendStop(event.getDesiredFloor());
 		elevatorEventQueue.addEvent(new ElevatorCloseDoorEvent(sender.getId(), SCHEDULER_ID));
 	}
 	
@@ -198,7 +201,7 @@ public class Scheduler {
 			FloorPressButtonEvent request = unfulfilledRequests.pop();
 			elevatorEventQueue.addEvent(new ElevatorPressButtonEvent(
 					sender.getId(), SCHEDULER_ID, request.getDesiredFloor()));
-			sender.addStop(request.getCurrentFloor());
+			sender.addIntermediateStop(request.getCurrentFloor());
 		} 
 		
 		// there's no unfulfilled requests so just chill
