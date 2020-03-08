@@ -1,4 +1,4 @@
-chpackage floor;
+package floor;
 
 import java.util.ArrayList;
 import common.CommunicationSocket;
