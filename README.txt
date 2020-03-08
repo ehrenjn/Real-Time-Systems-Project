@@ -1,4 +1,4 @@
-SYSC 3303 - Project Specification - Iteration 2 -
+SYSC 3303 - Project Specification - Iteration 3 -
 
 -----------------------------------------------------------------
 
@@ -52,14 +52,11 @@ FILE EXPLANATIONS:
 		- When run from main(), initializes an array of floors, each with an associated floor socket.
 	- SchedulerSubsystem.java 
 		- When run from main(), initializes a scheduler object with a floor socket and a elevator socket.
-<<<<<<< HEAD
 
-=======
 	-ElevatorState.java
 		- Abstract class that implements the base state for the elevator.
 	-ElevatorCloseDoorState.java, ElevatorClosingDoorState.java, ElevatorOpenDoorState.java, ElevatorOpeningDoorState.java, ElevatorMovingState.java
 		- Implements the five finite states of the elevator along with one additional failure state (ElevatorFailureState.java)
->>>>>>> 5794880d2396c8959ac788ca526f5b9627f69b07
 
 All Diagrams are located in the 'doc' folder
 	- ClassDiagram.png: The UML diagram of the System for Iteration 1
@@ -115,6 +112,28 @@ Manel Oudjida (100945382)
 Nathan Fohkens (100946190) 
 	- Responsible for Elevator Subsystem state machine design, Floor Subsystem state machine design and Scheduler Subsystem state machine.
 	- Cooperative State Machine.png
+
+~ITERATION 3~
+
+Chris Wang (100951354) 
+	- Responsible for the improvement of the implementation of the Elevator Subsystem, Floor Subsystem  and Scheduler Subsystem. Assisted with the elevator RPC design
+	- package: elevator, event.toElevator, floor, event, event.toScheduler
+	
+Ehran Julien-Neitzert (101046053)
+	- Responsible for the implementation of the multiple elevator RPC scheduler. Improve the implementation of Elevator Subsystem, Floor  Subsystem and Scheduler Subsystem.
+	- package: scheduler floor, event, event.toScheduler
+
+Naomi Lui-Hing (101040800)
+	- Responsible for testing and the serialization code
+	- package : tests 
+
+Manel Oudjida (100945382)
+	- Responsible for sequence diagram, readme and UML class diagram
+	- javadoc , sequenceDiagram.png , UMLClassDiagram.png
+	
+Nathan Fohkens (100946190) 
+	- Responsible for UDP presentation of the socket and testing.
+	- Package: tests
 
 The Github repository containing the branch for iteration 1:  
 	- https://github.com/ehrenjn/Real-Time-Systems-Project/tree/
