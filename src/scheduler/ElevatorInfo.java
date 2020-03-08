@@ -1,5 +1,6 @@
 package scheduler;
 
+import java.awt.JobAttributes.DestinationType;
 import java.util.LinkedList;
 
 import common.*;
@@ -11,6 +12,7 @@ public class ElevatorInfo {
 	private LinkedList<Integer> destinationQueue;
 	
 	public ElevatorInfo(int id) {
+		this.id = id;
 		currentFloor = 0;
 		directionOfMovement = Direction.IDLE;
 		destinationQueue = new LinkedList<Integer>();
@@ -55,7 +57,33 @@ public class ElevatorInfo {
 		return ! destinationQueue.isEmpty();
 	}
 	
+	/**
+	 * Adds a stop to this elevator
+	 * @param floor the stop to add
+	 */
 	public void addStop(int floor) {
-		destinationQueue.add(floor);
+		if (destinationQueue.size() <= 1) {
+			destinationQueue.add(floor);
+		} 
+		else { // figure out where the stop can be squeezed in
+			for (int stop = 1; stop < destinationQueue.size(); stop++) {
+				int previousStop = destinationQueue.get(stop - 1);
+				int nextStop = destinationQueue.get(stop);
+				if ((floor > previousStop && floor < nextStop) ||
+				(floor < previousStop && floor > nextStop)) {
+					destinationQueue.add(stop, floor);
+					ThreadPrinter.print("stop inserted at: " + stop);
+					break;
+				}
+			}
+		}
+	}
+	
+	
+	public String toString() {
+		return String.format(
+				"ElevatorInfo[id=%d, currentFloor=%d, direction=%s, nextDest=%d, totalDests=%d]", 
+				id, currentFloor, directionOfMovement, destinationQueue.peek(), destinationQueue.size()
+		);
 	}
 }

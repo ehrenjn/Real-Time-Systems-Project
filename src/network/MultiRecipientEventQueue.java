@@ -4,16 +4,17 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+import common.ThreadPrinter;
 import event.Event;
 
 public class MultiRecipientEventQueue {
 	private HashMap<Integer, LinkedList<Event>> messageQueues;
-	private HashSet<Integer> recipientsWaitingForResponse;
+	private HashSet<RecipientAddress> recipientsWaitingForResponse;
 	
 	
 	public MultiRecipientEventQueue() {
 		messageQueues = new HashMap<Integer, LinkedList<Event>>();
-		recipientsWaitingForResponse = new HashSet<Integer>();
+		recipientsWaitingForResponse = new HashSet<RecipientAddress>();
 	}
 	
 	
@@ -35,18 +36,21 @@ public class MultiRecipientEventQueue {
 	 * Registers a recipient as waiting for a response event from the scheduler
 	 * @param recipientId id of the recipient
 	 */
-	public synchronized void addRecipientWaitingForEvent(int recipientId) {
-		recipientsWaitingForResponse.add(recipientId);
+	public synchronized void addRecipientWaitingForEvent(RecipientAddress recipient) {
+		recipientsWaitingForResponse.add(recipient);
 		notifyAll();
 	}
 	
 	
 	private Event tryToGetNextEventForRecipients() {
-		for (int recipient: recipientsWaitingForResponse) {
-			LinkedList<Event> messages = messageQueues.get(recipient);
+		for (RecipientAddress recipient: recipientsWaitingForResponse) {
+			LinkedList<Event> messages = messageQueues.get(recipient.getId());
 			if (messages != null && ! messages.isEmpty()) {
 				recipientsWaitingForResponse.remove(recipient);
-				return messages.pop();
+				Event event = messages.pop();
+				event.setToIp(recipient.getIp()); // make sure event keeps track of where it should go
+				event.setToPort(recipient.getPort());
+				return event;
 			}
 		}
 		return null;
