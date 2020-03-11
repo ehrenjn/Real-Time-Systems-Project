@@ -49,7 +49,7 @@ public class Scheduler {
 	 * @param inputEvent
 	 * @return boolean
 	 */
-	private boolean elevatorCanPickup(ElevatorInfo elevator, FloorPressButtonEvent event) {
+	public boolean elevatorCanPickup(ElevatorInfo elevator, FloorPressButtonEvent event) {
 		ThreadPrinter.print(elevator);
 		if (elevator.hasStops()) {
 			if ((elevator.getDirectionOfMovement() == Direction.UP) && (event.getDirection() == Direction.UP) &&
@@ -73,7 +73,7 @@ public class Scheduler {
 	 * @param inputEvent Expect a floor event from a user pushing an "UP" or "DOWN" button.
 	 * @return bestElevator the nearest elevator to the eventFloor
 	 */
-	private ElevatorInfo findBestElevator(FloorPressButtonEvent inputEvent) {
+	public ElevatorInfo findBestElevator(FloorPressButtonEvent inputEvent) {
 		ElevatorInfo bestElevator = null;
 		
 		for (ElevatorInfo elevatorInfo : elevators) {
