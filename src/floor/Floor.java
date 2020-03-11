@@ -42,6 +42,21 @@ public class Floor{
 	public int getFloorNumber() {
 		return floorNumber;
 	}
+
+	
+	/**
+	 * @return upButton state
+	 */
+	public LampState getUpButton() {
+		return upButton;
+	}
+	
+	/**
+	 * @return upButton state
+	 */
+	public LampState getDownButton() {
+		return downButton;
+	}
 	
 }
 
