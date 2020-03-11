@@ -42,29 +42,53 @@ public class Scheduler {
 	}
 	
 	
-	public void handleEvent(Event event) {
-		switch (event.getName()) {
-			case ElevatorArrivalSensorEvent.NAME:
-				handleElevatorArrivalSensorEvent((ElevatorArrivalSensorEvent) event);
-				break;
-			case ElevatorPressedButtonEvent.NAME:
-				handleElevatorPressedButtonEvent((ElevatorPressedButtonEvent) event);
-				break;
-			case ElevatorClosedDoorEvent.NAME:
-				handleElevatorClosedDoorEvent((ElevatorClosedDoorEvent) event);
-				break;
-			case FloorPressButtonEvent.NAME:
-				handleFloorPressButtonEvent((FloorPressButtonEvent) event);
-				break;
-			case ElevatorStoppedEvent.NAME:
-				handleElevatorStoppedEvent((ElevatorStoppedEvent) event);
-				break;
-			case ElevatorOpenedDoorEvent.NAME:
-				handleElevatorOpenedDoorEvent((ElevatorOpenedDoorEvent) event);
-				break;
+	/**
+	 * Returns true IF the elevator is moving toward the floor of the buttonEvent.
+	 * 
+	 * @param elevatorInfo
+	 * @param inputEvent
+	 * @return boolean
+	 */
+	private boolean elevatorCanPickup(ElevatorInfo elevator, FloorPressButtonEvent event) {
+		ThreadPrinter.print(elevator);
+		if (elevator.hasStops()) {
+			if ((elevator.getDirectionOfMovement() == Direction.UP) && (event.getDirection() == Direction.UP) &&
+			(elevator.getCurrentFloor() < event.getCurrentFloor()) && (elevator.getNextStop() > event.getDesiredFloor())) {
+				return true;
+			}
+			if ((elevator.getDirectionOfMovement() == Direction.DOWN) && (event.getDirection() == Direction.DOWN) &&
+			(elevator.getCurrentFloor() > event.getCurrentFloor()) && (elevator.getNextStop() < event.getDesiredFloor())) {
+				return true;
+			}
 		}
+		else if (elevator.getDirectionOfMovement() == Direction.IDLE) {
+			return true;
+		}
+		return false;
 	}
 	
+	/**
+	 * Returns the nearest elevator to the eventFloor that is either idle, or in transit towards the eventFloor & traveling in the same direction of the event.
+	 * 
+	 * @param inputEvent Expect a floor event from a user pushing an "UP" or "DOWN" button.
+	 * @return bestElevator the nearest elevator to the eventFloor
+	 */
+	private ElevatorInfo findBestElevator(FloorPressButtonEvent inputEvent) {
+		ElevatorInfo bestElevator = null;
+		
+		for (ElevatorInfo elevatorInfo : elevators) {
+			if (elevatorCanPickup(elevatorInfo, inputEvent)) {
+				if (bestElevator == null) {
+					bestElevator = elevatorInfo;
+				}
+				else if((bestElevator.getCurrentFloor() - inputEvent.getCurrentFloor()) < 
+				(bestElevator.getCurrentFloor() - inputEvent.getCurrentFloor())) {
+					bestElevator = elevatorInfo;
+				}
+			}
+		}
+		return bestElevator;
+	}
 
 	public void handleFloorPressButtonEvent(FloorPressButtonEvent event) {
 		ThreadPrinter.print("in handleFloorPressButtonEvent");
@@ -92,54 +116,6 @@ public class Scheduler {
 				bestElevator.addIntermediateStop(event.getDesiredFloor());
 			}
 		}
-	}
-	
-	/**
-	 * Returns the nearest elevator to the eventFloor that is either idle, or in transit towards the eventFloor & traveling in the same direction of the event.
-	 * 
-	 * @param inputEvent Expect a floor event from a user pushing an "UP" or "DOWN" button.
-	 * @return bestElevator the nearest elevator to the eventFloor
-	 */
-	private ElevatorInfo findBestElevator(FloorPressButtonEvent inputEvent) {
-		ElevatorInfo bestElevator = null;
-		
-		for (ElevatorInfo elevatorInfo : elevators) {
-			if (elevatorCanPickup(elevatorInfo, inputEvent)) {
-				if (bestElevator == null) {
-					bestElevator = elevatorInfo;
-				}
-				else if((bestElevator.getCurrentFloor() - inputEvent.getCurrentFloor()) < 
-				(bestElevator.getCurrentFloor() - inputEvent.getCurrentFloor())) {
-					bestElevator = elevatorInfo;
-				}
-			}
-		}
-		return bestElevator;
-	}
-	
-	/**
-	 * Returns true IF the elevator is moving toward the floor of the buttonEvent.
-	 * 
-	 * @param elevatorInfo
-	 * @param inputEvent
-	 * @return boolean
-	 */
-	private boolean elevatorCanPickup(ElevatorInfo elevator, FloorPressButtonEvent event) {
-		ThreadPrinter.print(elevator);
-		if (elevator.hasStops()) {
-			if ((elevator.getDirectionOfMovement() == Direction.UP) && (event.getDirection() == Direction.UP) &&
-			(elevator.getCurrentFloor() < event.getCurrentFloor()) && (elevator.getNextStop() > event.getDesiredFloor())) {
-				return true;
-			}
-			if ((elevator.getDirectionOfMovement() == Direction.DOWN) && (event.getDirection() == Direction.DOWN) &&
-			(elevator.getCurrentFloor() > event.getCurrentFloor()) && (elevator.getNextStop() < event.getDesiredFloor())) {
-				return true;
-			}
-		}
-		else if (elevator.getDirectionOfMovement() == Direction.IDLE) {
-			return true;
-		}
-		return false;
 	}
 	
 	
@@ -210,6 +186,29 @@ public class Scheduler {
 		// there's no unfulfilled requests so just chill
 		else {
 			sender.setDirectionOfMovement(Direction.IDLE);
+		}
+	}
+	
+	public void handleEvent(Event event) {
+		switch (event.getName()) {
+			case ElevatorArrivalSensorEvent.NAME:
+				handleElevatorArrivalSensorEvent((ElevatorArrivalSensorEvent) event);
+				break;
+			case ElevatorPressedButtonEvent.NAME:
+				handleElevatorPressedButtonEvent((ElevatorPressedButtonEvent) event);
+				break;
+			case ElevatorClosedDoorEvent.NAME:
+				handleElevatorClosedDoorEvent((ElevatorClosedDoorEvent) event);
+				break;
+			case FloorPressButtonEvent.NAME:
+				handleFloorPressButtonEvent((FloorPressButtonEvent) event);
+				break;
+			case ElevatorStoppedEvent.NAME:
+				handleElevatorStoppedEvent((ElevatorStoppedEvent) event);
+				break;
+			case ElevatorOpenedDoorEvent.NAME:
+				handleElevatorOpenedDoorEvent((ElevatorOpenedDoorEvent) event);
+				break;
 		}
 	}
 }
