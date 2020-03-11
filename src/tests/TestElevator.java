@@ -16,31 +16,15 @@ import network.*;
 public class TestElevator {
 	
 	CommunicationSocket elevatorSock = new CommunicationSocket();
+	ElevatorState testState;
 	int numOfFloors = 22;
 	
 	/*
 	 * Test Elevator class
 	 */
-	//@Before
-	//public void setUp() {
-		Elevator testElevator = new Elevator(elevatorSock,numOfFloors);		
-	//}
-	
-	@Test
-	public void TestRecieveEventIn() {
-		Event testEvent = new Event("test",2,1);
-		elevatorSock.sendEventIn(testEvent);
-		
-		assertEquals("Elevator should have received event", testEvent, testElevator.recieveEventIn());
-	}
-	
-	@Test
-	public void TestSendEventOut() {
-		
-		Event testEvent = new Event("test",2,1);
-		elevatorSock.sendEventOut(testEvent);
-		
-		assertEquals("Elevator should have sent event", testEvent, elevatorSock.recieveEventOut());
+	@Before
+	public void setUp() {
+		testState = new ElevatorOpenDoorState(numOfFloors);		
 	}
 
 	
@@ -48,7 +32,7 @@ public class TestElevator {
 	public void TesthandleElevatorPressButtonEvent() {
 		
 		ElevatorPressButtonEvent elevatorPBE = new ElevatorPressButtonEvent(0,0,10);
-		testElevator.handleElevatorPressButtonEvent(elevatorPBE);
+		testState.handleElevatorPressButtonEvent(elevatorPBE);
 		
 		ElevatorPressedButtonEvent elevatorPressed = new ElevatorPressedButtonEvent(0,0,10);
 
@@ -58,9 +42,9 @@ public class TestElevator {
 	@Test
 	public void TestHandleElevatorDirectionLampEvent() {
 		ElevatorDirectionLampEvent elevatorDLE = new ElevatorDirectionLampEvent(0, 0, common.Direction.UP, common.LampState.ON);
-		testElevator.handleElevatorDirectionLampEvent(elevatorDLE);
+		testState.handleElevatorDirectionLampEvent(elevatorDLE);
 		
-		assertEquals("Direction lamp changed", elevatorDLE, testElevator.getState().handleElevatorDirectionLampEvent(elevatorDLE));
+		assertEquals("Direction lamp changed", elevatorDLE, testState.handleElevatorDirectionLampEvent(elevatorDLE));
 		
 	}
 	
@@ -69,7 +53,7 @@ public class TestElevator {
 	public void TestHandleElevatorCloseDoorEvent() {
 		
 		ElevatorCloseDoorEvent elevatorCDE = new ElevatorCloseDoorEvent(0,0);
-		testElevator.handleElevatorCloseDoorEvent(elevatorCDE);
+		testState.handleElevatorCloseDoorEvent(elevatorCDE);
 		
 		ElevatorClosedDoorEvent elevatorClosed = new ElevatorClosedDoorEvent(0, 0);
 		
@@ -81,7 +65,7 @@ public class TestElevator {
 	public void TestHandleElevatorOpenDoorEvent() {
 		
 		ElevatorOpenDoorEvent elevatorODE = new ElevatorOpenDoorEvent(0,0);
-		testElevator.handleElevatorOpenDoorEvent(elevatorODE);
+		testState.handleElevatorOpenDoorEvent(elevatorODE);
 		
 		ElevatorOpenedDoorEvent elevatorOpened = new ElevatorOpenedDoorEvent(0, 0);
 		
@@ -93,9 +77,9 @@ public class TestElevator {
 	public void TestHandleElevatorStartMovingEvent() {
 		
 		ElevatorStartMovingEvent elevatorSME = new ElevatorStartMovingEvent(0, 0, common.Direction.UP);
-		testElevator.handleElevatorStartMovingEvent(elevatorSME);
+		testState.handleElevatorStartMovingEvent(elevatorSME);
 		
-		ElevatorState testState = testElevator.getState();
+		
 		int nextFloor = testState.getCurrentFloor() +1;
 		ElevatorArrivalSensorEvent elevatorMove = new ElevatorArrivalSensorEvent(0, 0, nextFloor);
 		
@@ -107,9 +91,9 @@ public class TestElevator {
 	public void TestHandleElevatorKeepMovingEvent() {
 		
 		ElevatorKeepMovingEvent elevatorKME = new ElevatorKeepMovingEvent(0, 0, common.Direction.UP);
-		testElevator.handleElevatorKeepMovingEvent(elevatorKME);
+		testState.handleElevatorKeepMovingEvent(elevatorKME);
 		
-		ElevatorState testState = testElevator.getState();
+		
 		int currFloor = testState.getCurrentFloor();
 		ElevatorArrivalSensorEvent elevatorMoving = new ElevatorArrivalSensorEvent(0, 0, currFloor);
 		
@@ -121,7 +105,7 @@ public class TestElevator {
 	public void TestHandleElevatorStopMovingEvent() {
 		
 		ElevatorStopMovingEvent elevatorStop = new ElevatorStopMovingEvent(0,0);
-		testElevator.handleElevatorStopMovingEvent(elevatorStop);
+		testState.handleElevatorStopMovingEvent(elevatorStop);
 		
 		ElevatorStoppedEvent elevatorStopped = new ElevatorStoppedEvent(0,0);
 		
@@ -132,18 +116,15 @@ public class TestElevator {
 	@Test
 	public void TestHandleElevatorButtonLampEvent() {
 		ElevatorButtonLampEvent elevatorBLE = new ElevatorButtonLampEvent(0,0,3,LampState.ON);
-		testElevator.handleElevatorButtonLampEvent(elevatorBLE);
+		testState.handleElevatorButtonLampEvent(elevatorBLE);
 		
-		assertEquals("Event should match", elevatorBLE,  testElevator.getState().handleElevatorButtonLampEvent(elevatorBLE));
+		assertEquals("Event should match", elevatorBLE,  testState.handleElevatorButtonLampEvent(elevatorBLE));
 	}
 	
 	@Test
 	public void TestGetFloorIncrement() {
-		
 		assertEquals("Floor should increment upwards",1, Elevator.getFloorIncrement(common.Direction.UP));
 		assertEquals("Floor should increment downwards",-1, Elevator.getFloorIncrement(common.Direction.DOWN));
-		//assertEquals("Floor should not increment",0,Elevator.getFloorIncrement(null));
-		
 	}
 
 	
