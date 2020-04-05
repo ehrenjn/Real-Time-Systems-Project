@@ -90,7 +90,10 @@ public abstract class ElevatorState {
 	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
 	 */
 	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorCloseDoorEvent) {
-		return this;
+		System.out.print("Given an original state: "  + this.name);
+		System.out.print(" and event: "  + ElevatorOpenDoorEvent.NAME);
+		System.out.println(" an impossible elevator state has occured");
+		return new ElevatorFailureState(this);
 	}
 	
 	
@@ -100,7 +103,10 @@ public abstract class ElevatorState {
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorCloseDoorEvent(ElevatorCloseDoorEvent elevatorCloseDoorEvent) {
-		return this;
+		System.out.print("Given an original state: "  + this.name);
+		System.out.print(" and event: "  + ElevatorCloseDoorEvent.NAME);
+		System.out.println(" an impossible elevator state has occured");
+		return new ElevatorFailureState(this);
 	}
 	
 	
@@ -110,7 +116,10 @@ public abstract class ElevatorState {
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent elevatorKeepMovingEvent) {
-		return this;
+		System.out.print("Given an original state: "  + this.name);
+		System.out.print(" and event: "  + ElevatorKeepMovingEvent.NAME);
+		System.out.println(" an impossible elevator state has occured");
+		return new ElevatorFailureState(this);
 	}
 	
 	/**
@@ -119,7 +128,10 @@ public abstract class ElevatorState {
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorStartMovingEvent(ElevatorStartMovingEvent elevatorStartMovingEvent) {
-		return this;
+		System.out.print("Given an original state: "  + this.name);
+		System.out.print(" and event: "  + ElevatorStartMovingEvent.NAME);
+		System.out.println(" an impossible elevator state has occured");
+		return new ElevatorFailureState(this);
 	}
 	
 	/**
@@ -128,7 +140,10 @@ public abstract class ElevatorState {
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorStopMovingEvent(ElevatorStopMovingEvent elevatorStopMovingEvent) {
-		return this;
+		System.out.print("Given an original state: "  + this.name);
+		System.out.print(" and event: "  + ElevatorStopMovingEvent.NAME);
+		System.out.println(" an impossible elevator state has occured");
+		return new ElevatorFailureState(this);
 	}
 	
 	/**
@@ -137,7 +152,10 @@ public abstract class ElevatorState {
 	 * @return button that is pressed
 	 */
 	public ElevatorState handleElevatorPressButtonEvent(ElevatorPressButtonEvent elevatorPressButtonEvent) {
-		return this;
+		System.out.print("Given an original state: "  + this.name);
+		System.out.print(" and event: "  + ElevatorPressButtonEvent.NAME);
+		System.out.println(" an impossible elevator state has occured");
+		return new ElevatorFailureState(this);
 	}
 	/**
 	 * get the current floor of the elevator
