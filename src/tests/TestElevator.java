@@ -50,9 +50,6 @@ public class TestElevator {
 		assertTrue(testState.handleElevatorPressButtonEvent(elevatorPBE) instanceof ElevatorOpenDoorState);
 	}
 	
-
-	
-	
 	@Test
 	public void TestHandleElevatorCloseDoorEvent() {
 		ElevatorCloseDoorEvent elevatorCDE = new ElevatorCloseDoorEvent(0,0);

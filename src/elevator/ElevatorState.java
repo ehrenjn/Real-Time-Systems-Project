@@ -89,10 +89,8 @@ public abstract class ElevatorState {
 	 * Default implementation for the handling of ElevatorCloseDoorEvent
 	 * @param elevatorDoorEvent the event modeling the opening/closing of a door
 	 */
-	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorCloseDoorEvent) {
-		System.out.print("Given an original state: "  + this.name);
-		System.out.print(" and event: "  + ElevatorOpenDoorEvent.NAME);
-		System.out.println(" an impossible elevator state has occured");
+	public ElevatorState handleElevatorOpenDoorEvent(ElevatorOpenDoorEvent elevatorOpenDoorEvent) {
+		ThreadPrinter.print("State: "  + this.name + ", transition: "+ ElevatorOpenDoorEvent.NAME + ", is illegal.");
 		return new ElevatorFailureState(this);
 	}
 	
@@ -103,9 +101,7 @@ public abstract class ElevatorState {
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorCloseDoorEvent(ElevatorCloseDoorEvent elevatorCloseDoorEvent) {
-		System.out.print("Given an original state: "  + this.name);
-		System.out.print(" and event: "  + ElevatorCloseDoorEvent.NAME);
-		System.out.println(" an impossible elevator state has occured");
+		ThreadPrinter.print("State: "  + this.name + ", transition: "+ ElevatorCloseDoorEvent.NAME + ", is illegal.");
 		return new ElevatorFailureState(this);
 	}
 	
@@ -116,9 +112,7 @@ public abstract class ElevatorState {
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorKeepMovingEvent(ElevatorKeepMovingEvent elevatorKeepMovingEvent) {
-		System.out.print("Given an original state: "  + this.name);
-		System.out.print(" and event: "  + ElevatorKeepMovingEvent.NAME);
-		System.out.println(" an impossible elevator state has occured");
+		ThreadPrinter.print("State: "  + this.name + ", transition: "+ ElevatorKeepMovingEvent.NAME + ", is illegal.");
 		return new ElevatorFailureState(this);
 	}
 	
@@ -128,9 +122,7 @@ public abstract class ElevatorState {
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorStartMovingEvent(ElevatorStartMovingEvent elevatorStartMovingEvent) {
-		System.out.print("Given an original state: "  + this.name);
-		System.out.print(" and event: "  + ElevatorStartMovingEvent.NAME);
-		System.out.println(" an impossible elevator state has occured");
+		ThreadPrinter.print("State: "  + this.name + ", transition: "+ ElevatorStartMovingEvent.NAME + ", is illegal.");
 		return new ElevatorFailureState(this);
 	}
 	
@@ -140,9 +132,7 @@ public abstract class ElevatorState {
 	 * @return elevator failure state
 	 */
 	public ElevatorState handleElevatorStopMovingEvent(ElevatorStopMovingEvent elevatorStopMovingEvent) {
-		System.out.print("Given an original state: "  + this.name);
-		System.out.print(" and event: "  + ElevatorStopMovingEvent.NAME);
-		System.out.println(" an impossible elevator state has occured");
+		ThreadPrinter.print("State: "  + this.name + ", transition: "+ ElevatorStopMovingEvent.NAME + ", is illegal.");
 		return new ElevatorFailureState(this);
 	}
 	
@@ -152,9 +142,7 @@ public abstract class ElevatorState {
 	 * @return button that is pressed
 	 */
 	public ElevatorState handleElevatorPressButtonEvent(ElevatorPressButtonEvent elevatorPressButtonEvent) {
-		System.out.print("Given an original state: "  + this.name);
-		System.out.print(" and event: "  + ElevatorPressButtonEvent.NAME);
-		System.out.println(" an impossible elevator state has occured");
+		ThreadPrinter.print("State: "  + this.name + ", transition: "+ ElevatorPressButtonEvent.NAME + ", is illegal.");
 		return new ElevatorFailureState(this);
 	}
 	/**

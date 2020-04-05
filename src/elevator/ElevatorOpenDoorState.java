@@ -47,7 +47,7 @@ public class ElevatorOpenDoorState extends ElevatorState{
 	 * @param elevatorPressButtonEvent the event modeling the press of a button
 	 * @return button that was pressed
 	 */
-	public ElevatorState handleElevatorButtonEvent(ElevatorPressButtonEvent elevatorPressButtonEvent) {
+	public ElevatorState handleElevatorPressButtonEvent(ElevatorPressButtonEvent elevatorPressButtonEvent) {
 		return this;
 	}
 }
