@@ -8,12 +8,10 @@ public class ElevatorFailureState extends ElevatorState{
 	public ElevatorFailureState() {
 		super(-1);
 		this.name = NAME;
-		System.out.println("An impossible elevator state has occured");
 	}
 
 	public ElevatorFailureState(ElevatorState state) {
 		super(state);
-		System.out.println("An impossible elevator state has occured");
 	}
 
 }
