@@ -1,24 +1,24 @@
 package tests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import common.*;
 import floor.Floor;
 
-class TestFloor {
+public class TestFloor {
 	
-	Floor floor;
+	private Floor floor;
 	
 	@Before
-	void setup() {
+	public void setup() {
 		floor = new Floor(22);
 	}
 
 	@Test
-	void testChangeButtonLampState() {
+	public void testChangeButtonLampState() {
 		floor = new Floor(22);
 		floor.changeButtonLampState(Direction.UP, LampState.ON);
 		assertEquals(floor.getUpButton(), LampState.ON);
