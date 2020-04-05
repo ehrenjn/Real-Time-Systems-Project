@@ -160,8 +160,21 @@ public abstract class ElevatorState {
 	public void setCurrentFloor(int currentFloor) {
 		this.currentFloor = currentFloor;
 	}
-	
+	 
+	/**
+	 * set the  direction of the lamp
+	 * @param currentFloor current floor of the elevator
+	 * @param state the state of the lamp
+	 */
 	public void setButtonLamp(int button, LampState state) {
 		buttonLamps[button] = state;
+	}
+	
+	/**
+	 * gets the name of the state
+	 * @return the name of the state
+	 */
+	public String getName() {
+		return this.name;
 	}
 }
