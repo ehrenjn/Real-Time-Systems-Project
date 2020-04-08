@@ -7,6 +7,8 @@ The purpose of this project is to implement an elevator control system with a mu
 
 A video demonstration of the working code is included in this repository and named as "Final Presentation Video.mp4"
 
+The final report for the course project is included in this repository and named as "SYSC3303-Group_1-Final-Report.pdf"
+
 -----------------------------------------------------------------
 
 Prerequisites:
